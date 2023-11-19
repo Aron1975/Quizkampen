@@ -1,34 +1,43 @@
-package ServerSide;
+package QuizServerSide;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
-public class Server extends Thread {
+public class QuizServer extends Thread {
 
     int port = 45000;
 
     Socket s;
+    QuizServerProtocol qsp;
 
-    public Server(Socket s) {
+    public QuizServer(Socket s, QuizServerProtocol qsp){
+
         this.s = s;
+        this.qsp = qsp;
     }
+
+
+
 
     @Override
     public void run() {
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
              PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
         ){
             System.out.println("Connected");
-            String inData = "";
+            String inData = br.readLine();
+            //pw.println(qsp.sendQuestion());
+            oos.writeObject(qsp.sendQuestion());
+            inData = br.readLine();
+            oos.writeObject(qsp.sendAnswers());
+
             while ((inData = br.readLine()) != null) {
                 System.out.println(inData);
                 //Spel logik.........
-                int randomNr = (int)Math.round(Math.random()*10);
-                pw.println("Svar: " + randomNr);
+                oos.writeObject(qsp.processInput(inData));
+
             }
         } catch (IOException e) {
             throw new RuntimeException();

@@ -1,11 +1,11 @@
-package ClientSide;
+package QuizClientSide;
 
-public class Player {
+public class QuizPlayer {
 
     private String name;
     private int score;
 
-    public Player(String name, int score) {
+    public QuizPlayer(String name, int score) {
         this.name = name;
         this.score = score;
     }

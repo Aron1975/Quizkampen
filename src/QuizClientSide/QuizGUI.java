@@ -1,11 +1,11 @@
-package ClientSide;
+package QuizClientSide;
 
 import javax.swing.*;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class PlayerGUI extends JFrame {
+public class QuizGUI extends JFrame {
 
     Icon avatar1 = new ImageIcon("Images/Avatar_1.jpg");
     Icon avatar2 = new ImageIcon("Images/Avatar_2.jpg");
@@ -21,7 +21,7 @@ public class PlayerGUI extends JFrame {
     JLabel category = new JLabel(categoryIcon);
     //JLabel questionField = new JLabel(questionBackground);
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
-    JButton[] answers = {new JButton(),new JButton(),new JButton(),new JButton()};
+    JButton[] answerButtons = {new JButton(),new JButton(),new JButton(),new JButton()};
 
 
     JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
@@ -30,7 +30,7 @@ public class PlayerGUI extends JFrame {
     Font f = new Font(null, 3, 20);
     Color answButtonColor = new Color(20,40,100);
 
-    public PlayerGUI(){
+    public QuizGUI(){
 
         setPlayerPanelProperties();
         setQuestionPanelProperties();
@@ -88,7 +88,7 @@ public class PlayerGUI extends JFrame {
         answerPanel.setLayout(answerLayout);
         SoftBevelBorder border = new SoftBevelBorder(SoftBevelBorder.RAISED);
         //Border border1 = new Rou
-        for(JButton jb: answers){
+        for(JButton jb: answerButtons){
             jb.setBackground(answButtonColor);
             jb.setOpaque(true);
             jb.setFont(f);
@@ -99,19 +99,31 @@ public class PlayerGUI extends JFrame {
             jb.setBackground(answButtonColor);
             jb.setForeground(Color.WHITE);
             jb.setBorder(border);
+            jb.setFocusPainted(false);
+            //jb.setFocusable(false);
             //jb.setPreferredSize(new Dimension(150,150));
             answerPanel.add(jb);
         }
     }
 
     void addButtonListener(ActionListener aListener){
-        for(JButton jB:answers){
+        for(JButton jB: answerButtons){
             jB.addActionListener(aListener);
         }
     }
 
     public void setQuestionLabelText(String text){
         questionLabel.setText(text);
+    }
+
+    public void setAnswerButtonText(String[] text){
+        for(int i=0; i<answerButtons.length; i++){
+            answerButtons[i].setText(text[i]);
+        }
+    }
+
+    public String getButtonText(int buttonNr){
+        return answerButtons[buttonNr].getText();
     }
 /*
     public static void main(String[] args) {

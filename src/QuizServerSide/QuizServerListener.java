@@ -1,21 +1,23 @@
-package ServerSide;
+package QuizServerSide;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerListener {
+public class QuizServerListener {
 
     int port = 45000;
+    QuizServerProtocol qsp;
 
-    public ServerListener() {
+    public QuizServerListener() {
+        this.qsp = new QuizServerProtocol();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
 
             while (true) {
                 System.out.println("Väntar på användare: ");
                 Socket socket = serverSocket.accept();
-                Server s = new Server(socket);
+                QuizServer s = new QuizServer(socket, qsp);
                 s.start();
             }
         } catch (IOException e) {
@@ -25,6 +27,7 @@ public class ServerListener {
 
     public static void main(String[] args) {
 
-        new ServerListener();
+        //QuizServerProtocol qsp = new QuizServerProtocol();
+        new QuizServerListener();
     }
 }
