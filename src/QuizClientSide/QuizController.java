@@ -17,6 +17,7 @@ public class QuizController extends Thread{
         this.pGUI = pGUI;
         this.client = client;
         this.pGUI.addButtonListener(new MyButtonListener());
+        this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
        // t.start();
         startGame();
     }
@@ -25,6 +26,7 @@ public class QuizController extends Thread{
         this.player = player;
         this.pGUI = pGUI;
         this.pGUI.addButtonListener(new MyButtonListener());
+        this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
     }
 
@@ -63,8 +65,23 @@ public class QuizController extends Thread{
                 System.out.println("Alt.4 Pushed");
                 messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
             }
-            pGUI.progressBar.setValue(pGUI.progressBar.getValue()+1);
-            pGUI.setQuestionLabelText(messageFromServer);
+        }
+    }
+class CategoryButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Pick category window
+            if(e.getSource() == pGUI.categoryButtons[0]){
+                System.out.println("Chose category 1");
+            }
+            else if(e.getSource() == pGUI.categoryButtons[1]){
+                System.out.println("Chose category 2");
+            }
+            else if(e.getSource() == pGUI.categoryButtons[2]){
+                System.out.println("Chose category 3");
+            }
+
         }
     }
 

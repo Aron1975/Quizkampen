@@ -22,13 +22,22 @@ public class QuizGUI extends JFrame {
     //JLabel questionField = new JLabel(questionBackground);
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
     JButton[] answerButtons = {new JButton(),new JButton(),new JButton(),new JButton()};
-
-
     JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
     LayoutManager playersLayout = new BorderLayout();
     LayoutManager answerLayout = new GridLayout(2,2);
     Font f = new Font(null, 3, 20);
     Color answButtonColor = new Color(20,40,100);
+
+
+
+    //Category window
+    JPanel categoryMainPanel = new JPanel();
+    JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
+    JPanel categoryButtonPanel = new JPanel();
+    JButton[] categoryButtons = {new JButton("Cat 1"),new JButton("Cat 22"),new JButton("Cat 33333")};
+    int screenX = 400;
+    int screenY = 600;
+    //GridLayout layoutCategoryButtons = new GridLayout(categoryButtons.length, 1);
 
     public QuizGUI(){
 
@@ -40,6 +49,13 @@ public class QuizGUI extends JFrame {
         add(questionPanel, BorderLayout.CENTER);
         //add(Box.createVerticalStrut(10));
         add(answerPanel, BorderLayout.SOUTH);
+
+        //Category window
+        //Funkar inte med pack(), separera Aron's window till en funktion om han behöver pack
+
+        //initCategoryWindow();
+
+
 
         pack();
         setLocationRelativeTo(null);
@@ -129,4 +145,54 @@ public class QuizGUI extends JFrame {
     public static void main(String[] args) {
         new PlayerGUI();
     }*/
+
+
+
+
+
+    //Category window
+    public void initCategoryWindow(){
+        //MAIN FRAME
+        setSize(new Dimension(screenX,screenY));
+        setResizable(false);
+        setLocationRelativeTo(null); // Center main window to screen
+
+        // MAIN PANEL
+        categoryMainPanel.setLayout(new BoxLayout(categoryMainPanel, BoxLayout.PAGE_AXIS));
+        //categoryMainPanel.setBackground(Color.WHITE);
+
+        // PICK A CATEGORY LABEL
+        //categoryLabelPickCategory.setBackground(Color.WHITE);
+        categoryLabelPickCategory.setOpaque(true);
+        categoryLabelPickCategory.setFont(f);
+        categoryLabelPickCategory.setAlignmentX(0.5f);
+
+        // BUTTONS
+        categoryButtonPanel.setLayout(new BoxLayout(categoryButtonPanel, BoxLayout.Y_AXIS));
+        for(int i = 0; i < categoryButtons.length; i++){
+            categoryButtons[i].setBackground(answButtonColor);
+            categoryButtons[i].setOpaque(true);
+            categoryButtons[i].setFont(f);
+            categoryButtons[i].setLayout(new BorderLayout());
+            categoryButtons[i].setBackground(answButtonColor);
+            categoryButtons[i].setForeground(Color.WHITE);
+            categoryButtons[i].setFocusPainted(false);
+            categoryButtons[i].setAlignmentX(0.5f);
+            categoryButtonPanel.add(categoryButtons[i].getText(), categoryButtons[i]);
+            categoryButtonPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        }
+
+        categoryMainPanel.add(Box.createRigidArea(new Dimension(0,150)));
+        categoryMainPanel.add(categoryLabelPickCategory);
+        categoryMainPanel.add(Box.createRigidArea(new Dimension(0,100)));
+        categoryMainPanel.add(categoryButtonPanel);
+        add(categoryMainPanel);
+    }
+
+    public void initCategoryButtonListener(ActionListener aListener)
+    {
+        for(JButton jB: categoryButtons){
+            jB.addActionListener(aListener);
+        }
+    }
 }
