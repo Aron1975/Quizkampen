@@ -4,6 +4,7 @@ public class QuizPlayer {
 
     private String name;
     private int score;
+    private int partScore;
 
     public QuizPlayer(String name, int score) {
         this.name = name;

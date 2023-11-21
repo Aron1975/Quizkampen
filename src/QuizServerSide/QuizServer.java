@@ -31,7 +31,7 @@ public class QuizServer extends Thread {
             //pw.println(qsp.sendQuestion());
             oos.writeObject(qsp.sendQuestion());
             inData = br.readLine();
-            oos.writeObject(qsp.sendAnswers());
+            oos.writeObject(qsp.sendAnswerAlternatives());
 
             while ((inData = br.readLine()) != null) {
                 System.out.println(inData);

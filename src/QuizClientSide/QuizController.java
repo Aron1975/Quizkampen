@@ -12,6 +12,9 @@ public class QuizController extends Thread{
     String messageFromServer;
     String[] messageArrayFromServer;
 
+    int round = 0;
+    boolean newRound = true;
+
     public QuizController(QuizPlayer player, QuizGUI pGUI, QuizClient client) {
         this.player = player;
         this.pGUI = pGUI;
@@ -29,8 +32,12 @@ public class QuizController extends Thread{
     }
 
     public void startGame(){
-        getQuestionFromServer();
-
+        while(true) {
+            if(newRound) {
+                getQuestionFromServer();
+                newRound = false;
+            }
+        }
     }
 
     public void getQuestionFromServer(){

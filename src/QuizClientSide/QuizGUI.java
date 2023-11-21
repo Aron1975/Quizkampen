@@ -113,7 +113,17 @@ public class QuizGUI extends JFrame {
     }
 
     public void setQuestionLabelText(String text){
+        if(text.length()>32){
+            text=splitText(text);
+        }
         questionLabel.setText(text);
+    }
+
+    public String splitText(String text){
+        String[] splittedText;
+        int index = text.indexOf(" ", 30);
+        splittedText = text.split(" ", 3);
+        return text;
     }
 
     public void setAnswerButtonText(String[] text){

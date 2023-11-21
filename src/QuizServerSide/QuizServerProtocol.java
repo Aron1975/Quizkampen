@@ -9,44 +9,29 @@ public class QuizServerProtocol {
 
     private int state = WAITING;
 
-    private String[] questions = {"Vem uppfann elektriciteten?"};
-    private String[] answerAlternatives = {"Robert Downey Jr.", "Ingen", "Tesla", "Gud"};
-    private String[] answer = {"Juste...", "Rätt", "Han kan ha blivit träffad av blixten, medans han körde runt i sin elektriska bil.", "Ok, så du är religiös"};
+
+    private int questionNr = 1;
+    private int tryNr = 0;
+
+    private String[] questions = {"Vem uppfann elektriciteten?", "Om 1 öl är 0 öl\n\n och 2 öl är 1 öl. \n Hur många öl är 5 öl?"};
+    private String[][] answerAlternatives = {{"Batman", "Ingen", "Tesla", "Gud"},{"3","5","0","4"}};
+    private String[][] answer = {{"Juste...eller?", "Japp", "Han kan ha blivit träffad av blixten..", "Jessus..."},
+            {"Nja","You wish...","Det är vad jag säger\n till min fru!","Skål"}};
 
     public QuizServerProtocol() {
 
     }
 
-    public String[] getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(String[] questions) {
-        this.questions = questions;
-    }
-
-    public String[] getAnswerAlternatives() {
-        return answerAlternatives;
-    }
-
-    public void setAnswerAlternatives(String[] answerAlternatives) {
-        this.answerAlternatives = answerAlternatives;
-    }
-
-    public String[] getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String[] answer) {
-        this.answer = answer;
-    }
-
     public String sendQuestion(){
-        return questions[0];
+        return questions[questionNr];
     }
 
-    public String[] sendAnswers(){
-        return answerAlternatives;
+    public String[] sendAnswerAlternatives(){
+        String[] answers = new String[4];
+        for(int i=0; i<4; i++){
+            answers[i]=answerAlternatives[questionNr][i];
+        }
+        return answers;
     }
 
     public String processInput(String dataIn) {
@@ -63,10 +48,14 @@ public class QuizServerProtocol {
             //....
             state = WAITING;
         }*/
-        for (int i=0; i<answerAlternatives.length; i++){
-            if(dataIn.equals(answerAlternatives[i])){
-                return answer[i];
+
+        for (int i=0; i<answerAlternatives[0].length; i++){
+            if(dataIn.equals(answerAlternatives[questionNr][i])){
+                return answer[questionNr][i];
             }
+        }
+        if(tryNr==3){
+
         }
         return dataOut;
     }
