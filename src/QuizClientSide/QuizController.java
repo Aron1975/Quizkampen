@@ -20,29 +20,38 @@ public class QuizController extends Thread{
         this.pGUI = pGUI;
         this.client = client;
         this.pGUI.addButtonListener(new MyButtonListener());
+        this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
        // t.start();
-        startGame();
+//commented for Testing GUI       startGame();
     }
 
     public QuizController(QuizPlayer player, QuizGUI pGUI) {
         this.player = player;
         this.pGUI = pGUI;
         this.pGUI.addButtonListener(new MyButtonListener());
+        this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
     }
 
     public void startGame(){
+
         while(true) {
             if(newRound) {
-                getQuestionFromServer();
+                getResponseFromServer();
                 newRound = false;
             }
         }
     }
 
-    public void getQuestionFromServer(){
+    //Skickar frågor till server som skickar svar tllbaka
+    public void getResponseFromServer(){
+        //Kategori
+        messageFromServer=client.sendAndGetMessage(null);
+       // pGUI.setCategoryLabelText(messageFromServer);
+        //Fråga
         messageFromServer=client.sendAndGetMessage(null);
         pGUI.setQuestionLabelText(messageFromServer);
+        //Svarsalternativen
         messageArrayFromServer=client.sendAndGetArrayMessage(null);
         pGUI.setAnswerButtonText(messageArrayFromServer);
     }
@@ -68,10 +77,29 @@ public class QuizController extends Thread{
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
-                messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+                pGUI.changeWindow("1");
             }
-            pGUI.progressBar.setValue(pGUI.progressBar.getValue()+1);
-            pGUI.setQuestionLabelText(messageFromServer);
+        }
+    }
+class CategoryButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Pick category window
+            if(e.getSource() == pGUI.categoryButtons[0]){
+                System.out.println("Chose category 1");
+                pGUI.changeWindow("2");
+            }
+            else if(e.getSource() == pGUI.categoryButtons[1]){
+                System.out.println("Chose category 2");
+                pGUI.changeWindow("2");
+            }
+            else if(e.getSource() == pGUI.categoryButtons[2]){
+                System.out.println("Chose category 3");
+                pGUI.changeWindow("2");
+            }
+
         }
     }
 
@@ -86,7 +114,8 @@ public class QuizController extends Thread{
     public static void main(String[] args) {
         QuizPlayer p = new QuizPlayer("Aron", 0);
         QuizGUI pGUI = new QuizGUI();
-        QuizClient c = new QuizClient();
-        new QuizController(p,pGUI, c);
+        //QuizClient c = new QuizClient();
+        //new QuizController(p,pGUI, c);
+        new QuizController(p,pGUI);
     }
 }
