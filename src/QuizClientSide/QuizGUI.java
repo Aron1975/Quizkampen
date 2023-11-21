@@ -7,11 +7,31 @@ import java.awt.event.ActionListener;
 
 public class QuizGUI extends JFrame {
 
+    //The different cards in CardLayout
+    protected final String WELCOME = "0";
+    protected final String CATEGORY = "1";
+    protected final String PLAY = "2";
+    protected final String SCORE = "3";
+
+    int screenX = 400;
+    int screenY = 600;
+    Color panelsBackgroundColor = Color.ORANGE;
+    Dimension panelsDimension = new Dimension(screenX,screenY);
+
+    //Avatar images
     Icon avatar1 = new ImageIcon("Images/Avatar_1.jpg");
     Icon avatar2 = new ImageIcon("Images/Avatar_2.jpg");
+
+    //Category Images
     Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
     Icon questionBackground = new ImageIcon("Images/Question.jpg");
 
+    //Preparing for CardLayout
+    JPanel mainQuizPanel = new JPanel();
+    CardLayout cardLo = new CardLayout();
+
+    //------------ Play Window ----------------------------
+    JPanel playerPanelMain = new JPanel();
     JPanel playerPanel = new JPanel();
     JPanel questionPanel = new JPanel();
     JPanel scores = new JPanel();
@@ -23,39 +43,52 @@ public class QuizGUI extends JFrame {
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
     JButton[] answerButtons = {new JButton(),new JButton(),new JButton(),new JButton()};
     JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
-    LayoutManager playersLayout = new BorderLayout();
+    //LayoutManager playersLayout = new BorderLayout();
+    LayoutManager playersLayout = new GridLayout(3,3);
     LayoutManager answerLayout = new GridLayout(2,2);
     Font f = new Font(null, 3, 20);
     Color answButtonColor = new Color(20,40,100);
+    //-----------------------------------------------------
 
 
-
-    //Category window
+    //---------- Category window --------------------------
     JPanel categoryMainPanel = new JPanel();
     JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
     JPanel categoryButtonPanel = new JPanel();
     JButton[] categoryButtons = {new JButton("Cat 1"),new JButton("Cat 22"),new JButton("Cat 33333")};
-    int screenX = 400;
-    int screenY = 600;
+
     //GridLayout layoutCategoryButtons = new GridLayout(categoryButtons.length, 1);
 
     public QuizGUI(){
 
-        setPlayerPanelProperties();
-        setQuestionPanelProperties();
-        setAnswerPanelProperties();
+        //Nytt för CardLayout
+        mainQuizPanel.setLayout(cardLo);
+        mainQuizPanel.setPreferredSize(panelsDimension);
 
-        add(playerPanel,BorderLayout.NORTH);
-        add(questionPanel, BorderLayout.CENTER);
-        //add(Box.createVerticalStrut(10));
-        add(answerPanel, BorderLayout.SOUTH);
+
+        //---------------
+
+        initPlayWindow();
 
         //Category window
         //Funkar inte med pack(), separera Aron's window till en funktion om han behöver pack
 
-        //initCategoryWindow();
+        initCategoryWindow();
 
+        mainQuizPanel.add(playerPanelMain, PLAY);
+        mainQuizPanel.add(categoryMainPanel, CATEGORY);
+        cardLo.show(mainQuizPanel, CATEGORY);
+        add(mainQuizPanel);
+        /*
+        mainPanel.add(panel1, "1");
+        mainPanel.add(panel2, "2");
+        mainPanel.add(panel3, "3");
 
+        cl.show(mainPanel, "1");
+
+        add(mainPanel);
+
+         */
 
         pack();
         setLocationRelativeTo(null);
@@ -64,8 +97,23 @@ public class QuizGUI extends JFrame {
 
     }
 
+    public void initPlayWindow(){
+        setPlayerPanelProperties();
+        setQuestionPanelProperties();
+        setAnswerPanelProperties();
+        playerPanelMain.setLayout(new BorderLayout());
+        playerPanelMain.setPreferredSize(panelsDimension);
+        playerPanelMain.setBackground(Color.orange);
+        playerPanelMain.add(playerPanel,BorderLayout.NORTH);
+        playerPanelMain.add(questionPanel, BorderLayout.CENTER);
+        //add(Box.createVerticalStrut(10));
+        playerPanelMain.add(answerPanel, BorderLayout.SOUTH);
+
+    }
+
     public void setPlayerPanelProperties(){
-        playerPanel.setPreferredSize(new Dimension(100,170));
+        playerPanel.setPreferredSize(new Dimension(screenX-60,screenX/2));
+        playerPanel.setBackground(panelsBackgroundColor);
         playerPanel.setLayout(playersLayout);
         playerPanel.add(player1,BorderLayout.WEST);
         playerPanel.add(category,BorderLayout.CENTER);
@@ -76,7 +124,7 @@ public class QuizGUI extends JFrame {
     public void setQuestionPanelProperties(){
         String questionText = "Fråga?";
         //questionPanel.setPreferredSize(new Dimension(300,200));
-        questionLabel.setPreferredSize(new Dimension(300,200));
+        questionLabel.setPreferredSize(new Dimension(screenX/2,screenX/2));
         questionPanel.setLayout(new BorderLayout());
         questionLabel.setBackground(Color.BLUE);
         questionLabel.setText(questionText);
@@ -89,7 +137,7 @@ public class QuizGUI extends JFrame {
         progressBar.setMinimum(0);
         progressBar.setMaximum(3);
         progressBar.setValue(0);
-        progressBar.setPreferredSize(new Dimension(300,16));
+        progressBar.setPreferredSize(new Dimension(screenX,16));
         progressBar.setForeground(Color.RED);
         progressBar.setBackground(Color.GRAY);
         questionPanel.add(questionLabel,BorderLayout.NORTH);
@@ -100,7 +148,7 @@ public class QuizGUI extends JFrame {
 
     public void setAnswerPanelProperties(){
         String answerText = "Svar";
-        answerPanel.setPreferredSize(new Dimension(200,200));
+        answerPanel.setPreferredSize(new Dimension(screenX/2,screenX/2));
         answerPanel.setLayout(answerLayout);
         SoftBevelBorder border = new SoftBevelBorder(SoftBevelBorder.RAISED);
         //Border border1 = new Rou
@@ -162,10 +210,15 @@ public class QuizGUI extends JFrame {
 
     //Category window
     public void initCategoryWindow(){
+        //Change
+        categoryMainPanel.setPreferredSize(panelsDimension);
+        categoryMainPanel.setBackground(panelsBackgroundColor);
+        categoryLabelPickCategory.setBackground(panelsBackgroundColor);
+        categoryButtonPanel.setBackground(panelsBackgroundColor);
         //MAIN FRAME
-        setSize(new Dimension(screenX,screenY));
-        setResizable(false);
-        setLocationRelativeTo(null); // Center main window to screen
+        //setSize(panelsDimension);
+        //setResizable(false);
+        //setLocationRelativeTo(null); // Center main window to screen
 
         // MAIN PANEL
         categoryMainPanel.setLayout(new BoxLayout(categoryMainPanel, BoxLayout.PAGE_AXIS));
@@ -196,7 +249,7 @@ public class QuizGUI extends JFrame {
         categoryMainPanel.add(categoryLabelPickCategory);
         categoryMainPanel.add(Box.createRigidArea(new Dimension(0,100)));
         categoryMainPanel.add(categoryButtonPanel);
-        add(categoryMainPanel);
+        //add(categoryMainPanel);
     }
 
     public void initCategoryButtonListener(ActionListener aListener)
@@ -204,5 +257,14 @@ public class QuizGUI extends JFrame {
         for(JButton jB: categoryButtons){
             jB.addActionListener(aListener);
         }
+    }
+
+    public void changeWindow(String category){
+        cardLo.show(mainQuizPanel, category);
+    }
+
+    //-------For testing
+    public static void main(String[] args) {
+        new QuizGUI();
     }
 }

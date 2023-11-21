@@ -22,7 +22,7 @@ public class QuizController extends Thread{
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
        // t.start();
-        startGame();
+//commented for Testing GUI       startGame();
     }
 
     public QuizController(QuizPlayer player, QuizGUI pGUI) {
@@ -34,17 +34,24 @@ public class QuizController extends Thread{
     }
 
     public void startGame(){
+
         while(true) {
             if(newRound) {
-                getQuestionFromServer();
+                getResponseFromServer();
                 newRound = false;
             }
         }
     }
 
-    public void getQuestionFromServer(){
+    //Skickar frågor till server som skickar svar tllbaka
+    public void getResponseFromServer(){
+        //Kategori
+        messageFromServer=client.sendAndGetMessage(null);
+       // pGUI.setCategoryLabelText(messageFromServer);
+        //Fråga
         messageFromServer=client.sendAndGetMessage(null);
         pGUI.setQuestionLabelText(messageFromServer);
+        //Svarsalternativen
         messageArrayFromServer=client.sendAndGetArrayMessage(null);
         pGUI.setAnswerButtonText(messageArrayFromServer);
     }
@@ -70,7 +77,8 @@ public class QuizController extends Thread{
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
-                messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+                pGUI.changeWindow("1");
             }
         }
     }
@@ -81,12 +89,15 @@ class CategoryButtonListener implements ActionListener {
             //Pick category window
             if(e.getSource() == pGUI.categoryButtons[0]){
                 System.out.println("Chose category 1");
+                pGUI.changeWindow("2");
             }
             else if(e.getSource() == pGUI.categoryButtons[1]){
                 System.out.println("Chose category 2");
+                pGUI.changeWindow("2");
             }
             else if(e.getSource() == pGUI.categoryButtons[2]){
                 System.out.println("Chose category 3");
+                pGUI.changeWindow("2");
             }
 
         }
@@ -103,7 +114,8 @@ class CategoryButtonListener implements ActionListener {
     public static void main(String[] args) {
         QuizPlayer p = new QuizPlayer("Aron", 0);
         QuizGUI pGUI = new QuizGUI();
-        QuizClient c = new QuizClient();
-        new QuizController(p,pGUI, c);
+        //QuizClient c = new QuizClient();
+        //new QuizController(p,pGUI, c);
+        new QuizController(p,pGUI);
     }
 }

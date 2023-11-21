@@ -9,7 +9,6 @@ public class QuizServerProtocol {
 
     private int state = WAITING;
 
-
     private int questionNr = 1;
     private int tryNr = 0;
 
