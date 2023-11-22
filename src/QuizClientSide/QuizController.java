@@ -87,6 +87,13 @@ public class QuizController extends Thread{
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
                 //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+                pGUI.setScoreBoard(2,4,false);
+                pGUI.changeWindow("3");
+            }
+            if(e.getSource() == pGUI.scoreBoardStartButton){
+                System.out.println("ScoreBoard");
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+
                 pGUI.changeWindow("0");
             }
         }
@@ -121,11 +128,10 @@ class CategoryButtonListener implements ActionListener {
     }*/
 
     public static void main(String[] args) {
-        QuizPlayer p = new QuizPlayer("Aron", 0);
+        QuizPlayer p = new QuizPlayer();
         QuizGUI pGUI = new QuizGUI();
         //QuizClient c = new QuizClient();
         //new QuizController(p,pGUI, c);
         new QuizController(p,pGUI);
-        pGUI.setVisible(true);
     }
 }

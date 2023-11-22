@@ -10,7 +10,7 @@ public class QuizGUI_Scoreboard {
     ImageIcon player2Icon = new ImageIcon("Images/Avatar_2n.jpg");
     Font f = new Font(null, 3, 20);
 
-    static int rounds = 15;
+    static int rounds = 10;
     int questionsPerRound = 3;
     static int currentRound = 3;
     int scorePlayer1 = 0;
@@ -52,14 +52,11 @@ public class QuizGUI_Scoreboard {
             scoreLabel.setHorizontalAlignment(JLabel.CENTER);
             borderPanel.add(scoreLabel, BorderLayout.CENTER);
 
-
             // Player profiles
             JPanel player1Panel = createPlayerPanel(playerName1, roundPointsPlayer1, player1Icon, 1);
             JPanel player2Panel = createPlayerPanel(playerName2, roundPointsPlayer2, player2Icon, 2);
             borderPanel.add(player1Panel, BorderLayout.WEST);
             borderPanel.add(player2Panel, BorderLayout.EAST);
-
-
 
             // Kör button
             JButton button = new JButton("Starta");
@@ -113,26 +110,7 @@ public class QuizGUI_Scoreboard {
         return playerNamePanel;
     }
 
-    public JPanel addScorePanel(int rounds, ImageIcon win, ImageIcon lose) {
-        JPanel scorePanel = new JPanel();
-        scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
-        scorePanel.setBackground(Color.orange);
 
-        for (int i = 0; i < rounds; i++) {
-            roundPanel[i] = new JPanel(new FlowLayout());
-            roundPanel[i].setBackground(Color.orange);
-
-            winLabel[i] = new JLabel(win);
-            loseLabel[i] = new JLabel(lose);
-
-
-            roundPanel[i].add(winLabel[i]);
-            roundPanel[i].add(loseLabel[i]);
-            scorePanel.add(roundPanel[i]);
-        }
-
-        return scorePanel;
-    }
 
     public JPanel addScorePanel2(int rounds, ImageIcon empty, int player) {
         JPanel scorePanel = new JPanel();
@@ -157,15 +135,7 @@ public class QuizGUI_Scoreboard {
         return scorePanel;
     }
 
-    public void showWinner(int round, boolean player1Won) {
-        if (player1Won) {
-            winLabel[round].setVisible(true);
-            loseLabel[round].setVisible(false);
-        } else {
-            loseLabel[round].setVisible(true);
-            winLabel[round].setVisible(false);
-        }
-    }
+
 
     public void setScoreBoard(int player, int questionNr, boolean correctAnswer){
         if(correctAnswer) {
