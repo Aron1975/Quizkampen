@@ -26,11 +26,22 @@ public class QuizGUI extends JFrame {
     Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
     Icon questionBackground = new ImageIcon("Images/Question.jpg");
 
-    //Preparing for CardLayout
+    //CardLayout Panel
     JPanel mainQuizPanel = new JPanel();
     CardLayout cardLo = new CardLayout();
 
-    //------------ Play Window ----------------------------
+    //------------ Welcome Window ------------------------
+    JPanel welcomePanelMain = new JPanel();
+
+    JPanel welcomePanel = new JPanel();
+    JPanel welcomeInputPanel = new JPanel();
+    JLabel quizLabel = new JLabel("QUIZKAMPEN");
+    JLabel nameText = new JLabel("Namn: ");
+    JTextField welcomeInput = new JTextField(30);
+    JButton welcomeStartButton = new JButton("Start Game");
+
+
+    //------------ Play Window ---------------------------
     JPanel playerPanelMain = new JPanel();
     JPanel playerPanel = new JPanel();
     JPanel questionPanel = new JPanel();
@@ -61,11 +72,13 @@ public class QuizGUI extends JFrame {
 
     public QuizGUI(){
 
+        setTitle("QUIZKAMPEN");
         //Nytt för CardLayout
         mainQuizPanel.setLayout(cardLo);
         mainQuizPanel.setPreferredSize(panelsDimension);
 
 
+        initWelcomeWindow();
         //---------------
 
         initPlayWindow();
@@ -75,9 +88,10 @@ public class QuizGUI extends JFrame {
 
         initCategoryWindow();
 
+        mainQuizPanel.add(welcomePanelMain, WELCOME);
         mainQuizPanel.add(playerPanelMain, PLAY);
         mainQuizPanel.add(categoryMainPanel, CATEGORY);
-        cardLo.show(mainQuizPanel, CATEGORY);
+        cardLo.show(mainQuizPanel, WELCOME);
         add(mainQuizPanel);
         /*
         mainPanel.add(panel1, "1");
@@ -94,6 +108,32 @@ public class QuizGUI extends JFrame {
         setLocationRelativeTo(null);
         //setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    }
+
+    public void initWelcomeWindow(){
+
+        welcomePanelMain.setPreferredSize(panelsDimension);
+        welcomePanelMain.setBackground(Color.orange);
+        welcomePanel.setPreferredSize(new Dimension((int)(screenX*0.8), (int)(screenY*0.8)));
+        welcomePanel.setLayout(new BorderLayout());
+        welcomePanel.setBackground(Color.orange);
+        welcomePanel.add(quizLabel,BorderLayout.NORTH);
+        welcomeInputPanel.setLayout(new FlowLayout());
+        welcomeInputPanel.add(nameText);
+        welcomeInputPanel.add(welcomeInput);
+        welcomeInputPanel.setPreferredSize(new Dimension((int)(screenX*0.5), (int)(screenY*0.2)));
+        Color c = new Color(210,170,30);
+        welcomeInputPanel.setBackground(c);
+        welcomePanel.add(welcomeInputPanel, BorderLayout.CENTER);
+
+        welcomePanel.add(welcomeStartButton,BorderLayout.SOUTH);
+
+        quizLabel.setHorizontalAlignment(JLabel.CENTER);
+        quizLabel.setFont(f);
+        nameText.setFont(f);
+        welcomeStartButton.setFont(f);
+        welcomePanelMain.add(welcomePanel);
 
     }
 
@@ -174,6 +214,7 @@ public class QuizGUI extends JFrame {
         for(JButton jB: answerButtons){
             jB.addActionListener(aListener);
         }
+        welcomeStartButton.addActionListener(aListener);
     }
 
     public void setQuestionLabelText(String text){

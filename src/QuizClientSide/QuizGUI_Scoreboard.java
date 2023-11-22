@@ -10,8 +10,8 @@ public class QuizGUI_Scoreboard {
     ImageIcon player2Icon = new ImageIcon("Images/Avatar_2n.jpg");
     Font f = new Font(null, 3, 20);
 
-    static int rounds = 12;
-    int questionsPerRound = 8;
+    static int rounds = 15;
+    int questionsPerRound = 3;
     static int currentRound = 3;
     int scorePlayer1 = 0;
 
@@ -39,6 +39,7 @@ public class QuizGUI_Scoreboard {
             frame.setSize(400, 600);
             frame.setBackground(Color.ORANGE);
             JPanel borderPanel = new JPanel(new BorderLayout());
+            //borderPanel.setPreferredSize(new Dimension(400,600));
             borderPanel.setBackground(Color.ORANGE);
             JLabel whoTurnLabel = new JLabel(whoTurn);
             whoTurnLabel.setFont(f);
@@ -179,6 +180,6 @@ public class QuizGUI_Scoreboard {
        // qs.setScoreBoard(1,4,true);
        // qs.setScoreBoard(2,6,true);
         qs.setScoreBoard(2,0,false);
-        qs.setScoreBoard(2,63,false);
+        qs.setScoreBoard(2,4,false);
     }
 }

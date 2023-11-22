@@ -64,6 +64,13 @@ public class QuizController extends Thread{
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            if(e.getSource() == pGUI.welcomeStartButton){
+                String name;
+                if(!(name=(pGUI.welcomeInput.getText()).trim()).isEmpty()) {
+                    player.setName(name);
+                    pGUI.changeWindow("1");
+                }
+            }
             if(e.getSource() == pGUI.answerButtons[0]){
 
                 messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
@@ -80,7 +87,7 @@ public class QuizController extends Thread{
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
                 //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
-                pGUI.changeWindow("1");
+                pGUI.changeWindow("0");
             }
         }
     }
