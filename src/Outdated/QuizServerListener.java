@@ -1,4 +1,6 @@
-package QuizServerSide;
+package Outdated;
+
+import QuizServerSide.QuizServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;

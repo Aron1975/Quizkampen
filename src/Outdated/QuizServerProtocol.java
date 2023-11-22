@@ -1,4 +1,4 @@
-package QuizServerSide;
+package Outdated;
 
 public class QuizServerProtocol {
 
