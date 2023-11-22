@@ -6,6 +6,8 @@ public class QuizPlayer {
     private int score;
     private int partScore;
 
+    public QuizPlayer(){}
+
     public QuizPlayer(String name, int score) {
         this.name = name;
         this.score = score;
@@ -25,5 +27,13 @@ public class QuizPlayer {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getPartScore() {
+        return partScore;
+    }
+
+    public void setPartScore(int partScore) {
+        this.partScore = partScore;
     }
 }

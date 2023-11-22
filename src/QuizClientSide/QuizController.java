@@ -23,6 +23,7 @@ public class QuizController extends Thread{
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
        // t.start();
 //commented for Testing GUI       startGame();
+        System.out.println(player.getName());
     }
 
     public QuizController(QuizPlayer player, QuizGUI pGUI) {
@@ -31,6 +32,7 @@ public class QuizController extends Thread{
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
+        System.out.println(player.getName());
     }
 
     public void startGame(){
@@ -62,6 +64,13 @@ public class QuizController extends Thread{
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            if(e.getSource() == pGUI.welcomeStartButton){
+                String name;
+                if(!(name=(pGUI.welcomeInput.getText()).trim()).isEmpty()) {
+                    player.setName(name);
+                    pGUI.changeWindow("1");
+                }
+            }
             if(e.getSource() == pGUI.answerButtons[0]){
 
                 messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
@@ -78,7 +87,14 @@ public class QuizController extends Thread{
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
                 //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
-                pGUI.changeWindow("1");
+                pGUI.setScoreBoard(2,4,false);
+                pGUI.changeWindow("3");
+            }
+            if(e.getSource() == pGUI.scoreBoardStartButton){
+                System.out.println("ScoreBoard");
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
+
+                pGUI.changeWindow("0");
             }
         }
     }
@@ -112,7 +128,7 @@ class CategoryButtonListener implements ActionListener {
     }*/
 
     public static void main(String[] args) {
-        QuizPlayer p = new QuizPlayer("Aron", 0);
+        QuizPlayer p = new QuizPlayer();
         QuizGUI pGUI = new QuizGUI();
         //QuizClient c = new QuizClient();
         //new QuizController(p,pGUI, c);

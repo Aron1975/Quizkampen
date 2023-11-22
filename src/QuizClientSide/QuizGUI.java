@@ -26,11 +26,34 @@ public class QuizGUI extends JFrame {
     Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
     Icon questionBackground = new ImageIcon("Images/Question.jpg");
 
-    //Preparing for CardLayout
+    //Scoreoard Images
+    ImageIcon emptyscore = new ImageIcon(new ImageIcon("Images/emptyscore2.jpg").
+            getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+    ImageIcon winIcon = new ImageIcon(new ImageIcon("Images/rightanswer.jpg").
+            getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+    ImageIcon loseIcon = new ImageIcon(new ImageIcon("Images/wronganswer.jpg").
+            getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+
+    //CardLayout Panel
     JPanel mainQuizPanel = new JPanel();
     CardLayout cardLo = new CardLayout();
 
-    //------------ Play Window ----------------------------
+    //------------ Welcome Window ------------------------
+    JPanel welcomePanelMain = new JPanel();
+    JPanel welcomePanel = new JPanel();
+    JPanel welcomeInputPanel = new JPanel();
+    JLabel quizLabel = new JLabel("QUIZKAMPEN");
+    JLabel nameText = new JLabel("Namn: ");
+    JTextField welcomeInput = new JTextField(30);
+    JButton welcomeStartButton = new JButton("Starta nytt spel");
+
+    //------------ Category window ------------------------
+    JPanel categoryMainPanel = new JPanel();
+    JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
+    JPanel categoryButtonPanel = new JPanel();
+    JButton[] categoryButtons = {new JButton("Cat 1"),new JButton("Cat 22"),new JButton("Cat 33333")};
+
+    //------------ Play Window ---------------------------
     JPanel playerPanelMain = new JPanel();
     JPanel playerPanel = new JPanel();
     JPanel questionPanel = new JPanel();
@@ -48,52 +71,81 @@ public class QuizGUI extends JFrame {
     LayoutManager answerLayout = new GridLayout(2,2);
     Font f = new Font(null, 3, 20);
     Color answButtonColor = new Color(20,40,100);
-    //-----------------------------------------------------
 
-
-    //---------- Category window --------------------------
-    JPanel categoryMainPanel = new JPanel();
-    JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
-    JPanel categoryButtonPanel = new JPanel();
-    JButton[] categoryButtons = {new JButton("Cat 1"),new JButton("Cat 22"),new JButton("Cat 33333")};
-
-    //GridLayout layoutCategoryButtons = new GridLayout(categoryButtons.length, 1);
+    //------------Scoreboard Window------------------------
+    String playerName1 = "Scaramanga";
+    String playerName2 = "James Bond";
+    String whoTurn = "Your turn";
+    static int rounds = 10;
+    int questionsPerRound = 3;
+    static int currentRound = 3;
+    int scorePlayer1 = 0;
+    int scorePlayer2 = 5;
+    int roundPointsPlayer1 = 2;
+    int roundPointsPlayer2 = 3;
+    JPanel[] roundPanel = new JPanel[rounds];
+    JLabel[][] plupparLabel = new JLabel[3][rounds * questionsPerRound];
+    JPanel scoreboardMainPanel = new JPanel();
+    JPanel player1Panel;
+    JPanel player2Panel;
+    JButton scoreBoardStartButton = new JButton("Starta");
+    JPanel borderPanel = new JPanel(new BorderLayout());
+    JLabel whoTurnLabel = new JLabel(whoTurn);
+    JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
 
     public QuizGUI(){
 
+        setTitle("QUIZKAMPEN");
         //Nytt för CardLayout
         mainQuizPanel.setLayout(cardLo);
         mainQuizPanel.setPreferredSize(panelsDimension);
 
 
-        //---------------
+        initWelcomeWindow();
 
         initPlayWindow();
 
-        //Category window
-        //Funkar inte med pack(), separera Aron's window till en funktion om han behöver pack
-
         initCategoryWindow();
 
+        initScoreboardWindow();
+
+        mainQuizPanel.add(welcomePanelMain, WELCOME);
         mainQuizPanel.add(playerPanelMain, PLAY);
         mainQuizPanel.add(categoryMainPanel, CATEGORY);
-        cardLo.show(mainQuizPanel, CATEGORY);
+        mainQuizPanel.add(scoreboardMainPanel, SCORE);
+        cardLo.show(mainQuizPanel, WELCOME);
         add(mainQuizPanel);
-        /*
-        mainPanel.add(panel1, "1");
-        mainPanel.add(panel2, "2");
-        mainPanel.add(panel3, "3");
-
-        cl.show(mainPanel, "1");
-
-        add(mainPanel);
-
-         */
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    }
+
+    public void initWelcomeWindow(){
+
+        welcomePanelMain.setPreferredSize(panelsDimension);
+        welcomePanelMain.setBackground(Color.orange);
+        welcomePanel.setPreferredSize(new Dimension((int)(screenX*0.8), (int)(screenY*0.8)));
+        welcomePanel.setLayout(new BorderLayout());
+        welcomePanel.setBackground(Color.orange);
+        welcomePanel.add(quizLabel,BorderLayout.NORTH);
+        welcomeInputPanel.setLayout(new FlowLayout());
+        welcomeInputPanel.add(nameText);
+        welcomeInputPanel.add(welcomeInput);
+        welcomeInputPanel.setPreferredSize(new Dimension((int)(screenX*0.5), (int)(screenY*0.2)));
+        Color c = new Color(210,170,30);
+        welcomeInputPanel.setBackground(c);
+        welcomePanel.add(welcomeInputPanel, BorderLayout.CENTER);
+
+        welcomePanel.add(welcomeStartButton,BorderLayout.SOUTH);
+
+        quizLabel.setHorizontalAlignment(JLabel.CENTER);
+        quizLabel.setFont(f);
+        nameText.setFont(f);
+        welcomeStartButton.setFont(f);
+        welcomePanelMain.add(welcomePanel);
 
     }
 
@@ -174,6 +226,8 @@ public class QuizGUI extends JFrame {
         for(JButton jB: answerButtons){
             jB.addActionListener(aListener);
         }
+        welcomeStartButton.addActionListener(aListener);
+        scoreBoardStartButton.addActionListener(aListener);
     }
 
     public void setQuestionLabelText(String text){
@@ -199,14 +253,6 @@ public class QuizGUI extends JFrame {
     public String getButtonText(int buttonNr){
         return answerButtons[buttonNr].getText();
     }
-/*
-    public static void main(String[] args) {
-        new PlayerGUI();
-    }*/
-
-
-
-
 
     //Category window
     public void initCategoryWindow(){
@@ -256,6 +302,100 @@ public class QuizGUI extends JFrame {
     {
         for(JButton jB: categoryButtons){
             jB.addActionListener(aListener);
+        }
+    }
+
+    public void initScoreboardWindow() {
+        scoreboardMainPanel.setPreferredSize(panelsDimension);
+        borderPanel.setPreferredSize(panelsDimension);
+
+        //borderPanel.setPreferredSize(new Dimension(400,600));
+        borderPanel.setBackground(Color.ORANGE);
+
+        whoTurnLabel.setFont(f);
+        whoTurnLabel.setHorizontalAlignment(JLabel.CENTER);
+        borderPanel.add(whoTurnLabel, BorderLayout.NORTH);
+
+        // Score display
+        scoreLabel.setFont(f);
+        scoreLabel.setHorizontalAlignment(JLabel.CENTER);
+        borderPanel.add(scoreLabel, BorderLayout.CENTER);
+
+        //Player Panels---------
+        player1Panel = createPlayerPanel(1);
+        player2Panel = createPlayerPanel(2);
+        borderPanel.add(player1Panel, BorderLayout.WEST);
+        borderPanel.add(player2Panel, BorderLayout.EAST);
+
+        // Start button
+        scoreBoardStartButton.setBackground(Color.GREEN);
+        scoreBoardStartButton.setOpaque(true);
+        scoreBoardStartButton.setContentAreaFilled(true);
+        borderPanel.add(scoreBoardStartButton, BorderLayout.SOUTH);
+        scoreboardMainPanel.add(borderPanel);
+    }
+
+    public JPanel createPlayerPanel(int player){
+        String name;
+        Icon playerIcon = null;
+        int roundPointsPlayer;
+        if(player == 1){
+            name = playerName1;
+            playerIcon = avatar1;
+            roundPointsPlayer=roundPointsPlayer1;
+        }else{
+            name = playerName2;
+            playerIcon = avatar2;
+            roundPointsPlayer=roundPointsPlayer2;
+        }
+        JPanel playerNamePanel = new JPanel();
+        playerNamePanel.setLayout(new BoxLayout(playerNamePanel, BoxLayout.Y_AXIS));
+        playerNamePanel.setBackground(Color.ORANGE);
+
+        JLabel nameLabel = new JLabel(" " + name);
+        JLabel roundScore = new JLabel("     " + (Integer.toString(roundPointsPlayer)));
+        JLabel playerIconLabel = new JLabel(playerIcon);
+
+        playerNamePanel.add(playerIconLabel);
+        playerNamePanel.add(nameLabel);
+        playerNamePanel.add(Box.createHorizontalGlue());  // Pushes the two labels apart
+        playerNamePanel.add(roundScore);
+        playerNamePanel.add(Box.createHorizontalGlue());
+
+        JPanel scorePanel = addScorePanel(player);
+        playerNamePanel.add(scorePanel);
+
+        return playerNamePanel;
+    }
+
+    public JPanel addScorePanel(int player) {
+        JPanel scorePanel = new JPanel();
+        scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
+        scorePanel.setBackground(Color.orange);
+
+        int count = 0;
+        for (int i = 0; i < rounds; i++) {
+            this.roundPanel[i] = new JPanel(new FlowLayout());
+            this.roundPanel[i].setBackground(Color.orange);
+
+            for (int j = 0; j < questionsPerRound; j++) {
+
+                this.plupparLabel[player][count] = new JLabel(emptyscore);
+                this.roundPanel[i].add(plupparLabel[player][count]);
+
+                count++;
+            }
+            scorePanel.add(this.roundPanel[i]);
+        }
+
+        return scorePanel;
+    }
+
+    public void setScoreBoard(int player, int questionNr, boolean correctAnswer){
+        if(correctAnswer) {
+            plupparLabel[player][questionNr].setIcon(this.winIcon);
+        }else{
+            plupparLabel[player][questionNr].setIcon(this.loseIcon);
         }
     }
 
