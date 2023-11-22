@@ -92,7 +92,7 @@ public class QuizGUI extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
+        //setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }

@@ -23,6 +23,7 @@ public class QuizController extends Thread{
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
        // t.start();
 //commented for Testing GUI       startGame();
+        System.out.println(player.getName());
     }
 
     public QuizController(QuizPlayer player, QuizGUI pGUI) {
@@ -31,6 +32,7 @@ public class QuizController extends Thread{
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
+        System.out.println(player.getName());
     }
 
     public void startGame(){
@@ -117,5 +119,6 @@ class CategoryButtonListener implements ActionListener {
         //QuizClient c = new QuizClient();
         //new QuizController(p,pGUI, c);
         new QuizController(p,pGUI);
+        pGUI.setVisible(true);
     }
 }
