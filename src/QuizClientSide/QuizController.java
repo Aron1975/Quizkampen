@@ -3,12 +3,11 @@ package QuizClientSide;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class QuizController extends Thread{
+public class QuizController {
 
     QuizPlayer player;
     QuizGUI pGUI;
     QuizClient client;
-    //Thread t = new Thread();
     String messageFromServer;
     String[] messageArrayFromServer;
 
@@ -32,32 +31,7 @@ public class QuizController extends Thread{
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
-        System.out.println(player.getName());
     }
-
-    public void startGame(){
-
-        while(true) {
-            if(newRound) {
-                getResponseFromServer();
-                newRound = false;
-            }
-        }
-    }
-
-    //Skickar frågor till server som skickar svar tllbaka
-    public void getResponseFromServer(){
-        //Kategori
-        messageFromServer=client.sendAndGetMessage(null);
-       // pGUI.setCategoryLabelText(messageFromServer);
-        //Fråga
-        messageFromServer=client.sendAndGetMessage(null);
-        pGUI.setQuestionLabelText(messageFromServer);
-        //Svarsalternativen
-        messageArrayFromServer=client.sendAndGetArrayMessage(null);
-        pGUI.setAnswerButtonText(messageArrayFromServer);
-    }
-
 
     class MyButtonListener implements ActionListener {
 
@@ -73,16 +47,16 @@ public class QuizController extends Thread{
             }
             if(e.getSource() == pGUI.answerButtons[0]){
 
-                messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
                 System.out.println(pGUI.getButtonText(0));
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 System.out.println("Alt.2 Pushed");
-                messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(1));
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(1));
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 System.out.println("Alt.3 Pushed");
-                messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(2));
+                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(2));
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
@@ -119,19 +93,11 @@ class CategoryButtonListener implements ActionListener {
         }
     }
 
- /*   @Override
-    public void run(){
-        String dataFromServer;
-        System.out.println("I Controller run()...");
-        dataFromServer = client.readMessage();
-        pGUI.setQuestionLabelText(dataFromServer);
-    }*/
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         QuizPlayer p = new QuizPlayer();
         QuizGUI pGUI = new QuizGUI();
-        //QuizClient c = new QuizClient();
-        //new QuizController(p,pGUI, c);
-        new QuizController(p,pGUI);
+        QuizClient c = new QuizClient();
+        new QuizController(p,pGUI, c);
+        c.play();
     }
 }
