@@ -2,7 +2,7 @@ package QuizServerSide;
 
 import java.net.ServerSocket;
 import java.util.ArrayList;
-public class QuizServer {
+public class QuizServer{
 
     static int port = 45000;
 

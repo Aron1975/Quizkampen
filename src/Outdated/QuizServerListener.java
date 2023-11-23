@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class QuizServerListener {
-
+/*
     int port = 45000;
     QuizServerProtocol qsp;
 
@@ -31,5 +31,5 @@ public class QuizServerListener {
 
         //QuizServerProtocol qsp = new QuizServerProtocol();
         new QuizServerListener();
-    }
+    }*/
 }

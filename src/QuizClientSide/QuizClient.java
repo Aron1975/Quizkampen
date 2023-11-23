@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 
-public class QuizClient {
+public class QuizClient{
 
     String ip="127.0.0.1";
     //String ip = "192.168.1.97";
@@ -71,8 +71,7 @@ public class QuizClient {
 
      */
 
-
-    public void play() throws Exception {
+    public void play() {
         System.out.println("Run quizClient.play");
         try {
             Object inputStreamMessage;
@@ -80,16 +79,22 @@ public class QuizClient {
                 //GAME LOOP(CLIENT SIDE), THIS IS WHERE THE THREAD WILL INFINITELY LOOP
                 //HAS A GAME LOOP SERVERSIDE THAT CORRESPONDS/LISTENS TO THIS TO CREATE 2-WAY COMMUNICATION)
 
-                inputStreamMessage = inputStream.readObject();
+                try {
+                    inputStreamMessage = inputStream.readObject();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 if(inputStreamMessage instanceof NetworkMessage)
                 {
                     NetworkMessage networkMessage = (NetworkMessage)inputStreamMessage;
-                    System.out.println("Received network object from server, deserializing/unpacking");
+                    //System.out.println("Received network object from server, deserializing/unpacking");
                 }
                 else if(inputStreamMessage instanceof QuizServerPlayer)
                 {
                     QuizServerPlayer player = (QuizServerPlayer)inputStreamMessage;
-                    System.out.println("Received player object from server, deserializing/unpacking (Object was player: " + player.getPlayerName());
+                    //System.out.println("Received player object from server, deserializing/unpacking (Object was player: " + player.getPlayerName());
                 }
 
                 //GAME LOGIC, IF WE HAVE STUFF SENT FROM SERVER, IT WILL DO THEM HERE
@@ -101,7 +106,11 @@ public class QuizClient {
             //outputStream.writeObject();
         }
         finally {
-            socket.close();
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

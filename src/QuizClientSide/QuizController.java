@@ -3,13 +3,14 @@ package QuizClientSide;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class QuizController {
+public class QuizController implements Runnable{
 
     QuizPlayer player;
     QuizGUI pGUI;
     QuizClient client;
     String messageFromServer;
     String[] messageArrayFromServer;
+    Thread t = new Thread(this);
 
     int round = 0;
     boolean newRound = true;
@@ -20,7 +21,8 @@ public class QuizController {
         this.client = client;
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
-       // t.start();
+        //client.play();
+        t.start();
 //commented for Testing GUI       startGame();
         System.out.println(player.getName());
     }
@@ -31,6 +33,14 @@ public class QuizController {
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //t.start();
+    }
+
+    @Override
+    public void run() {
+        System.out.println("I RUN......");
+        while(!Thread.interrupted()) {
+            client.play();
+        }
     }
 
     class MyButtonListener implements ActionListener {
@@ -48,7 +58,9 @@ public class QuizController {
             if(e.getSource() == pGUI.answerButtons[0]){
 
                 //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
-                System.out.println(pGUI.getButtonText(0));
+                for(int i = 0; i<1000; i++) {
+                    System.out.println(pGUI.getButtonText(0));
+                }
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 System.out.println("Alt.2 Pushed");
@@ -98,6 +110,6 @@ class CategoryButtonListener implements ActionListener {
         QuizGUI pGUI = new QuizGUI();
         QuizClient c = new QuizClient();
         new QuizController(p,pGUI, c);
-        c.play();
+        //c.play();
     }
 }
