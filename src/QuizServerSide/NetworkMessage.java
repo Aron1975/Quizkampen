@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class NetworkMessage implements Serializable {
 
-    public NetworkMessage(byte firstByte)
+    public NetworkMessage(int networkCode)
     {
-        this.firstByte = firstByte;
+        this.networkCode = networkCode;
     }
-    byte firstByte = 0x0;
+    int networkCode = 0;
 
-    public byte getFirstByte() { return firstByte; }
+    public int getNetworkCode() { return networkCode; }
 }

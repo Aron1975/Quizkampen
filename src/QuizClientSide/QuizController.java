@@ -1,7 +1,11 @@
 package QuizClientSide;
 
+import QuizServerSide.NetworkMessage;
+import QuizServerSide.NetworkProtocolServer;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class QuizController implements Runnable{
 
@@ -53,6 +57,12 @@ public class QuizController implements Runnable{
                 if(!(name=(pGUI.welcomeInput.getText()).trim()).isEmpty()) {
                     player.setName(name);
                     pGUI.changeWindow("1");
+                    try {
+                        NetworkProtocolClient.sendPacket(client.getOutputStream(), new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
+                        client.getOutputStream().writeObject(name);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
             if(e.getSource() == pGUI.answerButtons[0]){

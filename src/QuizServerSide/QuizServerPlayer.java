@@ -39,22 +39,44 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
             //ONLY TESTING
 
-                System.out.println("Running gameloop for player: " + getPlayerName());
+                //System.out.println("Running gameloop for player: " + getPlayerName());
 
                 //SEND NETWORKMESSAGE OBJECT
-                System.out.println("Sending NetworkMessageObject for player: " + getPlayerName());
-                output.writeObject(new NetworkMessage((byte) 0x10));
+                //System.out.println("Sending NetworkMessageObject for player: " + getPlayerName());
+                //output.writeObject(new NetworkMessage((byte) 0x10));
 
                 //SEND PLAYER OBJECT
-                System.out.println("Sending PlayerObject for player: " + getPlayerName());
-                output.writeObject(this);
+                //System.out.println("Sending PlayerObject for player: " + getPlayerName());
+                //output.writeObject(this);
 
             //END OF TESTING
+
+                //Let user send their desired name
+                //Keep reading from client until we receive a string
+                boolean continueLoop = true;
+                while(continueLoop) {
+                    Object lastReadObject = input.readObject();
+                    if (lastReadObject instanceof String) {
+                        String lastReadString = (String)lastReadObject;
+                        setPlayerName(lastReadString);
+                        System.out.println("Received player name: " + lastReadString);
+                        continueLoop = false;
+                    }
+                }
+
+                //Player is ready to start game
+                NetworkProtocolServer.sendPacket(output, new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.GAME_READY.ordinal()));
+                output.writeObject((boolean)true);
+
+
+
 
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop
             }
         }
         catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -69,5 +91,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
     public QuizServerGame getGame() {
         return game;
+    }
+    public ObjectOutputStream getOutputStream() {
+        return output;
+    }
+    public ObjectInputStream getInputStream() {
+        return input;
     }
 }
