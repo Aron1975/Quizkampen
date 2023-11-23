@@ -60,9 +60,9 @@ public class NetworkProtocolClient {
         }
     }
 
-    public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
-        objectOutputStream.writeObject(networkMessage);
-    }
+    //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
+    //    objectOutputStream.writeObject(networkMessage);
+    //}
     public static void parsePlayerReady(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         System.out.println("Parse player ready: " + (boolean)lastReadObject);

@@ -58,7 +58,7 @@ public class QuizController implements Runnable{
                     player.setName(name);
                     pGUI.changeWindow("1");
                     try {
-                        NetworkProtocolClient.sendPacket(client.getOutputStream(), new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
+                        client.getOutputStream().writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
                         client.getOutputStream().writeObject(name);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

@@ -62,9 +62,9 @@ public class NetworkProtocolServer {
         }
     }
 
-    public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
-        objectOutputStream.writeObject(networkMessage);
-    }
+    //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
+    //    objectOutputStream.writeObject(networkMessage);
+    //}
     public void parseSetPlayerName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         System.out.println("Parse SetPlayerName: " + (String)lastReadObject);

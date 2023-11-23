@@ -65,7 +65,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 //Player is ready to start game
-                NetworkProtocolServer.sendPacket(output, new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.GAME_READY.ordinal()));
+                output.writeObject(new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.GAME_READY.ordinal()));
                 output.writeObject((boolean)true);
 
 
