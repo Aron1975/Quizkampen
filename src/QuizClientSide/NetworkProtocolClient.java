@@ -13,11 +13,14 @@ public class NetworkProtocolClient {
     }
     QuizController quizController;
 
+    NetworkProtocolClient(){}
+
     //THIS NUMBER GETS SENT TO SERVER, ONLY RELATED TO SERVER PARSE
     //IF YOU WANT NUMBERS RELATED TO CLIENT PARSE, LOOK AT NetworkProtocolServer enum
     enum PROTOCOL_SEND
     {
         SET_PLAYERNAME,
+        GET_CATEGORY,
 
     }
 
@@ -29,7 +32,7 @@ public class NetworkProtocolClient {
                 parsePlayerReady(inputStream);
                 break;
             case 1:
-                //parsePlayerScore();
+                parseGetCategory(inputStream);
                 break;
             case 2:
                 //parseChooseCategory();
@@ -76,4 +79,10 @@ public class NetworkProtocolClient {
         System.out.println("PLAYER READY AFTER READ FROM SERVER: " + quizController.player.getReadyToStartGame());
     }
 
+    public void parseGetCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.setCategory((String)lastReadObject);
+        System.out.println("Category: " + (String)lastReadObject);
+
+    }
 }

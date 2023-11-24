@@ -43,7 +43,6 @@ public class QuizController implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("I RUN......");
         while(!Thread.interrupted()) {
             client.play(networkProtocolClient);
         }
@@ -59,38 +58,31 @@ public class QuizController implements Runnable{
                 if(!(name=(pGUI.welcomeInput.getText()).trim()).isEmpty()) {
                     player.setName(name);
                     pGUI.changeWindow("1");
-                    try {
+                    client.sendPlayerName(name);
+                  /*  try {
                         client.getOutputStream().writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
                         client.getOutputStream().writeObject(name);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
-                    }
+                    }*/
                 }
             }
             if(e.getSource() == pGUI.answerButtons[0]){
-
-                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(0));
-                for(int i = 0; i<1000; i++) {
-                    System.out.println(pGUI.getButtonText(0));
-                }
+                System.out.println("Alt.1 Pushed");
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 System.out.println("Alt.2 Pushed");
-                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(1));
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 System.out.println("Alt.3 Pushed");
-                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(2));
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 System.out.println("Alt.4 Pushed");
-                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
                 pGUI.setScoreBoard(2,4,false);
                 pGUI.changeWindow("3");
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
                 System.out.println("ScoreBoard");
-                //messageFromServer=client.sendAndGetMessage(pGUI.getButtonText(3));
 
                 pGUI.changeWindow("0");
             }

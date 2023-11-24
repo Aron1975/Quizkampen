@@ -16,6 +16,9 @@ public class QuizClient{
     ObjectInputStream inputStream;
     ObjectOutputStream outputStream;
 
+    //NYTT
+    NetworkProtocolClient npc;
+
     public QuizClient() {
 
         try {
@@ -89,7 +92,9 @@ public class QuizClient{
                 }
                 if(inputStreamMessage instanceof NetworkMessage networkMessage)
                 {
+
                     networkProtocolClient.parsePacket(inputStream, networkMessage);
+                    //
                     //System.out.println("Received network object from server, deserializing/unpacking");
                 }
                 else if(inputStreamMessage instanceof QuizServerPlayer)
@@ -113,6 +118,15 @@ public class QuizClient{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public void sendPlayerName(String name){
+        try {
+            outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
+            outputStream.writeObject(name);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 

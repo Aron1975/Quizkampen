@@ -403,8 +403,12 @@ public class QuizGUI extends JFrame {
         cardLo.show(mainQuizPanel, category);
     }
 
-    //-------For testing
+    public void setCategory(String cat){
+
+
+    }
+    /*-------For testing
     public static void main(String[] args) {
         new QuizGUI();
-    }
+    }*/
 }

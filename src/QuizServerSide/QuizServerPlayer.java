@@ -7,6 +7,13 @@ import java.io.Serializable;
 import java.net.Socket;
 
 public class QuizServerPlayer extends Thread implements Serializable {
+
+    //Testing------------------
+    int status = 0;
+
+    //-------------------------
+
+
     //NETWORK
     transient Socket socket;
     transient ObjectInputStream input;
@@ -18,6 +25,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean firstMove;
     QuizServerPlayer opponent;
     String playerName;
+
 
 
     public QuizServerPlayer(Socket socket, QuizServerGame game, String playerName, boolean firstMove) {
@@ -51,23 +59,33 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
             //END OF TESTING
 
-                //Let user send their desired name
-                //Keep reading from client until we receive a string
-                boolean continueLoop = true;
-                while(continueLoop) {
-                    Object lastReadObject = input.readObject();
-                    if (lastReadObject instanceof String) {
-                        String lastReadString = (String)lastReadObject;
-                        setPlayerName(lastReadString);
-                        System.out.println("Received player name: " + lastReadString);
-                        continueLoop = false;
+                //Test-----------------
+                if(status == 0) {
+                    //-----------------------
+
+                    //Let user send their desired name
+                    //Keep reading from client until we receive a string
+                    boolean continueLoop = true;
+                    while (continueLoop) {
+                        Object lastReadObject = input.readObject();
+                        if (lastReadObject instanceof String) {
+                            String lastReadString = (String) lastReadObject;
+                            setPlayerName(lastReadString);
+                            System.out.println("Received player name: " + lastReadString);
+                            continueLoop = false;
+                        }
                     }
+
+                    //Player is ready to start game
+                    NetworkProtocolServer.sendPlayerReady(output);
+                    status = 1;
                 }
 
-                //Player is ready to start game
-                NetworkProtocolServer.sendPlayerReady(output);
+                if (status==1){
 
-
+                    NetworkProtocolServer.sendQuestion(output, "Bajskorv");
+                    status = 2;
+                }
 
 
 
