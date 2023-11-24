@@ -1,12 +1,9 @@
 package QuizServerSide;
 
 import java.io.Serializable;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class QuizServerGame implements Serializable {
-    //NETWORK
-    NetworkProtocol networkProtocol;
 
     //GAME
     QuizServerPlayer playerOne;
@@ -48,5 +45,4 @@ public class QuizServerGame implements Serializable {
 
     public void setNumberOfQuestionsPerRound(int numberOfQuestionsPerRound) { this.numberOfQuestionsPerRound = numberOfQuestionsPerRound; }
     public int getNumberOfQuestionsPerRound() { return numberOfQuestionsPerRound; }
-    public NetworkProtocol getNetworkProtocol() { return networkProtocol; }
 }

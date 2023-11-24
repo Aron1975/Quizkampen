@@ -40,12 +40,14 @@ public class QuizServer{
                     Game loop is in QuizServerPlayer.run()
                  */
                 QuizServerPlayer player1 = new QuizServerPlayer(listener.accept(), game, names.get(curIndex), true);
+
+                player1.start();
+
                 curIndex++;
                 QuizServerPlayer player2 = new QuizServerPlayer(listener.accept(), game, names.get(curIndex), false);
                 curIndex++;
 
                 System.out.println("Two players connected, Starting game");
-                player1.start();
                 player2.start();
 
                 //Alternative approach, easier threading (Sigrun's comment)

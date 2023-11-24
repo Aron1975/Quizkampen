@@ -30,6 +30,9 @@ public class QuizClient{
 
     }
 
+    public ObjectOutputStream getOutputStream() { return outputStream; }
+    public ObjectInputStream getInputStream() { return inputStream; }
+
     /*
     //ARON'S BASE CODE - ANDRE DISABLED SINCE WE'RE CHANGING HOW STREAM IS GONNA WORK (NOT SURE IF WE MIGHT STILL WANT THIS THOUGH)
 
@@ -71,7 +74,7 @@ public class QuizClient{
 
      */
 
-    public void play() {
+    public void play(NetworkProtocolClient networkProtocolClient) {
         System.out.println("Run quizClient.play");
         try {
             Object inputStreamMessage;
@@ -81,14 +84,12 @@ public class QuizClient{
 
                 try {
                     inputStreamMessage = inputStream.readObject();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                if(inputStreamMessage instanceof NetworkMessage)
+                if(inputStreamMessage instanceof NetworkMessage networkMessage)
                 {
-                    NetworkMessage networkMessage = (NetworkMessage)inputStreamMessage;
+                    networkProtocolClient.parsePacket(inputStream, networkMessage);
                     //System.out.println("Received network object from server, deserializing/unpacking");
                 }
                 else if(inputStreamMessage instanceof QuizServerPlayer)
@@ -104,8 +105,9 @@ public class QuizClient{
             }
             //SEND QUIT MESSAGE
             //outputStream.writeObject();
-        }
-        finally {
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
             try {
                 socket.close();
             } catch (IOException e) {
