@@ -1,4 +1,4 @@
-package QuizServerSide.Questions;//package QuizServerSide.Questions;
+package QuizServerSide.Questions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
