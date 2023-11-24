@@ -33,7 +33,7 @@ class ArrayOfQuestions {
 
        for (Questions questions : questionsAndalternatives){
             if ((questions.category).equals(categoryFromUser)){
-                //qn.add(questions);
+                qn.add(questions);
             }
         }
 
