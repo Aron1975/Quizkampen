@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class ArrayOfQuestions {
-    ArrayList<Questions> questionsAndalternatives = new ArrayList<>();
+    ArrayList<Questions> questionsAndAlternatives = new ArrayList<>();
 
     public ArrayOfQuestions() {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/QuizServerSide/Questions/Questions"))) {
@@ -18,7 +18,7 @@ class ArrayOfQuestions {
                 String[] alternative = reader.readLine().split(";");
                 String correctalternative = reader.readLine();
 
-                questionsAndalternatives.add(new Questions(category, question, alternative, correctalternative));
+                questionsAndAlternatives.add(new Questions(category, question, alternative, correctalternative));
 
             }
         } catch (IOException e) {
@@ -31,7 +31,7 @@ class ArrayOfQuestions {
        Questions question;
        ArrayList <Questions> qn=new ArrayList<>();
 
-       for (Questions questions : questionsAndalternatives){
+       for (Questions questions : questionsAndAlternatives){
             if ((questions.category).equals(categoryFromUser)){
                 qn.add(questions);
             }
@@ -45,16 +45,7 @@ class ArrayOfQuestions {
 
     }
 
-    public String[] randomizeAnswerAlternativs(String[] answers){
-        Questions question;
-        ArrayList<Questions>qn=new ArrayList<>();
-
-        for (Questions questions:questionsAndalternatives){
-            if((questions.correctalternative).equals(answers));
-        }
-
-
-
+    public String[] randomizeAnswerAlternatives(String[] answers){
 
 
 
@@ -78,7 +69,7 @@ class ArrayOfQuestions {
 
         /*Scanner scanner = new Scanner(System.in);
         //Ställer vardera fråga, kontrollerar sedan svar
-        for (Questions questions : aq.questionsAndalternatives) {
+        for (Questions questions : aq.questionsAndAlternatives) {
             System.out.println(questions.category + "-" + questions.question);
 
             for (int i = 0; i < questions.alternative.length; i++) {

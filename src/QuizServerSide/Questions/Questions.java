@@ -9,13 +9,13 @@ public class Questions {
     String category;
     String question;
     String[] alternative;
-    String correctalternative;
+    String correctAlternative;
 
-    Questions(String category, String question, String[] alternative, String correctalternative) {
+    Questions(String category, String question, String[] alternative, String correctAlternative) {
         this.category = category;
         this.question = question;
         this.alternative = alternative;
-        this.correctalternative = correctalternative;
+        this.correctAlternative = correctAlternative;
     }
 }
 
