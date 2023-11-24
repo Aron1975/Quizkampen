@@ -46,6 +46,14 @@ class ArrayOfQuestions {
     }
 
     public String[] randomizeAnswerAlternativs(String[] answers){
+        Questions question;
+        ArrayList<Questions>qn=new ArrayList<>();
+
+        for (Questions questions:questionsAndalternatives){
+            if((questions.correctalternative).equals(answers));
+        }
+
+
 
 
 
