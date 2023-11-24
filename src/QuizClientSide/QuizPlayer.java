@@ -5,6 +5,7 @@ public class QuizPlayer {
     private String name;
     private int score;
     private int partScore;
+    private boolean readyToStartGame = false;
 
     public QuizPlayer(){}
 
@@ -35,5 +36,13 @@ public class QuizPlayer {
 
     public void setPartScore(int partScore) {
         this.partScore = partScore;
+    }
+
+    public boolean getReadyToStartGame() {
+        return readyToStartGame;
+    }
+
+    public void setReadyToStartGame(boolean readyToStartGame) {
+        this.readyToStartGame = readyToStartGame;
     }
 }

@@ -8,6 +8,11 @@ import java.io.ObjectOutputStream;
 
 public class NetworkProtocolClient {
 
+    NetworkProtocolClient(QuizController quizController){
+        this.quizController = quizController;
+    }
+    QuizController quizController;
+
     //THIS NUMBER GETS SENT TO SERVER, ONLY RELATED TO SERVER PARSE
     //IF YOU WANT NUMBERS RELATED TO CLIENT PARSE, LOOK AT NetworkProtocolServer enum
     enum PROTOCOL_SEND
@@ -16,7 +21,7 @@ public class NetworkProtocolClient {
 
     }
 
-    public static void parsePacket(ObjectInputStream inputStream, NetworkMessage networkMessage) throws IOException, ClassNotFoundException {
+    public void parsePacket(ObjectInputStream inputStream, NetworkMessage networkMessage) throws IOException, ClassNotFoundException {
         int networkCode = networkMessage.getNetworkCode();
 
         switch(networkCode) {
@@ -24,7 +29,7 @@ public class NetworkProtocolClient {
                 parsePlayerReady(inputStream);
                 break;
             case 1:
-                //parseAnswerQuestion();
+                //parsePlayerScore();
                 break;
             case 2:
                 //parseChooseCategory();
@@ -63,9 +68,12 @@ public class NetworkProtocolClient {
     //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
     //    objectOutputStream.writeObject(networkMessage);
     //}
-    public static void parsePlayerReady(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parsePlayerReady(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         System.out.println("Parse player ready: " + (boolean)lastReadObject);
+        System.out.println("PLAYER READY B4 READ FROM SERVER: " + quizController.player.getReadyToStartGame());
+        quizController.player.setReadyToStartGame((boolean)lastReadObject);
+        System.out.println("PLAYER READY AFTER READ FROM SERVER: " + quizController.player.getReadyToStartGame());
     }
 
 }

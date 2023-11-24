@@ -74,7 +74,7 @@ public class QuizClient{
 
      */
 
-    public void play() {
+    public void play(NetworkProtocolClient networkProtocolClient) {
         System.out.println("Run quizClient.play");
         try {
             Object inputStreamMessage;
@@ -89,7 +89,7 @@ public class QuizClient{
                 }
                 if(inputStreamMessage instanceof NetworkMessage networkMessage)
                 {
-                    NetworkProtocolClient.parsePacket(inputStream, networkMessage);
+                    networkProtocolClient.parsePacket(inputStream, networkMessage);
                     //System.out.println("Received network object from server, deserializing/unpacking");
                 }
                 else if(inputStreamMessage instanceof QuizServerPlayer)

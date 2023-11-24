@@ -13,7 +13,7 @@ public class NetworkProtocolServer {
 
     enum PROTOCOL_SEND
     {
-        GAME_READY,
+        PLAYER_READY,
 
     }
 
@@ -68,6 +68,11 @@ public class NetworkProtocolServer {
     public void parseSetPlayerName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         System.out.println("Parse SetPlayerName: " + (String)lastReadObject);
+    }
+
+    public static void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.PLAYER_READY.ordinal()));
+        outputStream.writeObject((boolean)true);
     }
 
 }

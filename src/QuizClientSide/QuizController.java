@@ -15,6 +15,7 @@ public class QuizController implements Runnable{
     String messageFromServer;
     String[] messageArrayFromServer;
     Thread t = new Thread(this);
+    NetworkProtocolClient networkProtocolClient;
 
     int round = 0;
     boolean newRound = true;
@@ -23,6 +24,7 @@ public class QuizController implements Runnable{
         this.player = player;
         this.pGUI = pGUI;
         this.client = client;
+        this.networkProtocolClient = new NetworkProtocolClient(this);
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //client.play();
@@ -43,7 +45,7 @@ public class QuizController implements Runnable{
     public void run() {
         System.out.println("I RUN......");
         while(!Thread.interrupted()) {
-            client.play();
+            client.play(networkProtocolClient);
         }
     }
 
