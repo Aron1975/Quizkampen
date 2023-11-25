@@ -98,11 +98,6 @@ public class QuizClient{
                     //
                     //System.out.println("Received network object from server, deserializing/unpacking");
                 }
-                else if(inputStreamMessage instanceof QuizServerPlayer)
-                {
-                    QuizServerPlayer player = (QuizServerPlayer)inputStreamMessage;
-                    //System.out.println("Received player object from server, deserializing/unpacking (Object was player: " + player.getPlayerName());
-                }
 
                 //GAME LOGIC, IF WE HAVE STUFF SENT FROM SERVER, IT WILL DO THEM HERE
                 //if (inputStreamMessage.startsWith("VALID_MOVE")) {
