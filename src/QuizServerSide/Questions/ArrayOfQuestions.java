@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 class ArrayOfQuestions {
     ArrayList<Questions> questionsAndAlternatives = new ArrayList<>();
@@ -45,13 +47,21 @@ class ArrayOfQuestions {
 
     }
 
-    public String[] randomizeAnswerAlternatives(String[] answers){
+    /*public String[] randomizeAnswerAlternatives(String[] answers){
 
 
 
 
 
         return answers;
+    }
+
+     */
+
+    public String[] randomizeAnswerAlternatives(String[] answers) {
+        List<String> shuffledAlternatives = new ArrayList<>(Arrays.asList(answers));
+        Collections.shuffle(shuffledAlternatives);
+        return shuffledAlternatives.toArray(new String[0]);
     }
 
 
@@ -66,6 +76,13 @@ class ArrayOfQuestions {
 
         q=aq.generateRandomQuestion("Sci-fi:");
         System.out.println(q.question);
+
+        String[] shuffledAlternatives = aq.randomizeAnswerAlternatives(q.alternative);
+
+        System.out.println("");
+        for (int i = 0; i < shuffledAlternatives.length; i++) {
+            System.out.println((i + 1) + ". " + shuffledAlternatives[i]);
+        }
 
 
         /*Scanner scanner = new Scanner(System.in);
