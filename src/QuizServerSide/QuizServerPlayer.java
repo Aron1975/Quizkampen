@@ -118,14 +118,18 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     //status = 1;
                 }
 
-                /*
+
                 if (status == 1) {
 
-                    NetworkProtocolServer.sendQuestion(output, "Bajskorv");
+                    //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = 2;
                 }
+                if (status == 2) {
+                    serverProtocol.sendQuestion(output, "Bajskorv");
 
-                 */
+                }
+
+
 
 
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop

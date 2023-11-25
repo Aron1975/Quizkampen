@@ -1,8 +1,5 @@
 package QuizServerSide;
 
-import QuizClientSide.QuizController;
-import QuizClientSide.QuizPlayer;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,6 +20,7 @@ public class NetworkProtocolServer {
     {
         PLAYER_READY,
         SEND_CATEGORY,
+        SEND_QUESTION,
         OPPONENT_NAME,
 
     }
@@ -92,9 +90,14 @@ public class NetworkProtocolServer {
         outputStream.writeObject((String)name);
     }
 
-    public static void sendQuestion(ObjectOutputStream outputStream, String cat) throws IOException{
+    public static void sendCategory(ObjectOutputStream outputStream, String cat) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY.ordinal()));
         outputStream.writeObject(cat);
     }
+    public void sendQuestion(ObjectOutputStream outputStream, String cat) throws IOException{
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
+        outputStream.writeObject(cat);
+    }
+
 
 }
