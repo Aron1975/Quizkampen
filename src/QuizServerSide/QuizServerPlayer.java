@@ -19,6 +19,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     transient ObjectInputStream input;
     transient ObjectOutputStream output;
     QuizServerGame game;
+    NetworkProtocolServer serverProtocol;
 
     //GAME
     int score;
@@ -28,10 +29,10 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
 
 
-    public QuizServerPlayer(Socket socket, QuizServerGame game, String playerName, boolean firstMove) {
+    public QuizServerPlayer(Socket socket, QuizServerGame game, boolean firstMove) {
         this.game = game;
-        this.playerName = playerName;
         this.socket = socket;
+        this.serverProtocol = new NetworkProtocolServer(this);
         try {
             output = new ObjectOutputStream(this.socket.getOutputStream());
             input = new ObjectInputStream(this.socket.getInputStream());
@@ -69,10 +70,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     while (continueLoop) {
                         Object lastReadObject = input.readObject();
                         if (lastReadObject instanceof String) {
-                            String lastReadString = (String) lastReadObject;
-                            setPlayerName(lastReadString);
-                            System.out.println("Received player name: " + lastReadString);
-                            continueLoop = false;
+                            serverProtocol.parseSetPlayerName(input, this);
                         }
                     }
 

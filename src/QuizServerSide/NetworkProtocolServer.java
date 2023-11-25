@@ -1,5 +1,6 @@
 package QuizServerSide;
 
+import QuizClientSide.QuizController;
 import QuizClientSide.QuizPlayer;
 
 import java.io.IOException;
@@ -13,6 +14,10 @@ import java.io.ObjectOutputStream;
 //Reads the first byte which controls what(structure) to send/parse based on the function connected to that specific number of first byte
 public class NetworkProtocolServer {
 
+    NetworkProtocolServer(QuizServerPlayer player){
+        this.player = player;
+    }
+    QuizServerPlayer player;
 
     enum PROTOCOL_SEND
     {
@@ -27,7 +32,7 @@ public class NetworkProtocolServer {
         switch(networkCode) {
             //Hexadecimal
             case 0:
-                parseSetPlayerName(inputStream);
+                parseSetPlayerName(inputStream, player);
                 break;
             case 1:
                 //parseAnswerQuestion();
@@ -69,10 +74,9 @@ public class NetworkProtocolServer {
     //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
     //    objectOutputStream.writeObject(networkMessage);
     //}
-    public void parseSetPlayerName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        System.out.println("Parse SetPlayerName: " + (String)lastReadObject);
-
+        player.setPlayerName((String)lastReadObject);
     }
 
     public static void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
