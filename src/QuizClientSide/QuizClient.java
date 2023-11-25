@@ -117,13 +117,4 @@ public class QuizClient{
         }
     }
 
-    public void sendPlayerName(String name){
-        try {
-            outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
-            outputStream.writeObject(name);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
 }

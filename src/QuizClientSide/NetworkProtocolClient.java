@@ -73,6 +73,11 @@ public class NetworkProtocolClient {
         }
     }
 
+    public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException{
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
+        outputStream.writeObject(name);
+    }
+
     public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         //Skickar från klient till server
         Object lastReadObject = inputStream.readObject();
