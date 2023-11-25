@@ -68,18 +68,33 @@ public class QuizController implements Runnable{
                 }
             }
             if(e.getSource() == pGUI.answerButtons[0]){
-                System.out.println("Alt.1 Pushed");
+                try {
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[0].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             if(e.getSource() == pGUI.answerButtons[1]){
-                System.out.println("Alt.2 Pushed");
+                try {
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[1].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             if(e.getSource() == pGUI.answerButtons[2]){
-                System.out.println("Alt.3 Pushed");
+                try {
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[2].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             if(e.getSource() == pGUI.answerButtons[3]){
-                System.out.println("Alt.4 Pushed");
-                pGUI.setScoreBoard(2,4,false);
-                pGUI.changeWindow("3");
+                try {
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[3].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
                 System.out.println("ScoreBoard");

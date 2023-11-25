@@ -12,6 +12,7 @@ public class QuizGUI extends JFrame {
     protected final String CATEGORY = "1";
     protected final String PLAY = "2";
     protected final String SCORE = "3";
+    String lastAnsweredQuestion;
 
     int screenX = 400;
     int screenY = 600;
@@ -486,4 +487,25 @@ public class QuizGUI extends JFrame {
     public static void main(String[] args) {
         new QuizGUI();
     }*/
+
+    public String getLastAnsweredQuestion() {
+        return lastAnsweredQuestion;
+    }
+
+    public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
+        this.lastAnsweredQuestion = lastAnsweredQuestion;
+    }
+    public void changeAnsweredButtonColor(boolean correctAnswer){
+        int i = 0;
+        for (i = 0; i < 4; i++){
+            answerButtons[i].equals(lastAnsweredQuestion);
+            break;
+        }
+        if(correctAnswer) {
+            answerButtons[i].setBackground(Color.GREEN);
+        }else{
+            answerButtons[i].setBackground(Color.RED);
+        }
+
+    }
 }

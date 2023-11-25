@@ -1,5 +1,8 @@
 package QuizServerSide;
 
+import QuizServerSide.Questions.ArrayOfQuestions;
+import QuizServerSide.Questions.Questions;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,14 +11,13 @@ import java.net.Socket;
 
 public class QuizServerPlayer extends Thread implements Serializable {
 
-    private final int START=0;
-    private final int LOBBY = 1;
-    private final int CATEGORY = 2;
-    private final int GAME = 3;
-    private final int SCORE = 4;
+    private final int LOBBY=0;
+    private final int CATEGORY = 1;
+    private final int GAME = 2;
+    private final int SCORE = 3;
 
     //Testing------------------
-    int status = 0;
+    int status = LOBBY;
 
     //-------------------------
 
@@ -32,6 +34,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean firstMove;
     QuizServerPlayer opponent;
     String playerName;
+    Questions currentQuestion;
 
 
 
@@ -78,7 +81,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 System.out.println("OUT-OUT WHILE: " + getName());
                 //boolean continueLoop = true;
-                if (status == 0) {
+                if (status == LOBBY) {
                     //-----------------------
 
                     //Let user send their desired name
@@ -115,22 +118,37 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                     //Player is ready to start game
                     //NetworkProtocolServer.sendPlayerReady(output);
-                    //status = 1;
+                    status = GAME;
                 }
 
 
-                if (status == 1) {
+                if (status == CATEGORY) {
 
                     //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
-                    status = 2;
+                    status = GAME;
                 }
-                if (status == 2) {
-                    serverProtocol.sendQuestion(output, "Bajskorv");
+                if (status == GAME) {
+                    // Plocka nästa fråga från databas
+                    currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:");
+                    //skickar fråga och alternativ
+                    serverProtocol.sendQuestion(output, currentQuestion);
+                    //ta emot svar
+                    Object lastReadObject = input.readObject();
+                    if (lastReadObject instanceof NetworkMessage) {
+                        boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this);
+                        System.out.println("correctAnswer: " + correctAnswer);
+                        //validera svar mot correctanswer och skicka tillbaks
+                        serverProtocol.sendAnswerResult(output, correctAnswer);
+                    }
+                    //updatera färg på knappen
+                    //
 
+                   // status = SCORE;
                 }
 
+                if(status == SCORE) {
 
-
+                }
 
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop
             }
@@ -162,4 +180,5 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public ObjectInputStream getInputStream() {
         return input;
     }
+
 }

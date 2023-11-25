@@ -1,10 +1,12 @@
 package QuizServerSide;
 
+import QuizServerSide.Questions.ArrayOfQuestions;
+
 import java.net.ServerSocket;
 import java.util.ArrayList;
 public class QuizServer{
 
-    static int port = 45000;
+    static int port = 42050;
 
     public static void main(String[] args) throws Exception {
 
@@ -36,6 +38,7 @@ public class QuizServer{
                 player2.start();
                 player1.setOpponent(player2);
                 player2.setOpponent(player1);
+
 
 
 

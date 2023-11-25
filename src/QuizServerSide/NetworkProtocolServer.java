@@ -1,5 +1,7 @@
 package QuizServerSide;
 
+import QuizServerSide.Questions.Questions;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,8 +22,9 @@ public class NetworkProtocolServer {
     {
         PLAYER_READY,
         SEND_CATEGORY,
-        SEND_QUESTION,
         OPPONENT_NAME,
+        SEND_QUESTION,
+        SEND_ANSWER_RESULT,
 
     }
 
@@ -34,7 +37,7 @@ public class NetworkProtocolServer {
                 parseSetPlayerName(inputStream, player);
                 break;
             case 1:
-                //parseAnswerQuestion();
+                parseAnswerQuestion(inputStream, player);
                 break;
             case 2:
                 //parseChooseCategory();
@@ -78,6 +81,12 @@ public class NetworkProtocolServer {
         Object lastReadObject = inputStream.readObject();
         player.setPlayerName((String)lastReadObject);
     }
+    public boolean parseAnswerQuestion(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        System.out.println((String)lastReadObject);
+        return player.currentQuestion.checkAnswer((String)lastReadObject);
+    }
+
 
     public static void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.PLAYER_READY.ordinal()));
@@ -94,10 +103,17 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY.ordinal()));
         outputStream.writeObject(cat);
     }
-    public void sendQuestion(ObjectOutputStream outputStream, String cat) throws IOException{
+    public void sendQuestion(ObjectOutputStream outputStream, Questions question) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
-        outputStream.writeObject(cat);
+        outputStream.writeObject(question.getQuestion());
+        outputStream.writeObject(question.getAlternative());
+
     }
+    public void sendAnswerResult(ObjectOutputStream outputStream, boolean result) throws IOException{
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_ANSWER_RESULT.ordinal()));
+        outputStream.writeObject(result);
+    }
+
 
 
 }

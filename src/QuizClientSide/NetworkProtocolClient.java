@@ -1,6 +1,8 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
+import QuizServerSide.NetworkProtocolServer;
+import QuizServerSide.Questions.Questions;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +23,7 @@ public class NetworkProtocolClient {
     {
         SET_PLAYERNAME,
         GET_CATEGORY,
+        SEND_ANSWER,
 
     }
 
@@ -38,8 +41,10 @@ public class NetworkProtocolClient {
                 parseGetOpponentName(inputStream);
                 break;
             case 3:
+                parseSendQuestion(inputStream);
                 break;
             case 4:
+                parseAnswerResult(inputStream);
                 break;
             case 5:
                 break;
@@ -67,6 +72,31 @@ public class NetworkProtocolClient {
                 break;
         }
     }
+
+    public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        //Skickar från klient till server
+        Object lastReadObject = inputStream.readObject();
+        quizController.player.setCurrentQuestion((String)lastReadObject);
+        quizController.pGUI.questionLabel.setText((String)lastReadObject);
+        lastReadObject = inputStream.readObject();
+        String[] alternatives = (String[])lastReadObject;
+        quizController.player.setCurrentAlternatives(alternatives);
+        quizController.pGUI.answerButtons[0].setText(alternatives[0]);
+        quizController.pGUI.answerButtons[1].setText(alternatives[1]);
+        quizController.pGUI.answerButtons[2].setText(alternatives[2]);
+        quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+    }
+    public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.player.setCurrentAnsweredResult((boolean)lastReadObject);
+        quizController.pGUI.changeAnsweredButtonColor((boolean)lastReadObject);
+    }
+    public void sendAnswer(ObjectOutputStream outputStream, String answer) throws IOException{
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SEND_ANSWER.ordinal()));
+        outputStream.writeObject(answer);
+        quizController.pGUI.setLastAnsweredQuestion(answer);
+    }
+
 
     //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
     //    objectOutputStream.writeObject(networkMessage);

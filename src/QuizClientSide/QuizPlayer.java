@@ -6,6 +6,9 @@ public class QuizPlayer {
     private int score;
     private int partScore;
     private boolean readyToStartGame = false;
+    String currentQuestion;
+    String[] currentAlternatives;
+    boolean currentAnsweredResult;
 
     public QuizPlayer(){}
 
@@ -44,5 +47,28 @@ public class QuizPlayer {
 
     public void setReadyToStartGame(boolean readyToStartGame) {
         this.readyToStartGame = readyToStartGame;
+    }
+    public String getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public void setCurrentQuestion(String currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
+
+    public String[] getCurrentAlternatives() {
+        return currentAlternatives;
+    }
+
+    public void setCurrentAlternatives(String[] currentAlternatives) {
+        this.currentAlternatives = currentAlternatives;
+    }
+
+    public boolean isCurrentAnsweredResult() {
+        return currentAnsweredResult;
+    }
+
+    public void setCurrentAnsweredResult(boolean currentAnsweredResult) {
+        this.currentAnsweredResult = currentAnsweredResult;
     }
 }

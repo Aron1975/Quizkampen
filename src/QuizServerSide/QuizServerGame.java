@@ -1,5 +1,8 @@
 package QuizServerSide;
 
+
+import QuizServerSide.Questions.ArrayOfQuestions;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,10 +17,11 @@ public class QuizServerGame implements Serializable {
     String currentQuestion;
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;
+    ArrayOfQuestions aq;
 
     QuizServerGame()
     {
-
+        aq = new ArrayOfQuestions();
     }
     /*
     QuizServerGame(QuizServerPlayer playerOne, QuizServerPlayer playerTwo)
@@ -45,4 +49,11 @@ public class QuizServerGame implements Serializable {
 
     public void setNumberOfQuestionsPerRound(int numberOfQuestionsPerRound) { this.numberOfQuestionsPerRound = numberOfQuestionsPerRound; }
     public int getNumberOfQuestionsPerRound() { return numberOfQuestionsPerRound; }
+    public ArrayOfQuestions getAq() {
+        return aq;
+    }
+
+    public void setAq(ArrayOfQuestions aq) {
+        this.aq = aq;
+    }
 }

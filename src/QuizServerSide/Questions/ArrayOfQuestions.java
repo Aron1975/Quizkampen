@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class ArrayOfQuestions {
+public class ArrayOfQuestions {
     ArrayList<Questions> questionsAndAlternatives = new ArrayList<>();
 
     public ArrayOfQuestions() {
@@ -66,11 +66,6 @@ class ArrayOfQuestions {
         return shuffledAlternatives.toArray(new String[0]);
     }
 
-    public boolean checkAnswer(String answer, String correctAnswer){
-        return answer.equals(correctAnswer);
-    }
-
-
 
 
 
@@ -86,8 +81,8 @@ class ArrayOfQuestions {
         q=aq.generateRandomQuestion("Sci-fi:");
         System.out.println(q.question);
         System.out.println(q.correctAlternative);
-        if (aq.checkAnswer(q.correctAlternative, q.question))
-            System.out.println("Winner");
+        //if (aq.checkAnswer(q.correctAlternative, q.question))
+            //System.out.println("Winner");
 
 
 
