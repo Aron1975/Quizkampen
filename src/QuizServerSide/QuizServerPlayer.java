@@ -8,8 +8,14 @@ import java.net.Socket;
 
 public class QuizServerPlayer extends Thread implements Serializable {
 
+    private final int START=0;
+    private final int LOBBY = 1;
+    private final int CATEGORY = 2;
+    private final int GAME = 3;
+    private final int SCORE = 4;
+
     //Testing------------------
-    int status = 0;
+    int status = LOBBY;
 
     //-------------------------
 
@@ -41,6 +47,10 @@ public class QuizServerPlayer extends Thread implements Serializable {
         }
     }
 
+    public void setOpponent(QuizServerPlayer opponent) {
+        this.opponent = opponent;
+    }
+
     public void run()
     {
         try {
@@ -61,7 +71,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
             //END OF TESTING
 
                 //Test-----------------
-                if(status == 0) {
+                if(status == LOBBY) {
                     //-----------------------
 
                     //Let user send their desired name
@@ -79,10 +89,13 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     status = 1;
                 }
 
-                if (status==1){
+                if (status==CATEGORY){
 
                     NetworkProtocolServer.sendQuestion(output, "Bajskorv");
-                    status = 2;
+
+
+
+                    status = GAME;
                 }
 
 

@@ -32,9 +32,12 @@ public class QuizServer{
                  */
                 QuizServerPlayer player1 = new QuizServerPlayer(listener.accept(), game, true);
                 player1.start();
-
                 QuizServerPlayer player2 = new QuizServerPlayer(listener.accept(), game, false);
                 player2.start();
+                player1.setOpponent(player2);
+                player2.setOpponent(player1);
+
+
 
                 System.out.println("Two players connected, Starting game");
 
