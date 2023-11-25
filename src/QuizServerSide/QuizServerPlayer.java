@@ -67,6 +67,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     //Player set name
                     Object lastReadObject = input.readObject();
                     if (lastReadObject instanceof NetworkMessage) {
+                        serverProtocol.parseSetPlayerName(input, this);
                         opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
                     }
                     status = GAME;
