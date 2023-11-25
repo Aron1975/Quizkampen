@@ -75,7 +75,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 //END OF TESTING
                 //Test-----------------
-                if(status == LOBBY) {
 
                 System.out.println("OUT-OUT WHILE: " + getName());
                 //boolean continueLoop = true;
@@ -119,7 +118,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     //status = 1;
                 }
 
-                if (status==CATEGORY){
                 /*
                 if (status == 1) {
 
@@ -136,11 +134,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(ex);
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
