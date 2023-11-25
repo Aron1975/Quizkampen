@@ -90,6 +90,7 @@ public class QuizClient{
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+
                 if(inputStreamMessage instanceof NetworkMessage networkMessage)
                 {
 
