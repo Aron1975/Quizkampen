@@ -61,63 +61,14 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void run()
     {
         try {
-            boolean continueLoop = true;
             while (true) {
 
-                //ONLY TESTING
-
-                //System.out.println("Running gameloop for player: " + getPlayerName());
-
-                //SEND NETWORKMESSAGE OBJECT
-                //System.out.println("Sending NetworkMessageObject for player: " + getPlayerName());
-                //output.writeObject(new NetworkMessage((byte) 0x10));
-
-                //SEND PLAYER OBJECT
-                //System.out.println("Sending PlayerObject for player: " + getPlayerName());
-                //output.writeObject(this);
-
-                //END OF TESTING
-                //Test-----------------
-
-                System.out.println("OUT-OUT WHILE: " + getName());
-                //boolean continueLoop = true;
                 if (status == LOBBY) {
-                    //-----------------------
-
-                    //Let user send their desired name
-                    //Keep reading from client until we receive a string
-                    System.out.println("OUT WHILE: " + getName());
-                    while (continueLoop) {
-                        Object lastReadObject = input.readObject();
-                        if (lastReadObject instanceof NetworkMessage) {
-                            serverProtocol.parseSetPlayerName(input, this);
-
-                            while(getOpponent().getPlayerName() == null)
-                            {
-                                System.out.println("Opponent name is null");
-                            }
-                            System.out.println("IN WHILE: " + getName());
-                            System.out.println("Opponent Name: " + opponent.getPlayerName());
-
-
-                            opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
-                            continueLoop = false;
-
-                            /*
-                            if (game.playerOne == this) {
-                                System.out.println("SEND PACKET TO OPPONENT");
-                                game.playerTwo.getNetworkProtocolServer().sendOpponentName(output, game.playerOne.getPlayerName());
-                            } else {
-                                System.out.println("SEND PACKET TO OPPONENT");
-                                game.playerOne.getNetworkProtocolServer().sendOpponentName(output, game.playerOne.getPlayerName());
-                            }
-
-                             */
-                        }
+                    //Player set name
+                    Object lastReadObject = input.readObject();
+                    if (lastReadObject instanceof NetworkMessage) {
+                        opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
                     }
-
-                    //Player is ready to start game
-                    //NetworkProtocolServer.sendPlayerReady(output);
                     status = GAME;
                 }
 
