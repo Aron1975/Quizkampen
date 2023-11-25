@@ -66,6 +66,13 @@ class ArrayOfQuestions {
         return shuffledAlternatives.toArray(new String[0]);
     }
 
+    public boolean checkAnswer(String answer, String correctAnswer){
+        return answer.equals(correctAnswer);
+    }
+
+
+
+
 
 
 
@@ -76,8 +83,13 @@ class ArrayOfQuestions {
         ArrayOfQuestions aq=new ArrayOfQuestions();
         Questions q;
 
-        q=aq.generateRandomQuestion("Geografi:");
+        q=aq.generateRandomQuestion("Sci-fi:");
         System.out.println(q.question);
+        System.out.println(q.correctAlternative);
+        if (aq.checkAnswer(q.correctAlternative, q.question))
+            System.out.println("Winner");
+
+
 
         String[] shuffledAlternatives = aq.randomizeAnswerAlternatives(q.alternative);
 
