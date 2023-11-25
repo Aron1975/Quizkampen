@@ -36,6 +36,9 @@ public class QuizServer{
                 QuizServerPlayer player2 = new QuizServerPlayer(listener.accept(), game, false);
                 player2.start();
 
+                player1.setOpponent(player2);
+                player2.setOpponent(player1);
+
                 System.out.println("Two players connected, Starting game");
 
                 //Alternative approach, easier threading (Sigrun's comment)

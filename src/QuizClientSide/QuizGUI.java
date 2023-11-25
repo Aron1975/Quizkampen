@@ -473,6 +473,11 @@ public class QuizGUI extends JFrame {
         categoryNameLabel.setText("   " + catName);
     }
 
+    public void setOpponentName(String catName){
+        player2NameLabel.setText("   " + catName);
+        nameLabel[2].setText(catName);
+    }
+
     public String getCategoryButtonName(int buttonNr){
         return categoryButtons[buttonNr].getText();
     }

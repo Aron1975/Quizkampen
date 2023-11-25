@@ -35,7 +35,7 @@ public class NetworkProtocolClient {
                 parseGetCategory(inputStream);
                 break;
             case 2:
-                //parseChooseCategory();
+                parseGetOpponentName(inputStream);
                 break;
             case 3:
                 break;
@@ -83,6 +83,13 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setCategoryName((String)lastReadObject);
         System.out.println("Category: " + (String)lastReadObject);
+
+    }
+
+    public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.setOpponentName((String)lastReadObject);
+        System.out.println("UPDATE OPPONENT NAME LABEL: " + (String)lastReadObject);
 
     }
 }
