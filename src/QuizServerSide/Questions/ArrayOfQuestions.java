@@ -60,7 +60,9 @@ class ArrayOfQuestions {
 
     public String[] randomizeAnswerAlternatives(String[] answers) {
         List<String> shuffledAlternatives = new ArrayList<>(Arrays.asList(answers));
+
         Collections.shuffle(shuffledAlternatives);
+
         return shuffledAlternatives.toArray(new String[0]);
     }
 
@@ -74,7 +76,7 @@ class ArrayOfQuestions {
         ArrayOfQuestions aq=new ArrayOfQuestions();
         Questions q;
 
-        q=aq.generateRandomQuestion("Sci-fi:");
+        q=aq.generateRandomQuestion("Geografi:");
         System.out.println(q.question);
 
         String[] shuffledAlternatives = aq.randomizeAnswerAlternatives(q.alternative);
