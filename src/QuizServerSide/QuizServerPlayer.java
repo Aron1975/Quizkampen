@@ -29,6 +29,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     QuizServerGame game;
     NetworkProtocolServer serverProtocol;
 
+
     //GAME
     int score;
     boolean firstMove;
@@ -57,7 +58,14 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void setOpponent(QuizServerPlayer opponent) {
         this.opponent = opponent;
     }
+    public int getScore() {
+        return score;
+    }
 
+    public void setScore(int score) throws IOException {
+        this.score += score;
+        getNetworkProtocolServer().sendScore(output,score);
+    }
     public void run()
     {
         try {
@@ -70,7 +78,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         serverProtocol.parseSetPlayerName(input, this);
                         opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
                     }
-                    status = GAME;
+                    //Skicka nytt fönster till client
+                    serverProtocol.sendChangeWindow(output,"3");
+                    setScore(50);
+
+                    status = CATEGORY;
                 }
 
 
@@ -78,24 +90,28 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                     //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = GAME;
+
                 }
                 if (status == GAME) {
                     // Plocka nästa fråga från databas
-                    currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:");
+                    currentQuestion = game.getAq().generateRandomQuestion("Mat:");
                     //skickar fråga och alternativ
                     serverProtocol.sendQuestion(output, currentQuestion);
                     //ta emot svar
                     Object lastReadObject = input.readObject();
                     if (lastReadObject instanceof NetworkMessage) {
                         boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this);
+                        if (correctAnswer){
+                            setScore(1);
+
+                        }
                         System.out.println("correctAnswer: " + correctAnswer);
                         //validera svar mot correctanswer och skicka tillbaks
                         serverProtocol.sendAnswerResult(output, correctAnswer);
                     }
-                    //updatera färg på knappen
                     //
 
-                   // status = SCORE;
+                   //status = SCORE;
                 }
 
                 if(status == SCORE) {

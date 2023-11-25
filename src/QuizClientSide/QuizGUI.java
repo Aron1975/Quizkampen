@@ -92,6 +92,8 @@ public class QuizGUI extends JFrame {
     static int rounds = 8;
     int questionsPerRound = 3;
     static int currentRound = 3;
+
+
     int scorePlayer1 = 0;
     int scorePlayer2 = 5;
     int roundPointsPlayer1 = 2;
@@ -508,4 +510,24 @@ public class QuizGUI extends JFrame {
         }
 
     }
+
+    public int getScorePlayer1() {
+        return scorePlayer1;
+    }
+
+    public void setScorePlayer1(int scorePlayer1) {
+        this.scorePlayer1 = scorePlayer1;
+        scoreLabel.setText(scorePlayer1+ " - " +getScorePlayer2());
+    }
+
+    public int getScorePlayer2() {
+        return scorePlayer2;
+    }
+
+    public void setScorePlayer2(int scorePlayer2) {
+        this.scorePlayer2 = scorePlayer2;
+        scoreLabel.setText(getScorePlayer1()+ " - " +scorePlayer2);
+
+    }
 }
+

@@ -25,6 +25,8 @@ public class NetworkProtocolServer {
         OPPONENT_NAME,
         SEND_QUESTION,
         SEND_ANSWER_RESULT,
+        CHANGE_WINDOW,
+        SCORE,
 
     }
 
@@ -113,7 +115,13 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_ANSWER_RESULT.ordinal()));
         outputStream.writeObject(result);
     }
+    public void sendChangeWindow(ObjectOutputStream outputStream,String windowNumber) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.CHANGE_WINDOW.ordinal()));
+        outputStream.writeObject(windowNumber);
 
-
-
+    }
+    public void sendScore(ObjectOutputStream outputStream,int score) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SCORE.ordinal()));
+        outputStream.writeObject(score);
+    }
 }
