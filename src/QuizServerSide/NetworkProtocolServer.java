@@ -28,7 +28,7 @@ public class NetworkProtocolServer {
         CHANGE_WINDOW,
         SCORE,
         OPPONENT_NOT_READY,
-
+        PLAYER_TO_CHOOSE_CATEGORY,
     }
 
     public void parsePacket(ObjectInputStream inputStream, NetworkMessage networkMessage) throws IOException, ClassNotFoundException {
@@ -129,5 +129,10 @@ public class NetworkProtocolServer {
     public void sendOpponentNotReady(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_NOT_READY.ordinal()));
         outputStream.writeObject((boolean)false);
+    }
+
+    public void sendIsPlayerToChooseCategory(ObjectOutputStream outputStream, boolean pickCategory) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.PLAYER_TO_CHOOSE_CATEGORY.ordinal()));
+        outputStream.writeObject(pickCategory);
     }
 }

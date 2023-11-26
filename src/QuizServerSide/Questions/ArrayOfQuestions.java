@@ -17,6 +17,9 @@ public class ArrayOfQuestions {
             String line;
             while ((line = reader.readLine()) != null) {
                 String category = line;
+                if(!categories.contains(category)) {
+                    categories.add(line);
+                }
                 String question = reader.readLine();
                 String[] alternative = reader.readLine().split(";");
                 String correctalternative = reader.readLine();
@@ -67,6 +70,15 @@ public class ArrayOfQuestions {
         return shuffledAlternatives.toArray(new String[0]);
     }
 
+    public String[] randomizeCategoryAlternatives(int nrOfCategories) {
+        Collections.shuffle(this.categories);
+        String[] nrOfRandomCategories = new String[nrOfCategories];
+        for(int i= 0; i<nrOfCategories; i++){
+            nrOfRandomCategories[i] = this.categories.get(i);
+        }
+        return nrOfRandomCategories;
+    }
+
 
 
 
@@ -94,6 +106,10 @@ public class ArrayOfQuestions {
             System.out.println((i + 1) + ". " + shuffledAlternatives[i]);
         }
 
+        System.out.println("Categories");
+        for (int i = 0; i < aq.categories.size(); i++) {
+            System.out.println((i + 1) + ". " + aq.categories.get(i));
+        }
 
         /*Scanner scanner = new Scanner(System.in);
         //Ställer vardera fråga, kontrollerar sedan svar

@@ -40,10 +40,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
 
 
-    public QuizServerPlayer(Socket socket, QuizServerGame game, boolean firstMove) {
+    public QuizServerPlayer(Socket socket, QuizServerGame game, boolean categoryPicker) {
         this.game = game;
         this.socket = socket;
         this.serverProtocol = new NetworkProtocolServer(this);
+        this.categoryPicker = categoryPicker;
         try {
             output = new ObjectOutputStream(this.socket.getOutputStream());
             input = new ObjectInputStream(this.socket.getInputStream());
@@ -136,14 +137,16 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         serverProtocol.parseSetPlayerName(input, this);
                         serverProtocol.sendOpponentNotReady(output);
 
+                       /* Flyttad till CATEGORY
                         if(getCategoryPicker()){
                             //TODO: Send choose a category (Has to update GUI, add category buttons and have label "Choose a category")
+                            serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
                             //serverProtocol.sendChooseCategory();
                         }
                         else {
                             //TODO: Send waiting for opponent to pick category (Has to update GUI, remove buttons and just have label "Waiting for opponent to pick category")
                             //serverProtocol.sendWaitingForCategoryPick();
-                        }
+                        }*/
                         serverProtocol.sendChangeWindow(output, "1");
 
                         //Stall gameloop until both players have connected and set their name
@@ -156,6 +159,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                                 break;
                             }
                         }
+
                         //System.out.println("SHOULD SEND OPPONENT NAME NOW");
                         //Send opponent name to update GUI label
                         serverProtocol.sendOpponentName(output, opponent.getPlayerName());
@@ -166,6 +170,18 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
 
                 if (status == CATEGORY) {
+
+                    if(opponent.getReady()) {
+                        serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
+                        if (categoryPicker) {
+                            categoryPicker = false;
+                        } else {
+                            categoryPicker = true;
+                        }
+                        Thread.sleep(2000);
+                        serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
+                    }
+                   //
                     //We now already have our category window set up correctly
 
                     //Parse chosen category (add a currentCategory variable inside QuizServerGame and set it in this parse)

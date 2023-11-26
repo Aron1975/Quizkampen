@@ -305,6 +305,7 @@ public class QuizGUI extends JFrame {
             categoryButtons[i].setForeground(Color.WHITE);
             categoryButtons[i].setFocusPainted(false);
             categoryButtons[i].setAlignmentX(0.5f);
+            categoryButtons[i].setVisible(false);
             categoryButtonPanel.add(categoryButtons[i].getText(), categoryButtons[i]);
             categoryButtonPanel.add(Box.createRigidArea(new Dimension(0,10)));
         }
@@ -538,12 +539,12 @@ public class QuizGUI extends JFrame {
     public void changeCategoryWindowState(boolean toChooseCategory){
 
         if(toChooseCategory){
-            setCategoryName("Välj Kategori");
+            categoryLabelPickCategory.setText("Välj Kategori");
             for(int i = 0; i < categoryButtons.length; i++){
                 categoryButtons[i].setVisible(true);
             }
         }else{
-            setCategoryName("Motståndaren väljer kategori.");
+            categoryLabelPickCategory.setText("Motståndaren väljer kategori");
             for(int i = 0; i < categoryButtons.length; i++){
                 categoryButtons[i].setVisible(false);
             }
