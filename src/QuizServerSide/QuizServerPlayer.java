@@ -189,6 +189,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 if (status == CATEGORY) {
 
+                    if(categoryPicker) {
+                        game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
+                        serverProtocol.sendCategories(output, game.categories);
+                    }
+
                     if(opponent.getReady()) {
                         serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
                         if (categoryPicker) {
@@ -196,8 +201,19 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         } else {
                             categoryPicker = true;
                         }
-                        Thread.sleep(2000);
-                        serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
+                     /*   If we want to send categories to both players
+                        if(categoryPicker) {
+                            game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
+                            game.categoriesGotten = true;
+                        }
+                        if(!categoryPicker){
+                            while(!game.categoriesGotten){
+                                Thread.sleep(1);
+                            }
+                        }
+                        serverProtocol.sendCategories(output, game.categories);*/
+
+
                     }
                    //
                     //We now already have our category window set up correctly
