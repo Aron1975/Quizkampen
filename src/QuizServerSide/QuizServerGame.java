@@ -14,6 +14,9 @@ public class QuizServerGame implements Serializable {
     int currentRound = 0;
     int totalRounds = 0;
     int numberOfQuestionsPerRound = 2;
+    int nrOfCategories = 3;
+    String[] categories = new String[nrOfCategories];
+    boolean categoriesGotten = false;
     String currentQuestion;
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;
@@ -23,6 +26,7 @@ public class QuizServerGame implements Serializable {
     {
         aq = new ArrayOfQuestions();
     }
+
     /*
     QuizServerGame(QuizServerPlayer playerOne, QuizServerPlayer playerTwo)
     {

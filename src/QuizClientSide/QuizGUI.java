@@ -463,6 +463,13 @@ public class QuizGUI extends JFrame {
         categoryNameLabel.setText("   " + catName);
     }
 
+    public void setCategoryButtonText(String[] textArray){
+        for (int i = 0; i < textArray.length; i++){
+            categoryButtons[i].setText(textArray[i]);
+        }
+
+    }
+
     //GAME
     public void setQuestionLabelText(String text){
         if(text.length()>32){
