@@ -534,5 +534,20 @@ public class QuizGUI extends JFrame {
     public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
         this.lastAnsweredQuestion = lastAnsweredQuestion;
     }
+
+    public void changeCategoryWindowState(boolean toChooseCategory){
+
+        if(toChooseCategory){
+            setCategoryName("Välj Kategori");
+            for(int i = 0; i < categoryButtons.length; i++){
+                categoryButtons[i].setVisible(true);
+            }
+        }else{
+            setCategoryName("Motståndaren väljer kategori.");
+            for(int i = 0; i < categoryButtons.length; i++){
+                categoryButtons[i].setVisible(false);
+            }
+        }
+    }
 }
 
