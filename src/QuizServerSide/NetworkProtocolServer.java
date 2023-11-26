@@ -105,7 +105,7 @@ public class NetworkProtocolServer {
 
     public static void sendCategory(ObjectOutputStream outputStream, Questions category) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY.ordinal()));
-        outputStream.writeObject();
+        //outputStream.writeObject();
     }
     public void sendQuestion(ObjectOutputStream outputStream, Questions question) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));

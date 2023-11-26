@@ -80,12 +80,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         serverProtocol.parseSetPlayerName(input, this);
                         serverProtocol.sendOpponentNotReady(output);
                         serverProtocol.sendChangeWindow(output, "1");
-                        while (!(getReady() && opponent.getReady())) {
-                            Thread.sleep(1);
+                        while (true) {
+                            if(getReady() && ((opponent != null) && opponent.getReady())) {
+                                break;
+                            }
                         }
                         opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
-                        //Skicka nytt fönster till client
-                        setScore(50);
 
                         status = CATEGORY;
                     }
@@ -130,8 +130,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(ex);
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
