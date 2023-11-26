@@ -55,6 +55,7 @@ public class NetworkProtocolClient {
                 parseOpponentNotReady(inputStream);
                 break;
             case 8:
+                parseIsPlayerToChooseCategory(inputStream);
                 break;
             case 9:
                 break;
@@ -145,5 +146,11 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         quizController.player.setCurrentAnsweredResult((boolean) lastReadObject);
         quizController.pGUI.changeAnsweredButtonColor((boolean) lastReadObject);
+    }
+
+    public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.changeCategoryWindowState((boolean) lastReadObject);
+        System.out.println("Ändra CatWin till: " + (boolean)lastReadObject);
     }
 }
