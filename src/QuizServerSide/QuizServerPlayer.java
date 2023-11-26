@@ -101,6 +101,28 @@ public class QuizServerPlayer extends Thread implements Serializable {
         this.categoryPicker = categoryPicker;
     }
 
+    public void startNewQuestion() throws IOException, ClassNotFoundException {
+
+        // Plocka nästa fråga från databas
+        currentQuestion = game.getAq().generateRandomQuestion("Mat:");
+        //skickar fråga och alternativ
+        serverProtocol.sendQuestion(output, currentQuestion);
+        //ta emot svar
+        Object lastReadObject = input.readObject();
+        if (lastReadObject instanceof NetworkMessage) {
+            boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this);
+            if (correctAnswer){
+                setScore(1);
+
+            }
+            System.out.println("correctAnswer: " + correctAnswer);
+            //validera svar mot correctanswer och skicka tillbaks
+            serverProtocol.sendAnswerResult(output, correctAnswer);
+        }
+
+        // SLEEP THREAD(3-5sec?) SO WE CAN CHECK OUR RESULT
+    }
+
     public void run()
     {
         try {
@@ -155,29 +177,36 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 }
                 if (status == GAME) {
-                    // Plocka nästa fråga från databas
-                    currentQuestion = game.getAq().generateRandomQuestion("Mat:");
-                    //skickar fråga och alternativ
-                    serverProtocol.sendQuestion(output, currentQuestion);
-                    //ta emot svar
-                    Object lastReadObject = input.readObject();
-                    if (lastReadObject instanceof NetworkMessage) {
-                        boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this);
-                        if (correctAnswer){
-                            setScore(1);
+                    //CHECK startNewQuestion FUNCTION IF NEED TO CODE MORE STUFF
+                    // (Purpose: A function we can call everytime we want to start a new question instead of copy/paste same code)
+                    // It should have all code required to operate a complete question cycle (Even handling send answer result and such)
+                    startNewQuestion();
 
-                        }
-                        System.out.println("correctAnswer: " + correctAnswer);
-                        //validera svar mot correctanswer och skicka tillbaks
-                        serverProtocol.sendAnswerResult(output, correctAnswer);
-                    }
-                    //
+                    // Send player to score/result window
+
 
                     //status = SCORE;
                 }
 
                 if(status == SCORE) {
+                    //Check if last question was final question of round
 
+                    //Check if last round was played
+                    // If no then we have to start new round
+                    // This is steps to do so(Make a function of all these steps, and we can just call that one function):
+                    // 1. Wait for both players to press start new round? (DESIGN CHOICE) - Just some way to know we're about to start a new round
+                    // 2. Start a new round - startNewCategory(); - This should be a function we make with previous code created from category status
+                    //    that will handle everything up to startNewQuestion(); - And then we just call startNewQuestion();
+
+                    //So end result of above comment should just be following 2 lines
+                    //startNewCategory();
+                    //startNewQuestion();
+
+                    //else if last round was played then (We are now sitting in score/result window)
+                    //adjust the start new round button to send us to lobby and fix textlabel
+                    //adjust lobby to not allow new game to be started or setname field to exist?
+                    //No meaning sitting in lobby unless next line is made so we might want to just end game completely or something else
+                    //lobby should have 2 buttons added to it ("Check highscores" and "Settings")? - Settings let's us adjust GUI color and the other client stuff
                 }
 
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop
