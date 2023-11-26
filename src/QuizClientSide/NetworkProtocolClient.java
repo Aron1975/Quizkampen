@@ -102,9 +102,9 @@ public class NetworkProtocolClient {
 
     public void parseGetCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        quizController.pGUI.setCategoryName((String) lastReadObject);
-        System.out.println("Category: " + (String) lastReadObject);
-
+        String[] categories = (String[]) lastReadObject;
+        quizController.pGUI.setCategoryButtonText(categories);
+        System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {

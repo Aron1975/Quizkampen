@@ -21,7 +21,7 @@ public class NetworkProtocolServer {
     enum PROTOCOL_SEND
     {
         PLAYER_READY,
-        SEND_CATEGORY,
+        SEND_CATEGORIES,
         OPPONENT_NAME,
         SEND_QUESTION,
         SEND_ANSWER_RESULT,
@@ -104,9 +104,9 @@ public class NetworkProtocolServer {
         outputStream.writeObject((String)name);
     }
 
-    public static void sendCategory(ObjectOutputStream outputStream, Questions category) throws IOException{
-        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY.ordinal()));
-        //outputStream.writeObject();
+    public void sendCategories(ObjectOutputStream outputStream, String[] categories) throws IOException{
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORIES.ordinal()));
+        outputStream.writeObject(categories);
     }
     public void sendQuestion(ObjectOutputStream outputStream, Questions question) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
@@ -137,4 +137,5 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.PLAYER_TO_CHOOSE_CATEGORY.ordinal()));
         outputStream.writeObject(pickCategory);
     }
+
 }
