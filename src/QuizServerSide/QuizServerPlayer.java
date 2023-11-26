@@ -116,7 +116,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
             Thread.sleep(1);
         }
         if (whosTurn) {
-            currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:");
+            currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:", game.availableQuestions);
             opponent.currentQuestion = currentQuestion;
             setNewQuestionGenerated(true);
             opponent.setNewQuestionGenerated(true);
@@ -124,6 +124,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
         }
         //skickar fråga och alternativ
         serverProtocol.sendQuestion(output, currentQuestion);
+        setReady(false);
         //ta emot svar
         Object lastReadObject = input.readObject();
         if (lastReadObject instanceof NetworkMessage) {
@@ -138,6 +139,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
             System.out.println("FINISHING");
         }
         // SLEEP THREAD(3-5sec?) SO WE CAN CHECK OUR RESULT
+        while(true) {
+            Thread.sleep(1);
+            if (getReady() && (opponent.getReady())) {
+                break;
+            }
+        }
         Thread.sleep(3000);
 
     }
@@ -182,7 +189,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         //Send opponent name to update GUI label
                         serverProtocol.sendOpponentName(output, opponent.getPlayerName());
 
-                        status = CATEGORY;
+                        status = GAME;
                     }
                 }
 
@@ -215,6 +222,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 }
                 if (status == GAME) {
+                    serverProtocol.sendChangeWindow(output, "2");
                     //CHECK startNewQuestion FUNCTION IF NEED TO CODE MORE STUFF
                     // (Purpose: A function we can call everytime we want to start a new question instead of copy/paste same code)
                     // It should have all code required to operate a complete question cycle (Even handling send answer result and such)

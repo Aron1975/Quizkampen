@@ -2,6 +2,7 @@ package QuizServerSide;
 
 
 import QuizServerSide.Questions.ArrayOfQuestions;
+import QuizServerSide.Questions.Questions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class QuizServerGame implements Serializable {
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;
     ArrayOfQuestions aq;
+    ArrayList <Questions> availableQuestions = new ArrayList<>();
 
     QuizServerGame()
     {

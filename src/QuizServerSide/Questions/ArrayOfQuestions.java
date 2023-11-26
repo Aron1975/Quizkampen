@@ -33,19 +33,21 @@ public class ArrayOfQuestions {
 
     }
 
-    public Questions generateRandomQuestion(String categoryFromUser){
+    public Questions generateRandomQuestion(String categoryFromUser, ArrayList<Questions> availableQuestions) {
        Questions question;
-       ArrayList <Questions> qn=new ArrayList<>();
 
        for (Questions questions : questionsAndAlternatives){
             if ((questions.category).equals(categoryFromUser)){
-                qn.add(questions);
+                availableQuestions.add(questions);
             }
         }
 
-       Collections.shuffle(qn);
+       Collections.shuffle(availableQuestions);
 
-       return qn.get(0);
+        Questions tempQuestion = availableQuestions.get(0);
+        availableQuestions.remove(0);
+        System.out.println(tempQuestion.question);
+       return tempQuestion;
 
 
 
@@ -85,13 +87,13 @@ public class ArrayOfQuestions {
 
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         //Skapar en arraylist för frågor samt svar
         //Läsa in frågor och svar
         ArrayOfQuestions aq=new ArrayOfQuestions();
         Questions q;
 
-        q=aq.generateRandomQuestion("Sci-fi:");
+        q=aq.generateRandomQuestion("Sci-fi:", game.availableQuestions);
         System.out.println(q.question);
         System.out.println(q.correctAlternative);
         //if (aq.checkAnswer(q.correctAlternative, q.question))
@@ -130,7 +132,6 @@ public class ArrayOfQuestions {
             }
 
 
-        }*/
+        */
 
     }
-}

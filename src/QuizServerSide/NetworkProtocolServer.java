@@ -88,6 +88,7 @@ public class NetworkProtocolServer {
     public boolean parseAnswerQuestion(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         System.out.println((String)lastReadObject);
+        player.setReady(true);
         return player.currentQuestion.checkAnswer((String)lastReadObject);
     }
 
@@ -111,6 +112,7 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
         outputStream.writeObject(question.getQuestion());
         outputStream.writeObject(question.getAlternative());
+        System.out.println("Send question to + " + player.getPlayerName());
 
     }
     public void sendAnswerResult(ObjectOutputStream outputStream, boolean result) throws IOException{
