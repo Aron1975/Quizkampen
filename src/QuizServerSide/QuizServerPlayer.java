@@ -67,6 +67,40 @@ public class QuizServerPlayer extends Thread implements Serializable {
         this.score += score;
         getNetworkProtocolServer().sendScore(output,score);
     }
+
+    //Cannot be named getName cause inherit from Thread class
+    public String getPlayerName() {
+        return playerName;
+    }
+    public NetworkProtocolServer getNetworkProtocolServer() {
+        return serverProtocol;
+    }
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public QuizServerGame getGame() {
+        return game;
+    }
+    public ObjectOutputStream getOutputStream() {
+        return output;
+    }
+    public ObjectInputStream getInputStream() {
+        return input;
+    }
+    public boolean getReady() {
+        return ready;
+    }
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+    public boolean getCategoryPicker() {
+        return categoryPicker;
+    }
+    public void setCategoryPicker(boolean categoryPicker) {
+        this.categoryPicker = categoryPicker;
+    }
+
     public void run()
     {
         try {
@@ -139,7 +173,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     }
                     //
 
-                   //status = SCORE;
+                    //status = SCORE;
                 }
 
                 if(status == SCORE) {
@@ -154,39 +188,4 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(ex);
         }
     }
-
-
-    //Cannot be named getName cause inherit from Thread class
-    public String getPlayerName() {
-        return playerName;
-    }
-    public NetworkProtocolServer getNetworkProtocolServer() {
-        return serverProtocol;
-    }
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public QuizServerGame getGame() {
-        return game;
-    }
-    public ObjectOutputStream getOutputStream() {
-        return output;
-    }
-    public ObjectInputStream getInputStream() {
-        return input;
-    }
-    public boolean getReady() {
-        return ready;
-    }
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-    public boolean getCategoryPicker() {
-        return categoryPicker;
-    }
-    public void setCategoryPicker(boolean categoryPicker) {
-        this.categoryPicker = categoryPicker;
-    }
-
 }
