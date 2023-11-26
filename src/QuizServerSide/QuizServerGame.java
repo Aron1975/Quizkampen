@@ -14,6 +14,7 @@ public class QuizServerGame implements Serializable {
     int currentRound = 0;
     int totalRounds = 0;
     int numberOfQuestionsPerRound = 2;
+    int currentQuestionWithinRound = 0;
     String currentQuestion;
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;

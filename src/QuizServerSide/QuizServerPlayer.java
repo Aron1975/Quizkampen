@@ -37,13 +37,15 @@ public class QuizServerPlayer extends Thread implements Serializable {
     String playerName;
     Questions currentQuestion;
     boolean ready;
+    boolean newQuestionGenerated;
 
 
 
-    public QuizServerPlayer(Socket socket, QuizServerGame game, boolean firstMove) {
+    public QuizServerPlayer(Socket socket, QuizServerGame game, boolean categoryPicker) {
         this.game = game;
         this.socket = socket;
         this.serverProtocol = new NetworkProtocolServer(this);
+        this.categoryPicker = categoryPicker;
         try {
             output = new ObjectOutputStream(this.socket.getOutputStream());
             input = new ObjectInputStream(this.socket.getInputStream());
@@ -100,11 +102,26 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void setCategoryPicker(boolean categoryPicker) {
         this.categoryPicker = categoryPicker;
     }
+    public boolean isNewQuestionGenerated() {
+        return newQuestionGenerated;
+    }
 
-    public void startNewQuestion() throws IOException, ClassNotFoundException {
+    public void setNewQuestionGenerated(boolean newQuestionGenerated) {
+        this.newQuestionGenerated = newQuestionGenerated;
+    }
 
+    public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
         // Plocka nästa fråga från databas
-        currentQuestion = game.getAq().generateRandomQuestion("Mat:");
+        while (!isNewQuestionGenerated() && !whosTurn) {
+            Thread.sleep(1);
+        }
+        if (whosTurn) {
+            currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:");
+            opponent.currentQuestion = currentQuestion;
+            setNewQuestionGenerated(true);
+            opponent.setNewQuestionGenerated(true);
+            System.out.println("New question generated");
+        }
         //skickar fråga och alternativ
         serverProtocol.sendQuestion(output, currentQuestion);
         //ta emot svar
@@ -118,9 +135,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
             System.out.println("correctAnswer: " + correctAnswer);
             //validera svar mot correctanswer och skicka tillbaks
             serverProtocol.sendAnswerResult(output, correctAnswer);
+            System.out.println("FINISHING");
         }
-
         // SLEEP THREAD(3-5sec?) SO WE CAN CHECK OUR RESULT
+        Thread.sleep(3000);
+
     }
 
     public void run()
@@ -184,12 +203,21 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     //CHECK startNewQuestion FUNCTION IF NEED TO CODE MORE STUFF
                     // (Purpose: A function we can call everytime we want to start a new question instead of copy/paste same code)
                     // It should have all code required to operate a complete question cycle (Even handling send answer result and such)
-                    startNewQuestion();
-
+                    System.out.println("status game");
+                    startNewQuestion(getCategoryPicker());
+                    if(categoryPicker) {
+                        game.currentQuestionWithinRound++;
+                    }
+                    System.out.println("status game 2");
+                    setNewQuestionGenerated(false);
+                    opponent.setNewQuestionGenerated(false);
                     // Send player to score/result window
 
 
-                    //status = SCORE;
+                    if (game.currentQuestionWithinRound == game.numberOfQuestionsPerRound) {
+                        serverProtocol.sendChangeWindow(output, "3");
+                        status = SCORE;
+                    }
                 }
 
                 if(status == SCORE) {
