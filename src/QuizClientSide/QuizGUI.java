@@ -48,7 +48,7 @@ public class QuizGUI extends JFrame {
     JPanel welcomeInputPanel = new JPanel();
     JLabel quizLabel = new JLabel("QUIZKAMPEN");
     JLabel nameText = new JLabel("Namn: ");
-    JTextField welcomeInput = new JTextField(30);
+    JTextField welcomeInput = new JTextField(20);
     JButton welcomeStartButton = new JButton("Starta nytt spel");
 
     //------------ Category window ------------------------
