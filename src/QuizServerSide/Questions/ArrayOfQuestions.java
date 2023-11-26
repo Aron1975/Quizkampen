@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ArrayOfQuestions {
     ArrayList<Questions> questionsAndAlternatives = new ArrayList<>();
+    ArrayList<String> categories = new ArrayList<>();
 
     public ArrayOfQuestions() {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/QuizServerSide/Questions/Questions"))) {

@@ -1,8 +1,6 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
-import QuizServerSide.NetworkProtocolServer;
-import QuizServerSide.Questions.Questions;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,6 +52,7 @@ public class NetworkProtocolClient {
                 parseScore(inputStream);
                 break;
             case 7:
+                parseOpponentNotReady(inputStream);
                 break;
             case 8:
                 break;
@@ -76,35 +75,16 @@ public class NetworkProtocolClient {
         }
     }
 
-    public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
-        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
-        outputStream.writeObject(name);
-    }
-
-    public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        //Skickar från klient till server
-        Object lastReadObject = inputStream.readObject();
-        quizController.player.setCurrentQuestion((String) lastReadObject);
-        quizController.pGUI.questionLabel.setText((String) lastReadObject);
-        lastReadObject = inputStream.readObject();
-        String[] alternatives = (String[]) lastReadObject;
-        quizController.player.setCurrentAlternatives(alternatives);
-        quizController.pGUI.answerButtons[0].setText(alternatives[0]);
-        quizController.pGUI.answerButtons[1].setText(alternatives[1]);
-        quizController.pGUI.answerButtons[2].setText(alternatives[2]);
-        quizController.pGUI.answerButtons[3].setText(alternatives[3]);
-    }
-
-    public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        Object lastReadObject = inputStream.readObject();
-        quizController.player.setCurrentAnsweredResult((boolean) lastReadObject);
-        quizController.pGUI.changeAnsweredButtonColor((boolean) lastReadObject);
-    }
-
     public void sendAnswer(ObjectOutputStream outputStream, String answer) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SEND_ANSWER.ordinal()));
         outputStream.writeObject(answer);
         quizController.pGUI.setLastAnsweredQuestion(answer);
+    }
+    public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
+        outputStream.writeObject(name);
+        quizController.pGUI.setNameLabels(name);
+        //quizController.pGUI.player1NameLabel.setText(name);
     }
 
 
@@ -141,5 +121,29 @@ public class NetworkProtocolClient {
     public void parseScore(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setScorePlayer1((int) lastReadObject);
+    }
+    public void parseOpponentNotReady(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.player.setOpponentReady((boolean) lastReadObject);
+        quizController.pGUI.categoryLabelPickCategory.setText("Waiting for other player");
+    }
+    public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        //Skickar från klient till server
+        Object lastReadObject = inputStream.readObject();
+        quizController.player.setCurrentQuestion((String) lastReadObject);
+        quizController.pGUI.questionLabel.setText((String) lastReadObject);
+        lastReadObject = inputStream.readObject();
+        String[] alternatives = (String[]) lastReadObject;
+        quizController.player.setCurrentAlternatives(alternatives);
+        quizController.pGUI.answerButtons[0].setText(alternatives[0]);
+        quizController.pGUI.answerButtons[1].setText(alternatives[1]);
+        quizController.pGUI.answerButtons[2].setText(alternatives[2]);
+        quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+    }
+
+    public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.player.setCurrentAnsweredResult((boolean) lastReadObject);
+        quizController.pGUI.changeAnsweredButtonColor((boolean) lastReadObject);
     }
 }

@@ -36,6 +36,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     QuizServerPlayer opponent;
     String playerName;
     Questions currentQuestion;
+    boolean ready;
 
 
 
@@ -74,15 +75,20 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 if (status == LOBBY) {
                     //Player set name
                     Object lastReadObject = input.readObject();
+                    System.out.println(lastReadObject);
                     if (lastReadObject instanceof NetworkMessage) {
                         serverProtocol.parseSetPlayerName(input, this);
+                        serverProtocol.sendOpponentNotReady(output);
+                        serverProtocol.sendChangeWindow(output, "1");
+                        while (!(getReady() && opponent.getReady())) {
+                            Thread.sleep(1);
+                        }
                         opponent.getNetworkProtocolServer().sendOpponentName(output, opponent.getPlayerName());
-                    }
-                    //Skicka nytt fönster till client
-                    serverProtocol.sendChangeWindow(output,"3");
-                    setScore(50);
+                        //Skicka nytt fönster till client
+                        setScore(50);
 
-                    status = CATEGORY;
+                        status = CATEGORY;
+                    }
                 }
 
 
@@ -124,6 +130,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(ex);
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -147,6 +155,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
     }
     public ObjectInputStream getInputStream() {
         return input;
+    }
+    public boolean getReady() {
+        return ready;
+    }
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
 }

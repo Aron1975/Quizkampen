@@ -102,7 +102,7 @@ public class QuizController implements Runnable{
             if(e.getSource() == pGUI.scoreBoardStartButton){
                 System.out.println("ScoreBoard");
 
-                pGUI.changeWindow("0");
+                pGUI.changeWindow("1");
             }
         }
     }

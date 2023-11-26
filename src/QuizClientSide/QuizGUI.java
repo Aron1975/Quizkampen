@@ -464,12 +464,12 @@ public class QuizGUI extends JFrame {
         cardLo.show(mainQuizPanel, category);
     }
 
-    public void setNameLabels(String name1, String name2){
+    public void setNameLabels(String name1){
 
         player1NameLabel.setText(name1);
-        player2NameLabel.setText(name2);
+        //player2NameLabel.setText(name2);
         nameLabel[1].setText(name1);
-        nameLabel[2].setText(name2);
+        //nameLabel[2].setText(name2);
     }
 
     public void setCategoryName(String catName){

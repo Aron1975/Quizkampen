@@ -9,6 +9,8 @@ public class QuizPlayer {
     String currentQuestion;
     String[] currentAlternatives;
     boolean currentAnsweredResult;
+    boolean opponentReady;
+    QuizPlayer opponent;
 
     public QuizPlayer(){}
 
@@ -70,5 +72,18 @@ public class QuizPlayer {
 
     public void setCurrentAnsweredResult(boolean currentAnsweredResult) {
         this.currentAnsweredResult = currentAnsweredResult;
+    }
+    public boolean getOpponentReady() {
+        return opponentReady;
+    }
+    public void setOpponentReady(boolean opponentReady) {
+        this.opponentReady = opponentReady;
+    }
+    public QuizPlayer getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(QuizPlayer opponent) {
+        this.opponent = opponent;
     }
 }

@@ -27,6 +27,7 @@ public class NetworkProtocolServer {
         SEND_ANSWER_RESULT,
         CHANGE_WINDOW,
         SCORE,
+        OPPONENT_NOT_READY,
 
     }
 
@@ -82,6 +83,7 @@ public class NetworkProtocolServer {
         System.out.println("Parse set player name");
         Object lastReadObject = inputStream.readObject();
         player.setPlayerName((String)lastReadObject);
+        player.setReady(true);
     }
     public boolean parseAnswerQuestion(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
@@ -101,9 +103,9 @@ public class NetworkProtocolServer {
         outputStream.writeObject((String)name);
     }
 
-    public static void sendCategory(ObjectOutputStream outputStream, String cat) throws IOException{
+    public static void sendCategory(ObjectOutputStream outputStream, Questions category) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY.ordinal()));
-        outputStream.writeObject(cat);
+        outputStream.writeObject();
     }
     public void sendQuestion(ObjectOutputStream outputStream, Questions question) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
@@ -123,5 +125,9 @@ public class NetworkProtocolServer {
     public void sendScore(ObjectOutputStream outputStream,int score) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SCORE.ordinal()));
         outputStream.writeObject(score);
+    }
+    public void sendOpponentNotReady(ObjectOutputStream outputStream) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_NOT_READY.ordinal()));
+        outputStream.writeObject((boolean)false);
     }
 }
