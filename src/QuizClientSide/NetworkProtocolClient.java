@@ -23,6 +23,7 @@ public class NetworkProtocolClient {
         SET_PLAYERNAME,
         GET_CATEGORY,
         SEND_ANSWER,
+        CHOSEN_CATEGORY,
 
     }
 
@@ -86,6 +87,11 @@ public class NetworkProtocolClient {
         outputStream.writeObject(name);
         quizController.pGUI.setNameLabels(name);
         //quizController.pGUI.player1NameLabel.setText(name);
+    }
+
+    public void sendChosenCategory(ObjectOutputStream outputStream, String name) throws IOException {
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.CHOSEN_CATEGORY.ordinal()));
+        outputStream.writeObject(name);
     }
 
 

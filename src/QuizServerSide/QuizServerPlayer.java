@@ -102,6 +102,13 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void setCategoryPicker(boolean categoryPicker) {
         this.categoryPicker = categoryPicker;
     }
+    public void switchCategoryPicker(){
+        if (categoryPicker) {
+            categoryPicker = false;
+        } else {
+            categoryPicker = true;
+        }
+    }
     public boolean isNewQuestionGenerated() {
         return newQuestionGenerated;
     }
@@ -113,10 +120,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
         // Plocka nästa fråga från databas
         while (!isNewQuestionGenerated() && !whosTurn) {
+            System.out.println("New question not generated");
             Thread.sleep(1);
         }
         if (whosTurn) {
-            currentQuestion = game.getAq().generateRandomQuestion("Sci-fi:", game.availableQuestions);
+            System.out.println("PICK A QUESTION FROM CATEGORY: " + game.getCurrentCategory());
+            currentQuestion = game.getAq().generateRandomQuestion(game.getCurrentCategory(), game.availableQuestions);
             opponent.currentQuestion = currentQuestion;
             setNewQuestionGenerated(true);
             opponent.setNewQuestionGenerated(true);
@@ -189,7 +198,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         //Send opponent name to update GUI label
                         serverProtocol.sendOpponentName(output, opponent.getPlayerName());
 
-                        status = GAME;
+                        status = CATEGORY;
                     }
                 }
 
@@ -203,11 +212,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                     if(opponent.getReady()) {
                         serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
-                        if (categoryPicker) {
-                            categoryPicker = false;
-                        } else {
-                            categoryPicker = true;
-                        }
                      /*   If we want to send categories to both players
                         if(categoryPicker) {
                             game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
@@ -227,18 +231,23 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                     //Parse chosen category (add a currentCategory variable inside QuizServerGame and set it in this parse)
                     //This way we can use currentCategory in generateRandomQuestion() as argument
-                    //networkProtocol.parseChosenCategory();
+                    if(getCategoryPicker()) {
+                        Object lastReadObject = input.readObject();
+                        if (lastReadObject instanceof NetworkMessage) {
+                            serverProtocol.parseChosenCategory(input, this);
 
-                    //Change window to answer question window for both players (These can be coupled inside parseChosenCategory)
-                    //serverProtocol.sendChangeWindow(output, "1");
-                    //serverProtocol.sendChangeWindow(output, "2");
+                            //Change window to answer question window for both players
+                            // (These can be coupled inside parseChosenCategory, but probably shouldn't to more easily follow code logic)
+                            serverProtocol.sendChangeWindow(output, "2");
+                            opponent.getNetworkProtocolServer().sendChangeWindow(opponent.getOutputStream(), "2");
+                        }
+                    }
 
                     //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = GAME;
 
                 }
                 if (status == GAME) {
-                    serverProtocol.sendChangeWindow(output, "2");
                     //CHECK startNewQuestion FUNCTION IF NEED TO CODE MORE STUFF
                     // (Purpose: A function we can call everytime we want to start a new question instead of copy/paste same code)
                     // It should have all code required to operate a complete question cycle (Even handling send answer result and such)
@@ -260,6 +269,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
+                    switchCategoryPicker();
                     //Check if last question was final question of round
 
                     //Check if last round was played

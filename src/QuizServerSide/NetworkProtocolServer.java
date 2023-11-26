@@ -40,12 +40,13 @@ public class NetworkProtocolServer {
                 parseSetPlayerName(inputStream, player);
                 break;
             case 1:
-                parseAnswerQuestion(inputStream, player);
+                //UNUSED
                 break;
             case 2:
-                //parseChooseCategory();
+                parseAnswerQuestion(inputStream, player);
                 break;
             case 3:
+                parseChosenCategory(inputStream, player);
                 break;
             case 4:
                 break;
@@ -90,6 +91,11 @@ public class NetworkProtocolServer {
         System.out.println((String)lastReadObject);
         player.setReady(true);
         return player.currentQuestion.checkAnswer((String)lastReadObject);
+    }
+    public void parseChosenCategory(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        player.game.setCurrentCategory((String)lastReadObject);
+        System.out.println("CATEGORY PICKED: " + lastReadObject);
     }
 
 

@@ -112,16 +112,25 @@ class CategoryButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //Pick category window
             if(e.getSource() == pGUI.categoryButtons[0]){
-                System.out.println("Chose category 1");
-                pGUI.changeWindow("2");
+                try {
+                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[0].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             else if(e.getSource() == pGUI.categoryButtons[1]){
-                System.out.println("Chose category 2");
-                pGUI.changeWindow("2");
+                try {
+                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[1].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             else if(e.getSource() == pGUI.categoryButtons[2]){
-                System.out.println("Chose category 3");
-                pGUI.changeWindow("2");
+                try {
+                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[2].getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
         }
