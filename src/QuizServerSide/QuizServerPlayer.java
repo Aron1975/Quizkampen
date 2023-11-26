@@ -148,13 +148,17 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                         //Stall gameloop until both players have connected and set their name
                         while (true) {
+                            //System.out.println("Players ready?: " + getReady() + " | " + opponent.getReady());
+                            //Need to sleep(or any code, even print above will make it stop bug), else 1st client don't update opponent namelabel (doesn't execute sendOpponentName)
+                            //Because compiler optimization?
+                            Thread.sleep(1);
                             if(getReady() && ((opponent != null) && opponent.getReady())) {
                                 break;
                             }
                         }
-
+                        //System.out.println("SHOULD SEND OPPONENT NAME NOW");
                         //Send opponent name to update GUI label
-                        //sendOpponentName(output, opponent.getPlayerName());
+                        serverProtocol.sendOpponentName(output, opponent.getPlayerName());
 
                         status = CATEGORY;
                     }
@@ -215,6 +219,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(ex);
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
