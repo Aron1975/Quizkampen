@@ -456,16 +456,12 @@ public class QuizGUI extends JFrame {
         return lastAnsweredQuestion;
     }
 
-    public void changeAnsweredButtonColor(boolean correctAnswer){
-        int i = 0;
-        for (i = 0; i < 4; i++){
-            answerButtons[i].equals(lastAnsweredQuestion);
-            break;
-        }
+    public void changeAnsweredButtonColor(boolean correctAnswer, int buttonIndex){
+
         if(correctAnswer) {
-            answerButtons[i].setBackground(Color.GREEN);
+            answerButtons[buttonIndex].setBackground(Color.GREEN);
         }else{
-            answerButtons[i].setBackground(Color.RED);
+            answerButtons[buttonIndex].setBackground(Color.RED);
         }
     }
     public void setCategoryName(String catName){

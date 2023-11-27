@@ -72,28 +72,28 @@ public class QuizController implements Runnable{
             }
             if(e.getSource() == pGUI.answerButtons[0]){
                 try {
-                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[0].getText());
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[0].getText(),0);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 try {
-                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[1].getText());
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[1].getText(),1);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 try {
-                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[2].getText());
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[2].getText(),2);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 try {
-                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[3].getText());
+                    networkProtocolClient.sendAnswer(client.getOutputStream(),pGUI.answerButtons[3].getText(),3);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

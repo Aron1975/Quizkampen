@@ -91,7 +91,11 @@ public class NetworkProtocolServer {
         Object lastReadObject = inputStream.readObject();
         System.out.println((String)lastReadObject);
         player.setReady(true);
-        return player.currentQuestion.checkAnswer((String)lastReadObject);
+        boolean result=player.currentQuestion.checkAnswer((String)lastReadObject);
+        lastReadObject=inputStream.readObject();
+        player.lastAnsweredButtonIndex=(int) lastReadObject;
+
+        return result;
     }
     public void parseChosenCategory(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
@@ -125,6 +129,8 @@ public class NetworkProtocolServer {
     public void sendAnswerResult(ObjectOutputStream outputStream, boolean result) throws IOException{
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_ANSWER_RESULT.ordinal()));
         outputStream.writeObject(result);
+        outputStream.writeObject(player.lastAnsweredButtonIndex);
+
     }
     public void sendChangeWindow(ObjectOutputStream outputStream,String windowNumber) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.CHANGE_WINDOW.ordinal()));

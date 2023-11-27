@@ -78,15 +78,17 @@ public class NetworkProtocolClient {
         }
     }
 
-    public void sendAnswer(ObjectOutputStream outputStream, String answer) throws IOException {
+    public void sendAnswer(ObjectOutputStream outputStream, String answer,int buttonIndex) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SEND_ANSWER.ordinal()));
         outputStream.writeObject(answer);
+        outputStream.writeObject(buttonIndex);
         quizController.pGUI.setLastAnsweredQuestion(answer);
     }
     public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
         outputStream.writeObject(name);
         quizController.pGUI.setNameLabels(name);
+
         //quizController.pGUI.player1NameLabel.setText(name);
     }
 
@@ -152,8 +154,10 @@ public class NetworkProtocolClient {
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        quizController.player.setCurrentAnsweredResult((boolean) lastReadObject);
-        quizController.pGUI.changeAnsweredButtonColor((boolean) lastReadObject);
+        boolean result=((boolean) lastReadObject);
+        int buttonIndex=(int)inputStream.readObject();
+        quizController.player.setCurrentAnsweredResult(result);
+        quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
     }
 
     public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {

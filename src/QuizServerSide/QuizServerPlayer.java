@@ -38,6 +38,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     Questions currentQuestion;
     boolean ready;
     boolean newQuestionGenerated;
+    int lastAnsweredButtonIndex;
 
 
 

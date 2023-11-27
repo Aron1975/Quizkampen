@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 public class QuizServer{
 
-    static int port = 42050;
+    static int port = 42051;
 
     public static void main(String[] args) throws Exception {
 
@@ -36,6 +36,12 @@ public class QuizServer{
                 player1.start();
                 QuizServerPlayer player2 = new QuizServerPlayer(listener.accept(), game, false);
                 player2.start();
+                player1.setOpponent(player2);
+                player2.setOpponent(player1);
+
+
+
+
                 player1.setOpponent(player2);
                 player2.setOpponent(player1);
 
