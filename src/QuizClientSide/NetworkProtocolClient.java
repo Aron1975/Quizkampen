@@ -60,7 +60,7 @@ public class NetworkProtocolClient {
                 parseIsPlayerToChooseCategory(inputStream);
                 break;
             case 9:
-                parseGetChoosenCategory(inputStream);
+                parseGetChosenCategory(inputStream);
                 break;
             case 10:
                 parseButtonResetColor(inputStream);
@@ -116,7 +116,7 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
-        System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
+        //System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -156,6 +156,7 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[1].setText(alternatives[1]);
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+        quizController.player.increaseQuestionNr();
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -164,15 +165,15 @@ public class NetworkProtocolClient {
         int buttonIndex=(int)inputStream.readObject();
         quizController.player.setCurrentAnsweredResult(result);
         quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
+
     }
 
     public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeCategoryWindowState((boolean) lastReadObject);
-        System.out.println("Ändra CatWin till: " + (boolean)lastReadObject);
     }
 
-    public void parseGetChoosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parseGetChosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
         System.out.println("Receive chosen Category: " + (String) lastReadObject);

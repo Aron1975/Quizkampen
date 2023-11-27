@@ -12,11 +12,28 @@ public class QuizPlayer {
     boolean opponentReady;
     QuizPlayer opponent;
 
+    //Implement for keep track on which question and which round we are in.
+    int questionNr = 0;
+    int roundNr = 0;
+
     public QuizPlayer(){}
 
     public QuizPlayer(String name, int score) {
         this.name = name;
         this.score = score;
+    }
+
+    public void increaseQuestionNr(){
+        this.questionNr++;
+    }
+    public void resetQuestionNr(){
+        this.questionNr=0;
+    }
+    public void increaseRoundNr(){
+        this.roundNr++;
+    }
+    public void resetRoundNr(){
+        this.roundNr=0;
     }
 
     public String getName() {

@@ -19,7 +19,7 @@ public class QuizServerGame implements Serializable {
     int numberOfQuestionsPerRound = 2;
     int currentQuestionWithinRound = 0;
     int nrOfCategories = 3;
-    String[] categories = new String[nrOfCategories];
+    String[] categories; // = new String[nrOfCategories];
     boolean categoriesGotten = false;
     String currentCategory;
     String currentQuestion;
@@ -39,6 +39,7 @@ public class QuizServerGame implements Serializable {
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
+        categories = new String[nrOfCategories];
     }
 
     public void readPropertyFile() {

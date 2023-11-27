@@ -16,15 +16,19 @@ public class QuizGUI extends JFrame {
 
     int screenX = 400;
     int screenY = 600;
-    int imageIconSiza = 20;
+    int imageIconSize = 20;
+    int imageIconSize2 = 120;
+    int imageIconSize3 = 90;
     Color panelsBackgroundColor = new Color(20,80,200);
     Font f = new Font(null, 3, 20);
     Font f2 = new Font(null, 3, 14);
     Dimension panelsDimension = new Dimension(screenX,screenY);
 
     //Avatar images
-    Icon avatar1 = new ImageIcon("Images/Avatar_1.jpg");
-    Icon avatar2 = new ImageIcon("Images/Avatar_2.jpg");
+    Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar4.png").
+            getImage().getScaledInstance(imageIconSize2, imageIconSize3, Image.SCALE_SMOOTH));;
+    Icon avatar2 = new ImageIcon(new ImageIcon("Images/Avatar8.png").
+            getImage().getScaledInstance(imageIconSize2, imageIconSize3, Image.SCALE_SMOOTH));;
 
     //Category Images
     Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
@@ -32,11 +36,11 @@ public class QuizGUI extends JFrame {
 
     //Scoreoard Images
     ImageIcon emptyscore = new ImageIcon(new ImageIcon("Images/emptyAnswerWithBorder.png").
-            getImage().getScaledInstance(imageIconSiza, imageIconSiza, Image.SCALE_SMOOTH));
+            getImage().getScaledInstance(imageIconSize, imageIconSize, Image.SCALE_SMOOTH));
     ImageIcon winIcon = new ImageIcon(new ImageIcon("Images/correctAnswerWithBorder.png").
-            getImage().getScaledInstance(imageIconSiza, imageIconSiza, Image.SCALE_SMOOTH));
+            getImage().getScaledInstance(imageIconSize, imageIconSize, Image.SCALE_SMOOTH));
     ImageIcon loseIcon = new ImageIcon(new ImageIcon("Images/wrongAnswerWithBorder.png").
-            getImage().getScaledInstance(imageIconSiza, imageIconSiza, Image.SCALE_SMOOTH));
+            getImage().getScaledInstance(imageIconSize, imageIconSize, Image.SCALE_SMOOTH));
     ImageIcon emptyscore2 = new ImageIcon(new ImageIcon("Images/emptyAnswerWithBorder.png").
             getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 
@@ -97,7 +101,7 @@ public class QuizGUI extends JFrame {
 
 
     int scorePlayer1 = 0;
-    int scorePlayer2 = 5;
+    int scorePlayer2 = 0;
     int roundPointsPlayer1 = 2;
     int roundPointsPlayer2 = 3;
     JPanel[][] roundPanel = new JPanel[3][rounds];
@@ -217,6 +221,7 @@ public class QuizGUI extends JFrame {
 
        // roundQuestionSpotsPanel1.setLayout(new FlowLayout());
         //roundQuestionSpotsPanel2.setLayout(new FlowLayout());
+        roundQuestionSpotsPanel1.setPreferredSize(new Dimension(90,20));
 
         for(int i = 0; i<roundQuestionSpotsLabel1.length; i++){
 

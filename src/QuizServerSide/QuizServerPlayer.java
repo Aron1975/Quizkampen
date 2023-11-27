@@ -139,7 +139,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
         //ta emot svar
         Object lastReadObject = input.readObject();
         if (lastReadObject instanceof NetworkMessage) {
-            boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this);
+            boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this); //ParseAnswer calls Question.checkAnswer()
             if (correctAnswer){
                 setScore(1);
 
