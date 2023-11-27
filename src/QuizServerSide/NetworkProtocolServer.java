@@ -31,57 +31,9 @@ public class NetworkProtocolServer {
         PLAYER_TO_CHOOSE_CATEGORY,
         SEND_CATEGORY_TO_OPPONENT,
         SEND_BUTTON_RESET_COLOR,
+        UPDATE_WINNER_LABEL,
     }
 
-    public void parsePacket(ObjectInputStream inputStream, NetworkMessage networkMessage) throws IOException, ClassNotFoundException {
-        int networkCode = networkMessage.getNetworkCode();
-
-        switch(networkCode) {
-            //Hexadecimal
-            case 0:
-                parseSetPlayerName(inputStream, player);
-                break;
-            case 1:
-                //UNUSED
-                break;
-            case 2:
-                parseAnswerQuestion(inputStream, player);
-                break;
-            case 3:
-                parseChosenCategory(inputStream, player);
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-            case 13:
-                break;
-            case 14:
-                break;
-            case 15:
-                break;
-            case 16:
-                break;
-        }
-    }
-
-    //public static void sendPacket(ObjectOutputStream objectOutputStream, NetworkMessage networkMessage) throws IOException {
-    //    objectOutputStream.writeObject(networkMessage);
-    //}
     public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
         System.out.println("Parse set player name");
         Object lastReadObject = inputStream.readObject();
@@ -161,4 +113,9 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_BUTTON_RESET_COLOR.ordinal()));
         outputStream.writeObject(buttonIndex);
     }
+    public void sendUpdateWinnerLabel(ObjectOutputStream outputStream, boolean winner) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.UPDATE_WINNER_LABEL.ordinal()));
+        outputStream.writeObject(winner);
+    }
+
 }

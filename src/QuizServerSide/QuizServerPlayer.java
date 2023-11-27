@@ -168,7 +168,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
         try {
             int i = 0;
             while (true) {
-
                 if (status == LOBBY) {
                     //Player set name
                     Object lastReadObject = input.readObject();
@@ -298,7 +297,15 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop
             }
         }catch (IOException ex) {
-            throw new RuntimeException(ex);
+            System.out.println(getPlayerName() + " lost connection");
+            try {
+                opponent.getNetworkProtocolServer().sendChangeWindow(opponent.getOutputStream(),"3");
+                System.out.println("sendCHANGEwindow");
+                opponent.getNetworkProtocolServer().sendUpdateWinnerLabel(opponent.getOutputStream(),true);
+                System.out.println("sendUpdateWinnerLabel");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         } catch (InterruptedException e) {

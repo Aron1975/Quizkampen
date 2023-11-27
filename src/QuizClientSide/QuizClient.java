@@ -10,8 +10,7 @@ import java.net.Socket;
 public class QuizClient{
 
     String ip="127.0.0.1";
-    //String ip = "192.168.1.97";
-    int port = 42050;
+    int port = 42052;
     Socket socket;
     ObjectInputStream inputStream;
     ObjectOutputStream outputStream;

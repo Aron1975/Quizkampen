@@ -41,6 +41,10 @@ public class QuizController implements Runnable{
         //t.start();
     }
 
+    public QuizController() {
+
+    }
+
     @Override
     public void run() {
         while(!Thread.interrupted()) {
