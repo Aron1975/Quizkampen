@@ -41,6 +41,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
     int currentQuestionWithinRound;
+    int currentRound = 0;
 
 
 
@@ -209,11 +210,13 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if (status == CATEGORY) {
+                    currentQuestionWithinRound = 0;
 
                     if(categoryPicker) {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
                         serverProtocol.sendCategories(output, game.categories);
                     }
+                    System.out.println("Waiting for opponent to pick category" + playerName);
 
                     if(opponent.getReady()) {
                         serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
@@ -249,10 +252,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                             opponent.getNetworkProtocolServer().sendCategoryToOpponent(opponent.getOutputStream(), game.currentCategory);
                         }
                     }
-
                     //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = GAME;
-
                 }
 
                 if (status == GAME) {
@@ -273,8 +274,10 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
+                    currentRound++;
+                    serverProtocol.sendResetStartNewRoundButton(output);
                     switchCategoryPicker();
-                    if (game.getCurrentRound() != game.getTotalRounds()) {
+                    if (currentRound != game.getTotalRounds()) {
                         setReady(false);
                         //Wait for both player to press "Start new round" from score window
                         Object lastReadObject = input.readObject();
@@ -289,11 +292,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
                             if (getReady() && (opponent.getReady())) {
                                 break;
                             }
-                            status = CATEGORY;
                         }
                         serverProtocol.sendChangeWindow(output, "1");
+                        status = CATEGORY;
                     }
                     else {
+                        serverProtocol.sendDisableStartNewRoundButton(output);
                         status = END;
                         }
 

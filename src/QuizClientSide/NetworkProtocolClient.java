@@ -70,8 +70,10 @@ public class NetworkProtocolClient {
                 parseUpdateWinnerLabel(inputStream);
                 break;
             case 12:
+                parseResetStartNewRoundButton();
                 break;
             case 13:
+                parseDisableStartNewRoundButton();
                 break;
             case 14:
                 break;
@@ -198,6 +200,11 @@ public class NetworkProtocolClient {
         if ((boolean) lastReadObject) {
             quizController.pGUI.whoTurnLabel.setText(quizController.pGUI.player2NameLabel.getText() + " disconnected");
         }
-
+    }
+    public void parseResetStartNewRoundButton() throws IOException, ClassNotFoundException {
+        quizController.pGUI.scoreBoardStartButton.setText("Starta");
+    }
+    public void parseDisableStartNewRoundButton() throws IOException, ClassNotFoundException {
+        quizController.pGUI.scoreBoardStartButton.setVisible(false);
     }
 }
