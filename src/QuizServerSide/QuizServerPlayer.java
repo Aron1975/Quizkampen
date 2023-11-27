@@ -127,7 +127,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
             setNewQuestionGenerated(false);
             opponent.setNewQuestionGenerated(false);
             System.out.println("PICK A QUESTION FROM CATEGORY: " + game.getCurrentCategory());
-            currentQuestion = game.getAq().generateRandomQuestion(game.getCurrentCategory(), game.availableQuestions);
+            currentQuestion = game.getAq().generateRandomQuestion(game.getCurrentCategory());
             opponent.currentQuestion = currentQuestion;
             setNewQuestionGenerated(true);
             opponent.setNewQuestionGenerated(true);

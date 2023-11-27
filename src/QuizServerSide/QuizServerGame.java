@@ -26,7 +26,6 @@ public class QuizServerGame implements Serializable {
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;
     ArrayOfQuestions aq;
-    ArrayList<Questions> availableQuestions = new ArrayList<>();
     Properties p = new Properties();
     String filename = "src/Quizkampen.properties";
 
