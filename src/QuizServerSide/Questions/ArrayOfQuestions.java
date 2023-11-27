@@ -3,13 +3,10 @@ package QuizServerSide.Questions;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ArrayOfQuestions {
-    ArrayList<Questions> questionsAndAlternatives = new ArrayList<>();
+    HashMap<String, Questions> allQuestionsFromFile = new HashMap<>();
     ArrayList<String> categories = new ArrayList<>();
 
     public ArrayOfQuestions() {
@@ -24,7 +21,7 @@ public class ArrayOfQuestions {
                 String[] alternative = reader.readLine().split(";");
                 String correctalternative = reader.readLine();
 
-                questionsAndAlternatives.add(new Questions(category, question, alternative, correctalternative));
+                allQuestionsFromFile.put(question, new Questions(category, question, alternative, correctalternative));
 
             }
         } catch (IOException e) {
@@ -33,19 +30,20 @@ public class ArrayOfQuestions {
 
     }
 
-    public Questions generateRandomQuestion(String categoryFromUser, ArrayList<Questions> availableQuestions) {
-       Questions question;
-
-       for (Questions questions : questionsAndAlternatives){
-            if ((questions.category).equals(categoryFromUser)){
-                availableQuestions.add(questions);
+    public Questions generateRandomQuestion(String categoryFromUser) {
+        ArrayList<Questions> questionsWithCurrentCategory = new ArrayList<>();
+        //Populate a new list with questions for specific category
+        // (allQuestionsFromFile is the one keeping tabs on already asked questions)
+        for(Questions question : allQuestionsFromFile.values()){
+            if (question.category.equals(categoryFromUser)){
+                questionsWithCurrentCategory.add(question);
             }
         }
 
-       Collections.shuffle(availableQuestions);
+       Collections.shuffle(questionsWithCurrentCategory);
 
-        Questions tempQuestion = availableQuestions.get(0);
-        availableQuestions.remove(0);
+        Questions tempQuestion = questionsWithCurrentCategory.get(0);
+        allQuestionsFromFile.remove(tempQuestion.getQuestion());
         System.out.println(tempQuestion.question);
        return tempQuestion;
 
