@@ -110,7 +110,7 @@ public class NetworkProtocolServer {
     }
 
     public void sendOpponentName(ObjectOutputStream outputStream, String name) throws IOException {
-        System.out.println("Send opponent name");
+        System.out.println("Send opponent name" + name);
         outputStream.writeObject(new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.OPPONENT_NAME.ordinal()));
         outputStream.writeObject((String)name);
     }
@@ -123,7 +123,7 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_QUESTION.ordinal()));
         outputStream.writeObject(question.getQuestion());
         outputStream.writeObject(question.getAlternative());
-        System.out.println("Send question to + " + player.getPlayerName());
+        System.out.println("Send question to + " + player.playerName);
 
     }
     public void sendAnswerResult(ObjectOutputStream outputStream, boolean result) throws IOException{
