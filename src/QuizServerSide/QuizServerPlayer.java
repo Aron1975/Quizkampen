@@ -120,10 +120,11 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
         // Plocka nästa fråga från databas
         while (!isNewQuestionGenerated() && !whosTurn) {
-            System.out.println("New question not generated");
             Thread.sleep(1);
         }
         if (whosTurn) {
+            setNewQuestionGenerated(false);
+            opponent.setNewQuestionGenerated(false);
             System.out.println("PICK A QUESTION FROM CATEGORY: " + game.getCurrentCategory());
             currentQuestion = game.getAq().generateRandomQuestion(game.getCurrentCategory(), game.availableQuestions);
             opponent.currentQuestion = currentQuestion;
@@ -145,7 +146,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
             System.out.println("correctAnswer: " + correctAnswer);
             //validera svar mot correctanswer och skicka tillbaks
             serverProtocol.sendAnswerResult(output, correctAnswer);
-            System.out.println("FINISHING");
         }
         // SLEEP THREAD(3-5sec?) SO WE CAN CHECK OUR RESULT
         while(true) {
@@ -257,8 +257,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         game.currentQuestionWithinRound++;
                     }
                     System.out.println("status game 2");
-                    setNewQuestionGenerated(false);
-                    opponent.setNewQuestionGenerated(false);
                     // Send player to score/result window
 
 
