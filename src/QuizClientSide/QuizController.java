@@ -104,9 +104,12 @@ public class QuizController implements Runnable{
 
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
-                System.out.println("ScoreBoard");
-
-                pGUI.changeWindow("1");
+                try {
+                    networkProtocolClient.sendPlayerReady(client.getOutputStream());
+                    pGUI.scoreBoardStartButton.setText("Waiting for other player to accept");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

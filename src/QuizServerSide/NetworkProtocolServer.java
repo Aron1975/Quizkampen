@@ -56,6 +56,11 @@ public class NetworkProtocolServer {
         System.out.println("CATEGORY PICKED: " + lastReadObject);
     }
 
+    public void parseGetReady(ObjectInputStream input, QuizServerPlayer quizServerPlayer) throws IOException, ClassNotFoundException {
+        Object lastReadObject = input.readObject();
+        quizServerPlayer.setReady((boolean)lastReadObject);
+    }
+
 
     public static void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolServer.PROTOCOL_SEND.PLAYER_READY.ordinal()));
@@ -117,5 +122,4 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.UPDATE_WINNER_LABEL.ordinal()));
         outputStream.writeObject(winner);
     }
-
 }

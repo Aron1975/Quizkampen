@@ -25,6 +25,7 @@ public class NetworkProtocolClient {
         GET_CATEGORY,
         SEND_ANSWER,
         CHOSEN_CATEGORY,
+        PLAYER_READY,
 
     }
 
@@ -100,6 +101,11 @@ public class NetworkProtocolClient {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.CHOSEN_CATEGORY.ordinal()));
         outputStream.writeObject(name);
         quizController.pGUI.setCategoryNameLabel(name);
+    }
+
+    public void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
+        outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.PLAYER_READY.ordinal()));
+        outputStream.writeObject((boolean)true);
     }
 
 
