@@ -35,7 +35,7 @@ public class NetworkProtocolClient {
                 parsePlayerReady(inputStream);
                 break;
             case 1:
-                parseGetCategory(inputStream);
+                parseGetCategories(inputStream);
                 break;
             case 2:
                 parseGetOpponentName(inputStream);
@@ -59,6 +59,7 @@ public class NetworkProtocolClient {
                 parseIsPlayerToChooseCategory(inputStream);
                 break;
             case 9:
+                parseGetChoosenCategory(inputStream);
                 break;
             case 10:
                 break;
@@ -92,6 +93,7 @@ public class NetworkProtocolClient {
     public void sendChosenCategory(ObjectOutputStream outputStream, String name) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.CHOSEN_CATEGORY.ordinal()));
         outputStream.writeObject(name);
+        quizController.pGUI.setCategoryNameLabel(name);
     }
 
 
@@ -106,7 +108,7 @@ public class NetworkProtocolClient {
         System.out.println("PLAYER READY AFTER READ FROM SERVER: " + quizController.player.getReadyToStartGame());
     }
 
-    public void parseGetCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parseGetCategories(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
@@ -158,5 +160,11 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeCategoryWindowState((boolean) lastReadObject);
         System.out.println("Ändra CatWin till: " + (boolean)lastReadObject);
+    }
+
+    public void parseGetChoosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
+        System.out.println("Receive chosen Category: " + (String) lastReadObject);
     }
 }

@@ -37,6 +37,8 @@ public class QuizGUI extends JFrame {
             getImage().getScaledInstance(imageIconSiza, imageIconSiza, Image.SCALE_SMOOTH));
     ImageIcon loseIcon = new ImageIcon(new ImageIcon("Images/wrongAnswerWithBorder.png").
             getImage().getScaledInstance(imageIconSiza, imageIconSiza, Image.SCALE_SMOOTH));
+    ImageIcon emptyscore2 = new ImageIcon(new ImageIcon("Images/emptyAnswerWithBorder.png").
+            getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 
     //CardLayout Panel
     JPanel mainQuizPanel = new JPanel();
@@ -195,7 +197,7 @@ public class QuizGUI extends JFrame {
         playerAvatarPanel2.setLayout(new BoxLayout(playerAvatarPanel2, BoxLayout.Y_AXIS));
         playerCategoryPanel.setLayout(new BoxLayout(playerCategoryPanel, BoxLayout.Y_AXIS));
 
-        playerAvatarPanel1.add(Box.createRigidArea(new Dimension(40, 10)));
+        playerAvatarPanel1.add(Box.createRigidArea(new Dimension(0, 10)));
         playerAvatarPanel1.add(player1);
         playerAvatarPanel1.add(player1NameLabel);
         playerAvatarPanel1.add(roundQuestionSpotsPanel1);
@@ -212,12 +214,23 @@ public class QuizGUI extends JFrame {
         playerPanel.add(playerAvatarPanel1,BorderLayout.WEST);
         playerPanel.add(playerCategoryPanel,BorderLayout.CENTER);
         playerPanel.add(playerAvatarPanel2,BorderLayout.EAST);
-        /*
-       Lägg till !!!!!
-    JLabel[] roundQuestionSpotsLabel1 = new JLabel[3];
-    JLabel[] roundQuestionSpotsLabel2 = new JLabel[3];
 
-         */
+       // roundQuestionSpotsPanel1.setLayout(new FlowLayout());
+        //roundQuestionSpotsPanel2.setLayout(new FlowLayout());
+
+        for(int i = 0; i<roundQuestionSpotsLabel1.length; i++){
+
+            roundQuestionSpotsLabel1[i]=new JLabel();
+            roundQuestionSpotsLabel2[i]=new JLabel();
+            roundQuestionSpotsLabel1[i].setIcon(emptyscore2);
+            roundQuestionSpotsLabel2[i].setIcon(emptyscore2);
+            roundQuestionSpotsPanel1.add(roundQuestionSpotsLabel1[i]);
+            roundQuestionSpotsPanel2.add(roundQuestionSpotsLabel2[i]);
+
+        }
+        roundQuestionSpotsPanel1.setBackground(panelsBackgroundColor);
+        roundQuestionSpotsPanel2.setBackground(panelsBackgroundColor);
+
 
     }
 
@@ -233,18 +246,14 @@ public class QuizGUI extends JFrame {
         questionLabel.setOpaque(true);
         questionLabel.setFont(f);
 
-
         progressBar.setMinimum(0);
         progressBar.setMaximum(3);
         progressBar.setValue(1);
         progressBar.setPreferredSize(new Dimension(screenX,16));
         progressBar.setForeground(Color.RED);
         progressBar.setBackground(Color.GRAY);
-        //questionPanel.add(questionLabel,BorderLayout.NORTH);
         questionPanel.add(questionLabel);
         questionPanel.add(Box.createVerticalStrut(10));
-        //questionPanel.add(progressBar,BorderLayout.SOUTH);
-        //questionPanel.add(progressBar);
     }
 
     public void setAnswerPanelProperties(){
@@ -494,6 +503,11 @@ public class QuizGUI extends JFrame {
     public String getButtonText(int buttonNr){
         return answerButtons[buttonNr].getText();
     }
+
+    public void setCategoryNameLabel(String category){
+        categoryNameLabel.setText(category);
+    }
+
 
     //SCOREBOARD
     public void setScoreBoard(int player, int questionNr, boolean correctAnswer){

@@ -4,8 +4,10 @@ package QuizServerSide;
 import QuizServerSide.Questions.ArrayOfQuestions;
 import QuizServerSide.Questions.Questions;
 
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class QuizServerGame implements Serializable {
 
@@ -24,42 +26,87 @@ public class QuizServerGame implements Serializable {
     ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
     String currentCorrectAnswer;
     ArrayOfQuestions aq;
-    ArrayList <Questions> availableQuestions = new ArrayList<>();
+    ArrayList<Questions> availableQuestions = new ArrayList<>();
+    Properties p = new Properties();
+    String filename = "src/Quizkampen.properties";
 
-    QuizServerGame()
-    {
+    QuizServerGame() {
         aq = new ArrayOfQuestions();
+        readPropertyFile();
+        try {
+            this.numberOfQuestionsPerRound = Integer.parseInt(p.getProperty("NrOfQuestions", "2"));
+            this.totalRounds = Integer.parseInt(p.getProperty("NrOfRounds", "2"));
+            this.nrOfCategories = Integer.parseInt(p.getProperty("nrOfCategories", "3"));
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    /*
-    QuizServerGame(QuizServerPlayer playerOne, QuizServerPlayer playerTwo)
-    {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+    public void readPropertyFile() {
+        try {
+            p.load(new FileInputStream(filename));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-     */
 
-    public void setCurrentRound(int currentRound) { this.currentRound = currentRound; }
-    public int getCurrentRound() { return currentRound; }
+    public void setCurrentRound(int currentRound) {
+        this.currentRound = currentRound;
+    }
 
-    public void setTotalRounds(int totalRounds) { this.totalRounds = totalRounds; }
-    public int getTotalRounds() { return totalRounds; }
+    public int getCurrentRound() {
+        return currentRound;
+    }
 
-    public void setCurrentQuestion(String currentQuestion) { this.currentQuestion = currentQuestion; }
-    public String getCurrentQuestion() { return currentQuestion; }
+    public void setTotalRounds(int totalRounds) {
+        this.totalRounds = totalRounds;
+    }
 
-    public void setCurrentAnswerAlternatives(ArrayList<String> currentAnswerAlternatives) { this.currentAnswerAlternatives = currentAnswerAlternatives; }
-    public ArrayList<String> getCurrentAnswerAlternatives() { return currentAnswerAlternatives; }
+    public int getTotalRounds() {
+        return totalRounds;
+    }
 
-    public void setCurrentCorrectAnswer(String currentCorrectAnswer) { this.currentCorrectAnswer = currentCorrectAnswer; }
-    public String getCurrentCorrectAnswer() { return currentCorrectAnswer; }
+    public void setCurrentQuestion(String currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
 
-    public void setNumberOfQuestionsPerRound(int numberOfQuestionsPerRound) { this.numberOfQuestionsPerRound = numberOfQuestionsPerRound; }
-    public int getNumberOfQuestionsPerRound() { return numberOfQuestionsPerRound; }
+    public String getCurrentQuestion() {
+        return currentQuestion;
+    }
 
-    public void setCurrentCategory(String currentCategory) { this.currentCategory = currentCategory; }
-    public String getCurrentCategory() { return currentCategory; }
+    public void setCurrentAnswerAlternatives(ArrayList<String> currentAnswerAlternatives) {
+        this.currentAnswerAlternatives = currentAnswerAlternatives;
+    }
+
+    public ArrayList<String> getCurrentAnswerAlternatives() {
+        return currentAnswerAlternatives;
+    }
+
+    public void setCurrentCorrectAnswer(String currentCorrectAnswer) {
+        this.currentCorrectAnswer = currentCorrectAnswer;
+    }
+
+    public String getCurrentCorrectAnswer() {
+        return currentCorrectAnswer;
+    }
+
+    public void setNumberOfQuestionsPerRound(int numberOfQuestionsPerRound) {
+        this.numberOfQuestionsPerRound = numberOfQuestionsPerRound;
+    }
+
+    public int getNumberOfQuestionsPerRound() {
+        return numberOfQuestionsPerRound;
+    }
+
+    public void setCurrentCategory(String currentCategory) {
+        this.currentCategory = currentCategory;
+    }
+
+    public String getCurrentCategory() {
+        return currentCategory;
+    }
+
     public ArrayOfQuestions getAq() {
         return aq;
     }

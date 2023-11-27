@@ -240,6 +240,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                             // (These can be coupled inside parseChosenCategory, but probably shouldn't to more easily follow code logic)
                             serverProtocol.sendChangeWindow(output, "2");
                             opponent.getNetworkProtocolServer().sendChangeWindow(opponent.getOutputStream(), "2");
+                            //Send Current Category to Opponent
+                            opponent.getNetworkProtocolServer().sendCategoryToOpponent(opponent.getOutputStream(), game.currentCategory);
                         }
                     }
 
