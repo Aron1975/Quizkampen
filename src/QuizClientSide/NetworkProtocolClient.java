@@ -1,6 +1,7 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
+import QuizServerSide.NetworkProtocolServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -62,6 +63,7 @@ public class NetworkProtocolClient {
                 parseGetChoosenCategory(inputStream);
                 break;
             case 10:
+                parseButtonResetColor(inputStream);
                 break;
             case 11:
                 break;
@@ -175,4 +177,11 @@ public class NetworkProtocolClient {
         quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
         System.out.println("Receive chosen Category: " + (String) lastReadObject);
     }
+
+    public void parseButtonResetColor(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject =inputStream.readObject();
+        quizController.pGUI.changeAnsweredButtonReset((int)lastReadObject);
+
+    }
+
 }

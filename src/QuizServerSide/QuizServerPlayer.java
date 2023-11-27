@@ -121,6 +121,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
         // Plocka nästa fråga från databas
+        serverProtocol.sendButtonResetColor(output, lastAnsweredButtonIndex);
         while (!isNewQuestionGenerated() && !whosTurn) {
             Thread.sleep(1);
         }

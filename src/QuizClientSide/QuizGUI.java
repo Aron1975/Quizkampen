@@ -464,6 +464,11 @@ public class QuizGUI extends JFrame {
             answerButtons[buttonIndex].setBackground(Color.RED);
         }
     }
+
+    public void changeAnsweredButtonReset(int buttonIndex){
+        answerButtons[buttonIndex].setBackground(answButtonColor);
+    }
+
     public void setCategoryName(String catName){
         categoryNameLabel.setText("   " + catName);
     }

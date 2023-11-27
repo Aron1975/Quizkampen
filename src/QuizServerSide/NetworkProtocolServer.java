@@ -30,6 +30,7 @@ public class NetworkProtocolServer {
         OPPONENT_NOT_READY,
         PLAYER_TO_CHOOSE_CATEGORY,
         SEND_CATEGORY_TO_OPPONENT,
+        SEND_BUTTON_RESET_COLOR,
     }
 
     public void parsePacket(ObjectInputStream inputStream, NetworkMessage networkMessage) throws IOException, ClassNotFoundException {
@@ -154,5 +155,10 @@ public class NetworkProtocolServer {
     public void sendCategoryToOpponent(ObjectOutputStream outputStream, String category) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_CATEGORY_TO_OPPONENT.ordinal()));
         outputStream.writeObject(category);
+    }
+
+    public void sendButtonResetColor(ObjectOutputStream outputStream,int buttonIndex) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_BUTTON_RESET_COLOR.ordinal()));
+        outputStream.writeObject(buttonIndex);
     }
 }
