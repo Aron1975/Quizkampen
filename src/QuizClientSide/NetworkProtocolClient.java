@@ -127,22 +127,26 @@ public class NetworkProtocolClient {
     public void parseChangeWindow(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeWindow((String) lastReadObject);
+        System.out.println("CHANGE WINDOW: " + (String) lastReadObject);
     }
 
     public void parseScore(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setScorePlayer1((int) lastReadObject);
+        System.out.println("SCORE: " + (int) lastReadObject);
     }
     public void parseOpponentNotReady(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.player.setOpponentReady((boolean) lastReadObject);
         quizController.pGUI.categoryLabelPickCategory.setText("Waiting for other player");
+        System.out.println("OPPONENT NOT READY: " + (boolean) lastReadObject);
     }
     public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         //Skickar från klient till server
         Object lastReadObject = inputStream.readObject();
         quizController.player.setCurrentQuestion((String) lastReadObject);
         quizController.pGUI.questionLabel.setText((String) lastReadObject);
+        System.out.println("Sending questions parse" + (String) lastReadObject);
         lastReadObject = inputStream.readObject();
         String[] alternatives = (String[]) lastReadObject;
         quizController.player.setCurrentAlternatives(alternatives);

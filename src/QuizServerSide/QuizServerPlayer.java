@@ -39,6 +39,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean ready;
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
+    int currentQuestionWithinRound;
 
 
 
@@ -124,8 +125,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
             Thread.sleep(1);
         }
         if (whosTurn) {
-            setNewQuestionGenerated(false);
-            opponent.setNewQuestionGenerated(false);
             System.out.println("PICK A QUESTION FROM CATEGORY: " + game.getCurrentCategory());
             currentQuestion = game.getAq().generateRandomQuestion(game.getCurrentCategory());
             opponent.currentQuestion = currentQuestion;
@@ -155,6 +154,10 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 break;
             }
         }
+        if(whosTurn){
+            setNewQuestionGenerated(false);
+            opponent.setNewQuestionGenerated(false);
+        }
         Thread.sleep(3000);
 
     }
@@ -162,6 +165,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void run()
     {
         try {
+            int i = 0;
             while (true) {
 
                 if (status == LOBBY) {
@@ -250,23 +254,22 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     status = GAME;
 
                 }
+
                 if (status == GAME) {
                     //CHECK startNewQuestion FUNCTION IF NEED TO CODE MORE STUFF
                     // (Purpose: A function we can call everytime we want to start a new question instead of copy/paste same code)
                     // It should have all code required to operate a complete question cycle (Even handling send answer result and such)
-                    System.out.println("status game");
+                    System.out.println("status game" + i);
                     startNewQuestion(getCategoryPicker());
-                    if(categoryPicker) {
-                        game.currentQuestionWithinRound++;
-                    }
-                    System.out.println("status game 2");
+                    currentQuestionWithinRound++;
                     // Send player to score/result window
 
 
-                    if (game.currentQuestionWithinRound == game.numberOfQuestionsPerRound) {
+                    if (currentQuestionWithinRound == game.numberOfQuestionsPerRound) {
                         serverProtocol.sendChangeWindow(output, "3");
                         status = SCORE;
                     }
+                    i++;
                 }
 
                 if(status == SCORE) {
