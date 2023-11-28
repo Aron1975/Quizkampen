@@ -239,13 +239,12 @@ public class QuizGUI extends JFrame {
         questionPanel.setPreferredSize(new Dimension(screenX,screenY/2));
         questionPanel.setBackground(panelsBackgroundColor);
         questionLabel.setPreferredSize(new Dimension(screenX,screenY/3));
-        questionLabel.setBackground(Color.BLUE);
+        questionLabel.setBackground(Color.ORANGE);
         questionLabel.setText(questionText);
         questionLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         questionLabel.setVerticalTextPosition(SwingConstants.CENTER);
         questionLabel.setOpaque(true);
         questionLabel.setFont(f);
-
         progressBar.setMinimum(0);
         progressBar.setMaximum(3);
         progressBar.setValue(1);

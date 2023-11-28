@@ -6,6 +6,8 @@ import QuizServerSide.NetworkProtocolServer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Spliterator;
+import java.util.Spliterators;
 
 public class NetworkProtocolClient {
 
@@ -157,9 +159,15 @@ public class NetworkProtocolClient {
 
     public void parseSendQuestion(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         //Skickar från klient till server
-        Object lastReadObject = inputStream.readObject();
-        quizController.player.setCurrentQuestion((String) lastReadObject);
-        quizController.pGUI.questionLabel.setText((String) lastReadObject);
+        String[] splitQuestionText;
+        Object lastReadObject = (String) inputStream.readObject();
+        String str = (String) lastReadObject;
+        //String[] splitQuestionText = str.split() split.
+        //String temporaryQuestion="<html>"+rad1+"<br>"+rad2+"</html>";//);(String)lastReadObject;
+        //String html = "<html><body style='width: %1spx'>%1s";
+        //String.format(html, 200, temporaryQuestion);
+        quizController.player.setCurrentQuestion("<html>"+str+"</html>");
+        quizController.pGUI.questionLabel.setText("<html>"+str+"</html>");
         System.out.println("Sending questions parse" + (String) lastReadObject);
         lastReadObject = inputStream.readObject();
         String[] alternatives = (String[]) lastReadObject;
@@ -168,6 +176,7 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[1].setText(alternatives[1]);
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {

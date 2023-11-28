@@ -81,7 +81,7 @@ public class QuizController implements Runnable{
                     throw new RuntimeException(ex);
                 }
 
-                System.out.println("pressed button");
+                //System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.answerButtons[1]){
@@ -91,7 +91,7 @@ public class QuizController implements Runnable{
                     throw new RuntimeException(ex);
                 }
 
-                System.out.println("pressed button");
+                //System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.answerButtons[2]){
@@ -101,7 +101,7 @@ public class QuizController implements Runnable{
                     throw new RuntimeException(ex);
                 }
 
-                System.out.println("pressed button");
+                //System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.answerButtons[3]){
@@ -110,7 +110,7 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                System.out.println("pressed button");
+                //System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
