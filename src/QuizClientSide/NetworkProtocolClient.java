@@ -156,7 +156,7 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[1].setText(alternatives[1]);
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
-        quizController.player.increaseQuestionNr();
+        quizController.player.roundAndQuestionCounter(); // Updatera Player current round and question
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -165,6 +165,7 @@ public class NetworkProtocolClient {
         int buttonIndex=(int)inputStream.readObject();
         quizController.player.setCurrentAnsweredResult(result);
         quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
+        quizController.pGUI.currentScoreBoard(quizController.player.getQuestionNr(), result); // Uppdater score för spelaren i frågeomgången
 
     }
 

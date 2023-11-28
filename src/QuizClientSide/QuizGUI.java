@@ -524,6 +524,14 @@ public class QuizGUI extends JFrame {
         }
     }
 
+    public void currentScoreBoard(int questionNr, boolean correctAnswer){
+        if(correctAnswer) {
+            roundQuestionSpotsLabel1[0].setIcon(this.winIcon);
+        }else{
+            roundQuestionSpotsLabel1[0].setIcon(this.loseIcon);
+        }
+    }
+
     //General
     public void changeWindow(String category){
         cardLo.show(mainQuizPanel, category);
