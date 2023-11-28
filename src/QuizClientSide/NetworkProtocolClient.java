@@ -127,6 +127,7 @@ public class NetworkProtocolClient {
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
         //System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
+        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -168,7 +169,9 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[1].setText(alternatives[1]);
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+        System.out.println("R: " + quizController.player.getRoundNr() + " Q: " + quizController.player.getQuestionNr());
         quizController.player.roundAndQuestionCounter(); // Updatera Player current round and question
+        System.out.println("R: " + quizController.player.getRoundNr() + " Q: " + quizController.player.getQuestionNr());
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -177,7 +180,7 @@ public class NetworkProtocolClient {
         int buttonIndex = (int) inputStream.readObject();
         quizController.player.setCurrentAnsweredResult(result);
         quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
-        quizController.pGUI.currentScoreBoard(quizController.player.getQuestionNr(), result); // Uppdater score för spelaren i frågeomgången
+        quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result); // Uppdater score för spelaren i frågeomgången
 
     }
 

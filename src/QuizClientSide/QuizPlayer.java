@@ -13,9 +13,9 @@ public class QuizPlayer {
     QuizPlayer opponent;
 
     //Implement for keep track on which question and which round we are in.
-    int nrOfQuestionsPerRound = 2;   // Hämta från server
+    int nrOfQuestionsPerRound = 3;   // Hämta från server
     int nrOfRounds = 3;      // Hämta från server
-    int questionNr = 1;
+    int questionNr = 0;
     int roundNr = 1;
 
     public QuizPlayer(){}
@@ -43,6 +43,10 @@ public class QuizPlayer {
 
     public int getQuestionNr() {
         return questionNr;
+    }
+
+    public int getRoundNr() {
+        return roundNr;
     }
 
     public String getName() {

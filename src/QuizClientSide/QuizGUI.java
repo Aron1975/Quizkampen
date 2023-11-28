@@ -534,13 +534,23 @@ public class QuizGUI extends JFrame {
         }
     }
 
-    public void currentScoreBoard(int questionNr, boolean correctAnswer){
+    public void setCurrentScoreBoard(int questionNr, boolean correctAnswer){
         if(correctAnswer) {
-            roundQuestionSpotsLabel1[0].setIcon(this.winIcon);
+            roundQuestionSpotsLabel1[questionNr-1].setIcon(this.winIcon);
         }else{
-            roundQuestionSpotsLabel1[0].setIcon(this.loseIcon);
+            roundQuestionSpotsLabel1[questionNr-1].setIcon(this.loseIcon);
         }
     }
+
+    public void resetCurrentScoreBoard(){
+
+        for(int i = 0; i<roundQuestionSpotsLabel1.length; i++){
+
+            roundQuestionSpotsLabel1[i].setIcon(emptyscore2);
+            roundQuestionSpotsLabel2[i].setIcon(emptyscore2);
+        }
+    }
+
 
     //General
     public void changeWindow(String category){
