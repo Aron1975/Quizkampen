@@ -41,6 +41,10 @@ public class QuizController implements Runnable{
         //t.start();
     }
 
+    public QuizController() {
+
+    }
+
     @Override
     public void run() {
         while(!Thread.interrupted()) {
@@ -76,6 +80,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 try {
@@ -83,6 +90,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 try {
@@ -90,6 +100,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 try {
@@ -97,12 +110,16 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
-                System.out.println("ScoreBoard");
-
-                pGUI.changeWindow("1");
+                try {
+                    networkProtocolClient.sendPlayerReady(client.getOutputStream());
+                    pGUI.scoreBoardStartButton.setText("Waiting for other player to accept");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
