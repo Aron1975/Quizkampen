@@ -46,21 +46,7 @@ public class ArrayOfQuestions {
         allQuestionsFromFile.remove(tempQuestion.getQuestion());
         System.out.println(tempQuestion.question);
        return tempQuestion;
-
-
-
     }
-
-    /*public String[] randomizeAnswerAlternatives(String[] answers){
-
-
-
-
-
-        return answers;
-    }
-
-     */
 
     public String[] randomizeAnswerAlternatives(String[] answers) {
         List<String> shuffledAlternatives = new ArrayList<>(Arrays.asList(answers));

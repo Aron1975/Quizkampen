@@ -1,6 +1,7 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
+import QuizServerSide.NetworkProtocolServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -63,7 +64,7 @@ public class NetworkProtocolClient {
                 parseIsPlayerToChooseCategory(inputStream);
                 break;
             case 9:
-                parseGetChoosenCategory(inputStream);
+                parseGetChosenCategory(inputStream);
                 break;
             case 10:
                 parseButtonResetColor(inputStream);
@@ -128,7 +129,8 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
-        System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
+        //System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
+        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -177,6 +179,9 @@ public class NetworkProtocolClient {
             quizController.timer.getTimer().stop();
         }
         quizController.timer = new AnswerTimer(quizController);
+        System.out.println("R: " + quizController.player.getRoundNr() + " Q: " + quizController.player.getQuestionNr());
+        quizController.player.roundAndQuestionCounter(); // Updatera Player current round and question
+        System.out.println("R: " + quizController.player.getRoundNr() + " Q: " + quizController.player.getQuestionNr());
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -184,16 +189,18 @@ public class NetworkProtocolClient {
         boolean result = ((boolean) lastReadObject);
         int buttonIndex = (int) inputStream.readObject();
         quizController.player.setCurrentAnsweredResult(result);
-        quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
+        quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
+        quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result); // Uppdater score för spelaren i frågeomgången
+
     }
 
     public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeCategoryWindowState((boolean) lastReadObject);
-        System.out.println("Ändra CatWin till: " + (boolean) lastReadObject);
+        System.out.println("Ändra CatWin till: " + (boolean)lastReadObject);
     }
 
-    public void parseGetChoosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parseGetChosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
         System.out.println("Receive chosen Category: " + (String) lastReadObject);
