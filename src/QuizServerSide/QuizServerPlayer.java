@@ -215,6 +215,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     if(categoryPicker) {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
                         serverProtocol.sendCategories(output, game.categories);
+                        //send to opponent as well needed for client updates
+                        opponent.getNetworkProtocolServer().sendCategories(opponent.getOutputStream(), game.categories);
                     }
                     System.out.println("Waiting for opponent to pick category" + playerName);
 
