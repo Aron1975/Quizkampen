@@ -7,34 +7,6 @@ import javax.swing.*;
 public class AnswerTimer {
     Timer timer;
 
-    public int getR() {
-        return r;
-    }
-
-    public void setR(int r) {
-        this.r = r;
-    }
-
-    public int getG() {
-        return g;
-    }
-
-    public void setG(int g) {
-        this.g = g;
-    }
-
-    public int getB() {
-        return b;
-    }
-
-    public void setB(int b) {
-        this.b = b;
-    }
-
-    int r;
-    int g;
-    int b;
-
     AnswerTimer(QuizController quizController) {
             ActionListener listener = new ActionListener() {
                 int counter = quizController.pGUI.progressBar.getMaximum();
