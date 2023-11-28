@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.Timer;
 
 public class NetworkProtocolClient {
 
@@ -172,7 +173,11 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
 
+        CountDown timer = new CountDown(quizController);
     }
+
+
+
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
