@@ -15,6 +15,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     private final int CATEGORY = 1;
     private final int GAME = 2;
     private final int SCORE = 3;
+    private final int END = 4;
 
     //Testing------------------
     int status = LOBBY;
@@ -40,6 +41,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
     int currentQuestionWithinRound;
+    int currentRound = 0;
 
 
 
@@ -168,7 +170,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
         try {
             int i = 0;
             while (true) {
-
                 if (status == LOBBY) {
                     //Player set name
                     Object lastReadObject = input.readObject();
@@ -208,13 +209,14 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     }
                 }
 
-
                 if (status == CATEGORY) {
+                    currentQuestionWithinRound = 0;
 
                     if(categoryPicker) {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
                         serverProtocol.sendCategories(output, game.categories);
                     }
+                    System.out.println("Waiting for opponent to pick category" + playerName);
 
                     if(opponent.getReady()) {
                         serverProtocol.sendIsPlayerToChooseCategory(output, categoryPicker);
@@ -250,10 +252,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                             opponent.getNetworkProtocolServer().sendCategoryToOpponent(opponent.getOutputStream(), game.currentCategory);
                         }
                     }
-
                     //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = GAME;
-
                 }
 
                 if (status == GAME) {
@@ -274,7 +274,35 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
+                    currentRound++;
+                    serverProtocol.sendResetStartNewRoundButton(output);
                     switchCategoryPicker();
+                    if (currentRound != game.getTotalRounds()) {
+                        setReady(false);
+                        //Wait for both player to press "Start new round" from score window
+                        Object lastReadObject = input.readObject();
+                        if (lastReadObject instanceof NetworkMessage) {
+                            serverProtocol.parseGetReady(input, this);
+                        }
+                        while (true) {
+                            //System.out.println("Players ready?: " + getReady() + " | " + opponent.getReady());
+                            //Need to sleep(or any code, even print above will make it stop bug), else 1st client don't update opponent namelabel (doesn't execute sendOpponentName)
+                            //Because compiler optimization?
+                            Thread.sleep(1);
+                            if (getReady() && (opponent.getReady())) {
+                                break;
+                            }
+                        }
+                        serverProtocol.sendChangeWindow(output, "1");
+                        status = CATEGORY;
+                    }
+                    else {
+                        serverProtocol.sendDisableStartNewRoundButton(output);
+                        status = END;
+                        }
+
+
+
                     //Check if last question was final question of round
 
                     //Check if last round was played
@@ -294,11 +322,18 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     //No meaning sitting in lobby unless next line is made so we might want to just end game completely or something else
                     //lobby should have 2 buttons added to it ("Check highscores" and "Settings")? - Settings let's us adjust GUI color and the other client stuff
                 }
-
                 output.flush(); // True?: One flush per loop should be more than enough if not too much, don't call flush more than once per loop
             }
         }catch (IOException ex) {
-            throw new RuntimeException(ex);
+            System.out.println(getPlayerName() + " lost connection");
+            try {
+                opponent.getNetworkProtocolServer().sendChangeWindow(opponent.getOutputStream(),"3");
+                System.out.println("sendCHANGEwindow");
+                opponent.getNetworkProtocolServer().sendUpdateWinnerLabel(opponent.getOutputStream(),true);
+                System.out.println("sendUpdateWinnerLabel");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         } catch (InterruptedException e) {
