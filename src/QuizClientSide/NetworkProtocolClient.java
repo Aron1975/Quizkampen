@@ -79,6 +79,7 @@ public class NetworkProtocolClient {
                 parseDisableStartNewRoundButton();
                 break;
             case 14:
+                parseCorrectAnswerIndex(inputStream);
                 break;
             case 15:
                 break;
@@ -92,6 +93,7 @@ public class NetworkProtocolClient {
         outputStream.writeObject(answer);
         outputStream.writeObject(buttonIndex);
         quizController.pGUI.setLastAnsweredQuestion(answer);
+        System.out.println("Send answer to server");
     }
 
     public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
@@ -193,8 +195,6 @@ public class NetworkProtocolClient {
             quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
         } ; // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
-
-
     }
 
     public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -211,9 +211,7 @@ public class NetworkProtocolClient {
 
     public void parseButtonResetColor(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        if ((int) lastReadObject != 4) {
-            quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
-        }
+        quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
     }
 
     public void parseUpdateWinnerLabel(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -227,5 +225,12 @@ public class NetworkProtocolClient {
     }
     public void parseDisableStartNewRoundButton() throws IOException, ClassNotFoundException {
         quizController.pGUI.scoreBoardStartButton.setVisible(false);
+    }
+    public void parseCorrectAnswerIndex(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.changeAnsweredButtonColor(true, (int) lastReadObject);
+    }
+    public void parseOpponentScoresArray(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
     }
 }

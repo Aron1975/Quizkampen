@@ -144,7 +144,9 @@ public class QuizServerPlayer extends Thread implements Serializable {
             boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this); //ParseAnswer calls Question.checkAnswer()
             if (correctAnswer){
                 setScore(1);
-
+            }
+            else {
+                serverProtocol.sendCorrectAnswerIndex(output, currentQuestion.correctAnswerIndex());
             }
             System.out.println("correctAnswer: " + correctAnswer);
             //validera svar mot correctanswer och skicka tillbaks
@@ -276,6 +278,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
+                    //serverProtocol.sendOpponentScoreArray(output, );
                     currentRound++;
                     serverProtocol.sendResetStartNewRoundButton(output);
                     switchCategoryPicker();

@@ -475,10 +475,9 @@ public class QuizGUI extends JFrame {
     }
 
     public void changeAnsweredButtonReset(int buttonIndex){
-        answerButtons[buttonIndex].setBackground(answButtonColor);
         for(JButton jb:answerButtons) {
             jb.setEnabled(true);
-            //System.out.println(jb);
+            jb.setBackground(answButtonColor);
         }
     }
 

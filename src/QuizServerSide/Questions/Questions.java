@@ -55,6 +55,14 @@ public class Questions {
     public boolean checkAnswer(String answer){
         return answer.equals(correctAlternative);
     }
+    public int correctAnswerIndex(){
+        for(int i = 0; i < alternative.length; i++){
+            if(alternative[i].equals(correctAlternative)){
+                return i;
+            }
+        }
+        return 0;
+    }
 }
 
 

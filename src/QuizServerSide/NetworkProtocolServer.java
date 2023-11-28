@@ -34,6 +34,8 @@ public class NetworkProtocolServer {
         UPDATE_WINNER_LABEL,
         RESET_START_NEW_ROUND_BUTTON,
         DISABLE_START_NEW_ROUND_BUTTON,
+        CORRECT_ANSWER_INDEX,
+        OPPONENT_SCORES,
     }
 
     public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
@@ -130,4 +132,14 @@ public class NetworkProtocolServer {
     public void sendDisableStartNewRoundButton(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.DISABLE_START_NEW_ROUND_BUTTON.ordinal()));
     }
+    public void sendCorrectAnswerIndex(ObjectOutputStream outputStream, int buttonIndex) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.CORRECT_ANSWER_INDEX.ordinal()));
+        outputStream.writeObject(buttonIndex);
+    }
+  /*  public void sendOpponentScoreArray(ObjectOutputStream outputStream, boolean[][] score) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_SCORES.ordinal()));
+        outputStream.writeObject(score);
+    }
+    */
+
 }
