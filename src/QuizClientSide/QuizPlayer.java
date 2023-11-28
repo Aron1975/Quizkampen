@@ -17,6 +17,8 @@ public class QuizPlayer {
     int nrOfRounds = 3;      // Hämta från server
     int questionNr = 0;
     int roundNr = 1;
+    Boolean[][] answers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
+    Boolean[][] opponentAnswers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
 
     public QuizPlayer(){}
 
@@ -39,6 +41,22 @@ public class QuizPlayer {
             this.questionNr=0;
             this.roundNr = 1;
         }
+    }
+
+    public boolean getAnswerResult(int round, int question) {
+        return answers[round][question];
+    }
+
+    public void setAnswerResult(int round, int question, boolean answer) {
+        this.answers[round][question] = answer;
+    }
+
+    public boolean getOpponentAnswerResult(int round, int question) {
+        return answers[round][question];
+    }
+
+    public void setOpponentAnswerResult(int round, int question, boolean answer) {
+        this.answers[round][question] = answer;
     }
 
     public int getQuestionNr() {

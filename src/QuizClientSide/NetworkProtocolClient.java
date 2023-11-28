@@ -193,8 +193,10 @@ public class NetworkProtocolClient {
         quizController.player.setCurrentAnsweredResult(result);
         if (buttonIndex != 4) {
             quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
-        } ; // Uppdater score för spelaren i frågeomgången
+        }  // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
+        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr(), result);
+
     }
 
     public void parseIsPlayerToChooseCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
