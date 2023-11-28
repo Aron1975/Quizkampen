@@ -24,6 +24,15 @@ public class QuizGUI extends JFrame {
     Font f2 = new Font(null, 3, 14);
     Dimension panelsDimension = new Dimension(screenX,screenY);
 
+    int rounds = 3;
+    int questionsPerRound = 3;
+    static int currentRound = 3;
+
+    int scorePlayer1 = 0;
+    int scorePlayer2 = 0;
+    int roundPointsPlayer1 = 2;
+    int roundPointsPlayer2 = 3;
+
     //Avatar images
     Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar4.png").
             getImage().getScaledInstance(imageIconSize2, imageIconSize3, Image.SCALE_SMOOTH));;
@@ -95,15 +104,7 @@ public class QuizGUI extends JFrame {
     String playerName1 = "Scaramanga";
     String playerName2 = "James Bond";
     String whoTurn = "Your turn";
-    static int rounds = 8;
-    int questionsPerRound = 3;
-    static int currentRound = 3;
 
-
-    int scorePlayer1 = 0;
-    int scorePlayer2 = 0;
-    int roundPointsPlayer1 = 2;
-    int roundPointsPlayer2 = 3;
     JPanel[][] roundPanel = new JPanel[3][rounds];
     JLabel[][] plupparLabel = new JLabel[3][rounds * questionsPerRound];
     JPanel scoreboardMainPanel = new JPanel();
@@ -524,6 +525,14 @@ public class QuizGUI extends JFrame {
 
 
     //SCOREBOARD
+
+    public void setRounds(int rounds){
+        this.rounds = rounds;
+    }
+    public void setQuestionsPerRound(int questionsPerRound){
+        this.questionsPerRound = questionsPerRound;
+    }
+
     public void setScoreBoard(int player, int questionNr, boolean correctAnswer){
         if(correctAnswer) {
             plupparLabel[player][questionNr].setIcon(this.winIcon);
@@ -549,6 +558,7 @@ public class QuizGUI extends JFrame {
             roundQuestionSpotsLabel2[i].setIcon(emptyscore2);
         }
     }
+
 
 
     //General
