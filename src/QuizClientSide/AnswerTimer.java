@@ -25,7 +25,7 @@ public class AnswerTimer {
                     if (counter<1) {
                         try {
                             if(quizController.pGUI.answerButtons[0].isEnabled()) {
-                                quizController.networkProtocolClient.sendAnswer(quizController.getClient().getOutputStream(), quizController.pGUI.answerButtons[0].getText(), 0);
+                                quizController.networkProtocolClient.sendAnswer(quizController.getClient().getOutputStream(), "", 4);
                             }
                         } catch (IOException e) {
                             throw new RuntimeException(e);

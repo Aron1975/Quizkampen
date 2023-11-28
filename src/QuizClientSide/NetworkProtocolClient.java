@@ -189,8 +189,11 @@ public class NetworkProtocolClient {
         boolean result = ((boolean) lastReadObject);
         int buttonIndex = (int) inputStream.readObject();
         quizController.player.setCurrentAnsweredResult(result);
-        quizController.pGUI.changeAnsweredButtonColor(result,buttonIndex);
-        quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result); // Uppdater score för spelaren i frågeomgången
+        if (buttonIndex != 4) {
+            quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
+        } ; // Uppdater score för spelaren i frågeomgången
+        quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
+
 
     }
 
@@ -208,7 +211,9 @@ public class NetworkProtocolClient {
 
     public void parseButtonResetColor(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
+        if ((int) lastReadObject != 4) {
+            quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
+        }
     }
 
     public void parseUpdateWinnerLabel(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
