@@ -460,13 +460,23 @@ public class QuizGUI extends JFrame {
 
         if(correctAnswer) {
             answerButtons[buttonIndex].setBackground(Color.GREEN);
+
         }else{
             answerButtons[buttonIndex].setBackground(Color.RED);
+
+        }
+        for(JButton jb:answerButtons){
+            jb.setEnabled(false);
+            //System.out.println(jb);
         }
     }
 
     public void changeAnsweredButtonReset(int buttonIndex){
         answerButtons[buttonIndex].setBackground(answButtonColor);
+        for(JButton jb:answerButtons) {
+            jb.setEnabled(true);
+            //System.out.println(jb);
+        }
     }
 
     public void setCategoryName(String catName){

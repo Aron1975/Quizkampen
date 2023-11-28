@@ -80,6 +80,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 try {
@@ -87,6 +90,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 try {
@@ -94,6 +100,9 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+
+                System.out.println("pressed button");
+
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 try {
@@ -101,6 +110,7 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                System.out.println("pressed button");
 
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
