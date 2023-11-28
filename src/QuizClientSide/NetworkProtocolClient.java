@@ -1,13 +1,10 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
-import QuizServerSide.NetworkProtocolServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Spliterator;
-import java.util.Spliterators;
 
 public class NetworkProtocolClient {
 
@@ -172,6 +169,11 @@ public class NetworkProtocolClient {
         quizController.pGUI.answerButtons[2].setText(alternatives[2]);
         quizController.pGUI.answerButtons[3].setText(alternatives[3]);
 
+        if(quizController.timer != null)
+        {
+            quizController.timer.getTimer().stop();
+        }
+        quizController.timer = new AnswerTimer(quizController);
     }
 
     public void parseAnswerResult(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {

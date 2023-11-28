@@ -1,8 +1,5 @@
 package QuizClientSide;
 
-import QuizServerSide.NetworkMessage;
-import QuizServerSide.NetworkProtocolServer;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,6 +13,7 @@ public class QuizController implements Runnable{
     String[] messageArrayFromServer;
     Thread t = new Thread(this);
     NetworkProtocolClient networkProtocolClient;
+    AnswerTimer timer;
 
     int round = 0;
     boolean newRound = true;
@@ -44,6 +42,8 @@ public class QuizController implements Runnable{
     public QuizController() {
 
     }
+
+    QuizClient getClient() { return client; }
 
     @Override
     public void run() {
