@@ -11,12 +11,17 @@ public class AnswerTimer {
             ActionListener listener = new ActionListener() {
                 int counter = quizController.pGUI.progressBar.getMaximum();
                 int r=0,g=255,b=0;
+                long startTime = System.currentTimeMillis();
+
+                long curTime = System.currentTimeMillis();
                 public void actionPerformed(ActionEvent ae) {
-                    counter--;
+                    curTime = System.currentTimeMillis();
+                    counter = quizController.pGUI.progressBar.getMaximum() - (int)(curTime - startTime);
                     r = 255 + (int)(-255 * ((float)counter / quizController.pGUI.progressBar.getMaximum()));
                     g = (int) (255 * ((float)counter / quizController.pGUI.progressBar.getMaximum()));
                     quizController.pGUI.progressBar.setValue(counter);
                     quizController.pGUI.progressBar.setForeground(new Color(r,g,b));
+
                     if (counter<1) {
                         try {
                             if(quizController.pGUI.answerButtons[0].isEnabled()) {
