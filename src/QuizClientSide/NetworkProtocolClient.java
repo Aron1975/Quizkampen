@@ -5,6 +5,9 @@ import QuizServerSide.NetworkMessage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.Timer;
 
 public class NetworkProtocolClient {
 
