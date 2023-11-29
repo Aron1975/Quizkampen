@@ -40,6 +40,7 @@ public class NetworkProtocolServer {
         RESET_ANSWER_RESULT_ICONS_FOR_ROUND,
         SEND_ROUND_SCORE,
         IS_WINNER,
+        SEND_PROPERTIES,
     }
 
     public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
@@ -168,4 +169,8 @@ public class NetworkProtocolServer {
         //System.out.println("Send player score to client Player 1 " + player1Score);
     }
 
+    public void sendProperties(ObjectOutputStream outputStream, Integer[] properties) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_PROPERTIES.ordinal()));
+        outputStream.writeObject(properties);
+    }
 }

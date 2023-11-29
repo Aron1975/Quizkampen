@@ -14,12 +14,12 @@ public class QuizPlayer {
 
 
     //Implement for keep track on which question and which round we are in.
-    int nrOfQuestionsPerRound = 3;   // Hämta från server
-    int nrOfRounds = 3;      // Hämta från server
+    int nrOfQuestionsPerRound = 2;   // Hämta från server
+    int nrOfRounds = 2;      // Hämta från server
     int questionNr = -1;
     int roundNr = 0;
-    Boolean[][] answers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
-    Boolean[][] opponentAnswers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
+    Boolean[][] answers; //= new Boolean[nrOfRounds][nrOfQuestionsPerRound];
+    Boolean[][] opponentAnswers; //= new Boolean[nrOfRounds][nrOfQuestionsPerRound];
 
     public QuizPlayer(){}
 
@@ -131,5 +131,18 @@ public class QuizPlayer {
 
     public void setOpponent(QuizPlayer opponent) {
         this.opponent = opponent;
+    }
+
+    public void setNrOfQuestionsPerRound(int nrOfQuestionsPerRound) {
+        this.nrOfQuestionsPerRound = nrOfQuestionsPerRound;
+    }
+
+    public void setNrOfRounds(int nrOfRounds) {
+        this.nrOfRounds = nrOfRounds;
+    }
+
+    public void setPlayerAnswers(int nrOfRounds, int nrOfQuestionsPerRound) {
+        this.answers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
+        this.opponentAnswers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
     }
 }

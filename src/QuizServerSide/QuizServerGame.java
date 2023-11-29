@@ -115,4 +115,8 @@ public class QuizServerGame implements Serializable {
     public void setAq(ArrayOfQuestions aq) {
         this.aq = aq;
     }
+
+    public int getNrOfCategories() {
+        return nrOfCategories;
+    }
 }

@@ -100,6 +100,7 @@ public class NetworkProtocolClient {
                 parseIsWinner(inputStream);
                 break;
             case 20:
+                parseGetProperties(inputStream);
                 break;
             case 21:
                 break;
@@ -339,5 +340,20 @@ public class NetworkProtocolClient {
             newText = "Draw!";
         }
         quizController.pGUI.whoTurnLabel.setText(newText);
+    }
+
+    public void parseGetProperties(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Integer[] properties = (Integer[]) inputStream.readObject();
+        quizController.player.setNrOfQuestionsPerRound(properties[0]);
+        quizController.player.setNrOfRounds(properties[1]);
+        quizController.player.setPlayerAnswers(properties[1], properties[0]);
+        quizController.pGUI.setNrOfRounds(properties[1]);
+        quizController.pGUI.setNrOfQuestionsPerRound(properties[0]);
+        quizController.pGUI.initWelcomeWindow();
+        quizController.pGUI.initPlayWindow();
+        quizController.pGUI.initCategoryWindow();
+        quizController.pGUI.initScoreboardWindow();
+        // properties[2]   //Antalet kategeorier;
+        System.out.println("Receive NrOfRounds: " + properties[1] + " NrOfQuestions: " + properties[0]);
     }
 }

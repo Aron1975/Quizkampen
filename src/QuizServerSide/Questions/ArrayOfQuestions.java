@@ -21,9 +21,11 @@ public class ArrayOfQuestions {
                 }
                 String question = reader.readLine();
                 String[] alternative = reader.readLine().split(";");
+                ArrayList<String> listAlternatives = new ArrayList<>(Arrays.asList(alternative));
+                Collections.shuffle(listAlternatives);
                 String correctalternative = reader.readLine();
 
-                allQuestionsFromFileInList.add(new Questions(category, question, alternative, correctalternative));
+                allQuestionsFromFileInList.add(new Questions(category, question, listAlternatives, correctalternative));
             }
             generateHashMap();
         } catch (IOException e) {

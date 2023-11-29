@@ -24,8 +24,8 @@ public class QuizGUI extends JFrame {
     Font f2 = new Font(null, 3, 14);
     Dimension panelsDimension = new Dimension(screenX,screenY);
 
-    int rounds = 3;
-    int questionsPerRound = 3;
+    int rounds = 4;
+    int questionsPerRound = 4;
     static int currentRound = 3;
 
     int scorePlayer1 = 0;
@@ -96,8 +96,8 @@ public class QuizGUI extends JFrame {
     JLabel categoryNameLabel = new JLabel("Film");
     JPanel roundQuestionSpotsPanel1 = new JPanel();
     JPanel roundQuestionSpotsPanel2 = new JPanel();
-    JLabel[] roundQuestionSpotsLabel1 = new JLabel[3];
-    JLabel[] roundQuestionSpotsLabel2 = new JLabel[3];
+    JLabel[] roundQuestionSpotsLabel1 = new JLabel[questionsPerRound];
+    JLabel[] roundQuestionSpotsLabel2 = new JLabel[questionsPerRound];
 
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
     JButton[] answerButtons = {new JButton(),new JButton(),new JButton(),new JButton()};
@@ -134,10 +134,10 @@ public class QuizGUI extends JFrame {
         mainQuizPanel.setPreferredSize(panelsDimension);
 
         //Initialize
-        initWelcomeWindow();
-        initPlayWindow();
-        initCategoryWindow();
-        initScoreboardWindow();
+        //initWelcomeWindow();
+        //initPlayWindow();
+        //initCategoryWindow();
+        //initScoreboardWindow();
 
         mainQuizPanel.add(welcomePanelMain, WELCOME);
         mainQuizPanel.add(playerPanelMain, PLAY);
@@ -652,5 +652,12 @@ public class QuizGUI extends JFrame {
             }
         }
     }
-}
 
+    public void setNrOfRounds(int rounds){
+        this.rounds=rounds;
+    }
+
+    public void setNrOfQuestionsPerRound(int questionsPerRound){
+        this.questionsPerRound = questionsPerRound;
+    }
+}
