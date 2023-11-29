@@ -298,13 +298,13 @@ public class NetworkProtocolClient {
     }
 
     public void parseRoundScores(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        int[] checkWhoWonRound = new int[2];
-        checkWhoWonRound = ((int[]) inputStream.readObject());
+        int scoreplayer1 = (int) inputStream.readObject();
+        int scoreplayer2 = (int) inputStream.readObject();
 
-        quizController.pGUI.setScorePlayer1(checkWhoWonRound[0]);
-        quizController.pGUI.setScorePlayer2(checkWhoWonRound[1]);
-        System.out.println("Player1Score"+checkWhoWonRound[0]);
-        System.out.println("Player2Score"+checkWhoWonRound[1]);
+        quizController.pGUI.setScorePlayer1(scoreplayer1);
+        quizController.pGUI.setScorePlayer2(scoreplayer2);
+        System.out.println("Player1Score"+scoreplayer1);
+        System.out.println("Player2Score"+scoreplayer2);
 
 
 

@@ -44,6 +44,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
     int currentQuestionWithinRound;
     int currentRound = 0;
     int[]scoresPerRound=new int[2];
+    int scoresPerRoundPlayer1 = scoresPerRound[0];
+    int scoresPerRoundPlayer2 = scoresPerRound[1];
 
 
 
@@ -142,7 +144,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
         return currentRound;
     }
 
-    public int[] checkWhoWonRound(boolean[] answersCurrentRound,boolean[]opponentAnswerCurrentRound,int[]scoresPerRound2){
+    public int[] checkWhoWonRound(boolean[] answersCurrentRound,boolean[]opponentAnswerCurrentRound,int[]scoresPerRound){
 
         int[] scoresPerQuestion = new int[2];
 
@@ -333,12 +335,12 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         status = SCORE;
                     }
                     i++;
-                    serverProtocol.sendRoundScores(output, checkWhoWonRound(answers[currentRound],opponent.answers[currentRound],scoresPerRound));
-                    System.out.println("Inside gameloop"+scoresPerRound[0]+" "+scoresPerRound[1]);
                 }
 
                 if(status == SCORE) {
-
+                    checkWhoWonRound(answers[currentRound],opponent.answers[currentRound],scoresPerRound);
+                    serverProtocol.sendRoundScores(output, scoresPerRound[0],scoresPerRound[1]);
+                    System.out.println("Inside gameloop"+scoresPerRound[0]+" "+scoresPerRound[1]);
                     //serverProtocol.sendOpponentAllAnswers(output, opponent.answers);
                     serverProtocol.sendAnswersForRound(output, 1, answers[currentRound], currentRound);
                     serverProtocol.sendAnswersForRound(output, 2, opponent.answers[currentRound], currentRound);

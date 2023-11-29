@@ -153,13 +153,12 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.RESET_ANSWER_RESULT_ICONS_FOR_ROUND.ordinal()));
     }
 
-    public void sendRoundScores(ObjectOutputStream outputStream, int[]checkWhoWonRound) throws IOException {
+    public void sendRoundScores(ObjectOutputStream outputStream, int player1Score, int player2Score) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_ROUND_SCORE.ordinal()));
-        outputStream.writeObject(checkWhoWonRound);
-        System.out.println("Send player score to client Player 1 " +checkWhoWonRound[0]);
-        System.out.println("Send player score to client Player 2 " +checkWhoWonRound[1]);
-
-
+        outputStream.writeObject(player1Score);
+        outputStream.writeObject(player2Score);
+        System.out.println("Send player score to client Player 1 " + player1Score);
+        System.out.println("Send player score to client Player 2 " + player2Score);
     }
 
 }
