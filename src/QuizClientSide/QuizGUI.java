@@ -117,7 +117,8 @@ public class QuizGUI extends JFrame {
     JPanel scoreboardMainPanel = new JPanel();
     JPanel player1Panel;
     JPanel player2Panel;
-    JButton scoreBoardStartButton = new JButton("Starta");
+    String scoreBoardStartButtonText = "Starta ny runda";
+    JButton scoreBoardStartButton = new JButton(scoreBoardStartButtonText);
     JPanel borderPanel = new JPanel(new BorderLayout());
     JLabel whoTurnLabel = new JLabel(whoTurn);
     JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
@@ -483,10 +484,9 @@ public class QuizGUI extends JFrame {
     }
 
     public void changeAnsweredButtonReset(int buttonIndex){
-        answerButtons[buttonIndex].setBackground(answButtonColor);
         for(JButton jb:answerButtons) {
             jb.setEnabled(true);
-            //System.out.println(jb);
+            jb.setBackground(answButtonColor);
         }
     }
 
@@ -540,11 +540,19 @@ public class QuizGUI extends JFrame {
         this.questionsPerRound = questionsPerRound;
     }
 
-    public void setScoreBoard(int player, int questionNr, boolean correctAnswer){
+    public void setScoreBoard(int player, int roundNr, int questionNr, boolean correctAnswer){
+        int index = questionNr+(roundNr*questionsPerRound);
         if(correctAnswer) {
-            plupparLabel[player][questionNr].setIcon(this.winIcon);
-        }else{
-            plupparLabel[player][questionNr].setIcon(this.loseIcon);
+            System.out.println("UPDATE BUTTON INDEX: "+index);
+            plupparLabel[player][index].setIcon(this.winIcon);
+            //plupparLabel[player][0].setIcon(this.winIcon);
+        }else if(correctAnswer == false){
+            System.out.println("UPDATE BUTTON INDEX: "+index);
+            plupparLabel[player][index].setIcon(this.loseIcon);
+            //plupparLabel[player][0].setIcon(this.loseIcon);
+        }
+        else{
+            System.out.println("NULL! UPDATE BUTTON INDEX: "+index);
         }
     }
 
@@ -606,6 +614,7 @@ public class QuizGUI extends JFrame {
     public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
         this.lastAnsweredQuestion = lastAnsweredQuestion;
     }
+    public String getScoreBoardStartButtonText() { return scoreBoardStartButtonText; }
 
     public void changeCategoryWindowState(boolean toChooseCategory){
 

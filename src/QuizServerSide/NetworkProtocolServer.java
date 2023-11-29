@@ -34,6 +34,10 @@ public class NetworkProtocolServer {
         UPDATE_WINNER_LABEL,
         RESET_START_NEW_ROUND_BUTTON,
         DISABLE_START_NEW_ROUND_BUTTON,
+        CORRECT_ANSWER_INDEX,
+        OPPONENT_ALL_ANSWERS,
+        OPPONENT_CURRENT_ROUND_ANSWERS,
+        RESET_ANSWER_RESULT_ICONS_FOR_ROUND,
     }
 
     public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
@@ -46,7 +50,7 @@ public class NetworkProtocolServer {
         Object lastReadObject = inputStream.readObject();
         System.out.println((String)lastReadObject);
         player.setReady(true);
-        boolean result=player.currentQuestion.checkAnswer((String)lastReadObject);
+        boolean result=player.currentQuestion.checkAnswer((String)lastReadObject, player, player.game);
         lastReadObject=inputStream.readObject();
         player.lastAnsweredButtonIndex=(int) lastReadObject;
 
@@ -130,4 +134,22 @@ public class NetworkProtocolServer {
     public void sendDisableStartNewRoundButton(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.DISABLE_START_NEW_ROUND_BUTTON.ordinal()));
     }
+    public void sendCorrectAnswerIndex(ObjectOutputStream outputStream, int buttonIndex) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.CORRECT_ANSWER_INDEX.ordinal()));
+        outputStream.writeObject(buttonIndex);
+    }
+    public void sendOpponentAllAnswers(ObjectOutputStream outputStream, boolean[][] allAnswers) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_ALL_ANSWERS.ordinal()));
+        outputStream.writeObject(allAnswers);
+    }
+    public void sendOpponentAnswersForRound(ObjectOutputStream outputStream, boolean[] roundAnswers, int currentRound) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_CURRENT_ROUND_ANSWERS.ordinal()));
+        outputStream.writeObject(roundAnswers);
+        outputStream.writeObject(currentRound);
+    }
+    public void sendResetAnswerResultIconsForRound(ObjectOutputStream outputStream) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.RESET_ANSWER_RESULT_ICONS_FOR_ROUND.ordinal()));
+    }
+
+
 }

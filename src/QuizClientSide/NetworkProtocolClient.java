@@ -79,10 +79,26 @@ public class NetworkProtocolClient {
                 parseDisableStartNewRoundButton();
                 break;
             case 14:
+                parseCorrectAnswerIndex(inputStream);
                 break;
             case 15:
+                parseOpponentAllAnswers(inputStream);
                 break;
             case 16:
+                parseOpponentAnswersForRound(inputStream);
+                break;
+            case 17:
+                parseUpdateRoundAnswerIcons();
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
                 break;
         }
     }
@@ -92,6 +108,7 @@ public class NetworkProtocolClient {
         outputStream.writeObject(answer);
         outputStream.writeObject(buttonIndex);
         quizController.pGUI.setLastAnsweredQuestion(answer);
+        System.out.println("Send answer to server");
     }
 
     public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
@@ -130,7 +147,6 @@ public class NetworkProtocolClient {
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
         //System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
-        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -193,7 +209,8 @@ public class NetworkProtocolClient {
             quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
         }  // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
-        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr(), result);
+        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr()-1, result);
+        //BUGG FIX fel 51 index out of bounds 3/3
 
     }
 
@@ -211,9 +228,7 @@ public class NetworkProtocolClient {
 
     public void parseButtonResetColor(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        if ((int) lastReadObject != 4) {
-            quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
-        }
+        quizController.pGUI.changeAnsweredButtonReset((int) lastReadObject);
     }
 
     public void parseUpdateWinnerLabel(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -223,9 +238,51 @@ public class NetworkProtocolClient {
         }
     }
     public void parseResetStartNewRoundButton() throws IOException, ClassNotFoundException {
-        quizController.pGUI.scoreBoardStartButton.setText("Starta");
+        quizController.pGUI.scoreBoardStartButton.setText(quizController.pGUI.getScoreBoardStartButtonText());
     }
     public void parseDisableStartNewRoundButton() throws IOException, ClassNotFoundException {
         quizController.pGUI.scoreBoardStartButton.setVisible(false);
+    }
+    public void parseCorrectAnswerIndex(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        quizController.pGUI.changeAnsweredButtonColor(true, (int) lastReadObject);
+    }
+
+    public void parseOpponentAllAnswers(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        boolean[][] lastReadResults = (boolean[][]) lastReadObject;
+        int i = 0;
+        int j;
+        System.out.println("RoundLength: " + lastReadResults.length + " | QuestionsLength: " + lastReadResults[0].length);
+        for (boolean[] round : (boolean[][]) lastReadObject) {
+            j = 0;
+            for (boolean currentQuestion : round){
+                //quizController.player.answers[i][j] = currentQuestion;
+                quizController.player.setOpponentAnswerResult(i,j, currentQuestion);
+                quizController.pGUI.setScoreBoard(2,i,j, currentQuestion);
+                System.out.println("Round: " + i + " Question: " + j + " Result: " + currentQuestion);
+                j++;
+            }
+            i++;
+        }
+
+    }
+
+    public void parseOpponentAnswersForRound(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        boolean[] answerResults = (boolean[])lastReadObject;
+        int round = (int)inputStream.readObject();
+        int i = 0;
+        for (boolean answerResult : answerResults){
+            quizController.player.setOpponentAnswerResult(round,i, answerResult);
+            quizController.pGUI.setScoreBoard(2,round,i, answerResult);
+            System.out.println("Round: " + i + " Question: " + i + " Result: " + answerResult);
+            i++;
+        }
+
+    }
+
+    public void parseUpdateRoundAnswerIcons() throws IOException, ClassNotFoundException {
+        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 }

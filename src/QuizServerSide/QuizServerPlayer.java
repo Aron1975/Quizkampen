@@ -40,16 +40,20 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean ready;
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
+
     int currentQuestionWithinRound;
     int currentRound = 0;
 
 
+
+    boolean[][] answers;
 
     public QuizServerPlayer(Socket socket, QuizServerGame game, boolean categoryPicker) {
         this.game = game;
         this.socket = socket;
         this.serverProtocol = new NetworkProtocolServer(this);
         this.categoryPicker = categoryPicker;
+        this.answers = new boolean[game.totalRounds][game.numberOfQuestionsPerRound];
         try {
             output = new ObjectOutputStream(this.socket.getOutputStream());
             input = new ObjectInputStream(this.socket.getInputStream());
@@ -121,6 +125,21 @@ public class QuizServerPlayer extends Thread implements Serializable {
         this.newQuestionGenerated = newQuestionGenerated;
     }
 
+
+    public boolean[][] getAnswers() {
+        return answers;
+    }
+    public void setAnswers(boolean[][] answers) {
+        this.answers = answers;
+    }
+
+    public int getCurrentQuestionWithinRound() {
+        return currentQuestionWithinRound;
+    }
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
         // Plocka nästa fråga från databas
         serverProtocol.sendButtonResetColor(output, lastAnsweredButtonIndex);
@@ -144,7 +163,9 @@ public class QuizServerPlayer extends Thread implements Serializable {
             boolean correctAnswer = serverProtocol.parseAnswerQuestion(input, this); //ParseAnswer calls Question.checkAnswer()
             if (correctAnswer){
                 setScore(1);
-
+            }
+            else {
+                serverProtocol.sendCorrectAnswerIndex(output, currentQuestion.correctAnswerIndex());
             }
             System.out.println("correctAnswer: " + correctAnswer);
             //validera svar mot correctanswer och skicka tillbaks
@@ -161,7 +182,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
             setNewQuestionGenerated(false);
             opponent.setNewQuestionGenerated(false);
         }
-        Thread.sleep(3000);
+        Thread.sleep(game.delayStartNewQuestion);
 
     }
 
@@ -211,12 +232,14 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 if (status == CATEGORY) {
                     currentQuestionWithinRound = 0;
+                    serverProtocol.sendResetAnswerResultIconsForRound(output);
 
                     if(categoryPicker) {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
                         serverProtocol.sendCategories(output, game.categories);
                         //send to opponent as well needed for client updates
-                        opponent.getNetworkProtocolServer().sendCategories(opponent.getOutputStream(), game.categories);
+                        //opponent.getNetworkProtocolServer().sendCategories(opponent.getOutputStream(), game.categories);
+                        //BUG: Unsynced objectstream
                     }
                     System.out.println("Waiting for opponent to pick category" + playerName);
 
@@ -276,6 +299,9 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
+                    //serverProtocol.sendOpponentAllAnswers(output, opponent.answers);
+                    serverProtocol.sendOpponentAnswersForRound(output, opponent.answers[currentRound], currentRound);
+
                     currentRound++;
                     serverProtocol.sendResetStartNewRoundButton(output);
                     switchCategoryPicker();

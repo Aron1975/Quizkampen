@@ -1,5 +1,8 @@
 package QuizServerSide.Questions;
 
+import QuizServerSide.QuizServerGame;
+import QuizServerSide.QuizServerPlayer;
+
 public class Questions {
     /*ArrayList<String> questions =new ArrayList<>();
     ArrayList<String[]> alternativ =new ArrayList<>();
@@ -52,8 +55,18 @@ public class Questions {
         this.correctAlternative = correctAlternative;
     }
 
-    public boolean checkAnswer(String answer){
-        return answer.equals(correctAlternative);
+    public boolean checkAnswer(String answer, QuizServerPlayer player, QuizServerGame game){
+        boolean result = answer.equals(correctAlternative);
+        player.getAnswers()[player.getCurrentRound()][player.getCurrentQuestionWithinRound()] = result;
+        return result;
+    }
+    public int correctAnswerIndex(){
+        for(int i = 0; i < alternative.length; i++){
+            if(alternative[i].equals(correctAlternative)){
+                return i;
+            }
+        }
+        return 0;
     }
 }
 

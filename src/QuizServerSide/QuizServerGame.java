@@ -19,6 +19,7 @@ public class QuizServerGame implements Serializable {
     int numberOfQuestionsPerRound = 2;
     int currentQuestionWithinRound = 0;
     int nrOfCategories = 3;
+    int delayStartNewQuestion;
     String[] categories; // = new String[nrOfCategories];
     boolean categoriesGotten = false;
     String currentCategory;
@@ -36,6 +37,7 @@ public class QuizServerGame implements Serializable {
             this.numberOfQuestionsPerRound = Integer.parseInt(p.getProperty("NrOfQuestions", "2"));
             this.totalRounds = Integer.parseInt(p.getProperty("NrOfRounds", "2"));
             this.nrOfCategories = Integer.parseInt(p.getProperty("nrOfCategories", "3"));
+            this.delayStartNewQuestion = Integer.parseInt(p.getProperty("DelayStartNewQuestion", "3000"));
         } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +51,6 @@ public class QuizServerGame implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void setCurrentRound(int currentRound) {
         this.currentRound = currentRound;
