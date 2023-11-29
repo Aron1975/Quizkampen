@@ -238,7 +238,7 @@ public class NetworkProtocolClient {
         }
     }
     public void parseResetStartNewRoundButton() throws IOException, ClassNotFoundException {
-        quizController.pGUI.scoreBoardStartButton.setText("Starta");
+        quizController.pGUI.scoreBoardStartButton.setText(quizController.pGUI.getScoreBoardStartButtonText());
     }
     public void parseDisableStartNewRoundButton() throws IOException, ClassNotFoundException {
         quizController.pGUI.scoreBoardStartButton.setVisible(false);

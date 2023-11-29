@@ -110,7 +110,8 @@ public class QuizGUI extends JFrame {
     JPanel scoreboardMainPanel = new JPanel();
     JPanel player1Panel;
     JPanel player2Panel;
-    JButton scoreBoardStartButton = new JButton("Starta");
+    String scoreBoardStartButtonText = "Starta ny runda";
+    JButton scoreBoardStartButton = new JButton(scoreBoardStartButtonText);
     JPanel borderPanel = new JPanel(new BorderLayout());
     JLabel whoTurnLabel = new JLabel(whoTurn);
     JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
@@ -606,6 +607,7 @@ public class QuizGUI extends JFrame {
     public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
         this.lastAnsweredQuestion = lastAnsweredQuestion;
     }
+    public String getScoreBoardStartButtonText() { return scoreBoardStartButtonText; }
 
     public void changeCategoryWindowState(boolean toChooseCategory){
 
