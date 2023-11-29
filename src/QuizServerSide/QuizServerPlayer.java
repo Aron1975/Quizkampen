@@ -300,7 +300,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 if(status == SCORE) {
                     //serverProtocol.sendOpponentAllAnswers(output, opponent.answers);
-                    serverProtocol.sendOpponentAnswersForRound(output, opponent.answers[currentRound], currentRound);
+                    serverProtocol.sendAnswersForRound(output, 1, answers[currentRound], currentRound);
+                    serverProtocol.sendAnswersForRound(output, 2, opponent.answers[currentRound], currentRound);
 
                     currentRound++;
                     serverProtocol.sendResetStartNewRoundButton(output);

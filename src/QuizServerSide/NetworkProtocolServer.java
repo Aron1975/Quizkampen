@@ -142,8 +142,9 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_ALL_ANSWERS.ordinal()));
         outputStream.writeObject(allAnswers);
     }
-    public void sendOpponentAnswersForRound(ObjectOutputStream outputStream, boolean[] roundAnswers, int currentRound) throws IOException {
+    public void sendAnswersForRound(ObjectOutputStream outputStream, int playerId, boolean[] roundAnswers, int currentRound) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.OPPONENT_CURRENT_ROUND_ANSWERS.ordinal()));
+        outputStream.writeObject(playerId);
         outputStream.writeObject(roundAnswers);
         outputStream.writeObject(currentRound);
     }

@@ -269,13 +269,18 @@ public class NetworkProtocolClient {
     }
 
     public void parseOpponentAnswersForRound(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        Object lastReadObject = inputStream.readObject();
-        boolean[] answerResults = (boolean[])lastReadObject;
+        int playerId = (int)inputStream.readObject();
+        boolean[] answerResults = (boolean[])inputStream.readObject();
         int round = (int)inputStream.readObject();
         int i = 0;
         for (boolean answerResult : answerResults){
-            quizController.player.setOpponentAnswerResult(round,i, answerResult);
-            quizController.pGUI.setScoreBoard(2,round,i, answerResult);
+
+            if(playerId == 2)
+                quizController.player.setOpponentAnswerResult(round,i, answerResult);
+            else
+                quizController.player.setAnswerResult(round,i, answerResult);
+
+            quizController.pGUI.setScoreBoard(playerId,round,i, answerResult);
             System.out.println("Round: " + i + " Question: " + i + " Result: " + answerResult);
             i++;
         }
