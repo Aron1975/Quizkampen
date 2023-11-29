@@ -19,9 +19,12 @@ public class ArrayOfQuestions {
                 }
                 String question = reader.readLine();
                 String[] alternative = reader.readLine().split(";");
+                ArrayList<String> listAlternatives = new ArrayList<>(Arrays.asList(alternative));
+                Collections.shuffle(listAlternatives);
                 String correctalternative = reader.readLine();
 
-                allQuestionsFromFile.put(question, new Questions(category, question, alternative, correctalternative));
+                System.out.println("Load in question: " + question);
+                allQuestionsFromFile.put(question, new Questions(category, question, listAlternatives, correctalternative));
 
             }
         } catch (IOException e) {
