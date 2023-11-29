@@ -109,6 +109,7 @@ public class NetworkProtocolClient {
         outputStream.writeObject(buttonIndex);
         quizController.pGUI.setLastAnsweredQuestion(answer);
         System.out.println("Send answer to server");
+        System.out.println("Round: " + quizController.player.getRoundNr() + " Question: " + quizController.player.getQuestionNr());
     }
 
     public void sendPlayerName(ObjectOutputStream outputStream, String name) throws IOException {
@@ -209,7 +210,7 @@ public class NetworkProtocolClient {
             quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
         }  // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
-        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr()-1, result);
+        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr(), result);
         //BUGG FIX fel 51 index out of bounds 3/3
 
     }

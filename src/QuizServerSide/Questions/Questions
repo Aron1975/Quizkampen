@@ -18,6 +18,10 @@ Mat
 Vilken krydda används vanligtvis för att ge saffransris sin karakteristiska gula färg?
 Kanel;Gurkmeja;Paprika;Basilika
 Gurkmeja
+Mat
+?
+1;2;3;4
+2
 Sci-fi
 Vem är Luke Skywalkers far?
 Super Mario;Han Solo;Darth Vader;Gandalf
@@ -38,6 +42,10 @@ Sci-fi
 Vad är namnet på den artificiella intelligens som styr rymdskeppet i filmen "2001: A Space Odyssey"?
 HAL 9000;R2-D2;C-3PO;Jarvis
 HAL 9000
+Sci-fi
+?
+1;2;3;4
+1
 Geografi
 Vilket av följande länder ligger inte i Sydamerika?
 Brasilien;Argentina;Egypten;Chile
@@ -58,6 +66,10 @@ Geografi
 Vilket berg är världens högsta?
 Mount Everest;K2;Kilimanjaro;Mont Blanc
 Mount Everest
+Geografi
+?
+1;2;3;4
+3
 Rymden
 Vilken planet i vårt solsystem är känd som "den röda planeten"?
 Venus;Mars;Jupiter;Saturnus
@@ -78,3 +90,7 @@ Rymden
 Vilken planet kallas ibland "aftonstjärnan" när den syns på kvällen?
 Mars;Venus;Jupiter;Saturnus
 Venus
+Rymden
+?
+1;2;3;4
+4

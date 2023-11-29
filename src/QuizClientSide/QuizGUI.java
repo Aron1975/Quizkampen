@@ -558,10 +558,10 @@ public class QuizGUI extends JFrame {
 
     public void setCurrentScoreBoard(int questionNr, boolean correctAnswer){
         if(correctAnswer) {
-            roundQuestionSpotsLabel1[questionNr-1].setIcon(this.winIcon); //buggfix:
+            roundQuestionSpotsLabel1[questionNr].setIcon(this.winIcon); //buggfix:
             // Exception in thread "Thread-0" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 3
         }else{
-            roundQuestionSpotsLabel1[questionNr-1].setIcon(this.loseIcon);
+            roundQuestionSpotsLabel1[questionNr].setIcon(this.loseIcon);
         }
     }
 

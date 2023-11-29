@@ -277,7 +277,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
                             opponent.getNetworkProtocolServer().sendCategoryToOpponent(opponent.getOutputStream(), game.currentCategory);
                         }
                     }
-                    //NetworkProtocolServer.sendQuestion(output, "Bajskorv");
                     status = GAME;
                 }
 

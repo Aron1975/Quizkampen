@@ -15,8 +15,8 @@ public class QuizPlayer {
     //Implement for keep track on which question and which round we are in.
     int nrOfQuestionsPerRound = 3;   // Hämta från server
     int nrOfRounds = 3;      // Hämta från server
-    int questionNr = 0;
-    int roundNr = 1;
+    int questionNr = -1;
+    int roundNr = 0;
     Boolean[][] answers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
     Boolean[][] opponentAnswers = new Boolean[nrOfRounds][nrOfQuestionsPerRound];
 
@@ -29,17 +29,14 @@ public class QuizPlayer {
 
     //Räknar vilken fråga o round vi är på. Anropas från protokoll varje gång man tar emot en fråga.
     public void roundAndQuestionCounter(){
-        this.questionNr++;
-        if(this.questionNr>nrOfQuestionsPerRound) {
-            this.roundNr++;
-            this.questionNr = 1;
-            if (this.roundNr>this.nrOfRounds){
-                System.out.println("Fel. Vi ska inte kunna hamna här....");
-            }
+        if((this.questionNr == this.nrOfQuestionsPerRound-1) && (this.roundNr==this.nrOfRounds-1)) {
+            this.questionNr = -1;
+            this.roundNr = 0;
         }
-        if((this.questionNr == nrOfQuestionsPerRound) && (this.roundNr==nrOfRounds)){
-            this.questionNr=0;
-            this.roundNr = 1;
+        this.questionNr++;
+        if(this.questionNr>this.nrOfQuestionsPerRound-1) {
+            this.roundNr++;
+            this.questionNr = 0;
         }
     }
 
