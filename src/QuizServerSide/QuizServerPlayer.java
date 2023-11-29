@@ -182,7 +182,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
             setNewQuestionGenerated(false);
             opponent.setNewQuestionGenerated(false);
         }
-        Thread.sleep(3000);
+        Thread.sleep(game.delayStartNewQuestion);
 
     }
 
