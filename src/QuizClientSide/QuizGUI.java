@@ -533,13 +533,18 @@ public class QuizGUI extends JFrame {
     }
 
     public void setScoreBoard(int player, int roundNr, int questionNr, boolean correctAnswer){
-        System.out.println("in setcoreboard");
+        int index = questionNr+(roundNr*questionsPerRound);
         if(correctAnswer) {
-            plupparLabel[player][questionNr].setIcon(this.winIcon);
-            System.out.println("correct");
-        }else{
-            plupparLabel[player][questionNr].setIcon(this.loseIcon);
-            System.out.println("incorrect");
+            System.out.println("UPDATE BUTTON INDEX: "+index);
+            plupparLabel[player][index].setIcon(this.winIcon);
+            //plupparLabel[player][0].setIcon(this.winIcon);
+        }else if(correctAnswer == false){
+            System.out.println("UPDATE BUTTON INDEX: "+index);
+            plupparLabel[player][index].setIcon(this.loseIcon);
+            //plupparLabel[player][0].setIcon(this.loseIcon);
+        }
+        else{
+            System.out.println("NULL! UPDATE BUTTON INDEX: "+index);
         }
     }
 

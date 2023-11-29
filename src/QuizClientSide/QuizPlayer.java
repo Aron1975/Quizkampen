@@ -56,7 +56,6 @@ public class QuizPlayer {
     }
 
     public void setOpponentAnswerResult(int round, int question, boolean answer) {
-        System.out.println("setOpponentAnswerResult" + round + " " + question + " " + answer);
         this.opponentAnswers[round][question] = answer;
     }
 

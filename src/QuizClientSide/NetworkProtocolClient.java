@@ -85,6 +85,19 @@ public class NetworkProtocolClient {
                 parseOpponentAllAnswers(inputStream);
                 break;
             case 16:
+                parseOpponentAnswersForRound(inputStream);
+                break;
+            case 17:
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
                 break;
         }
     }
@@ -234,20 +247,36 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeAnsweredButtonColor(true, (int) lastReadObject);
     }
+
     public void parseOpponentAllAnswers(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
-        System.out.println("Inside parseOpponentAllAnswers: ");
+        boolean[][] lastReadResults = (boolean[][]) lastReadObject;
         int i = 0;
-        int j = 0;
+        int j;
+        System.out.println("RoundLength: " + lastReadResults.length + " | QuestionsLength: " + lastReadResults[0].length);
         for (boolean[] round : (boolean[][]) lastReadObject) {
-            j++;
+            j = 0;
             for (boolean currentQuestion : round){
                 //quizController.player.answers[i][j] = currentQuestion;
-                quizController.player.setOpponentAnswerResult(i,j-1, currentQuestion);
-                quizController.pGUI.setScoreBoard(2,i,j-1, currentQuestion);
-                System.out.println("Round: " + i + " Question: " + j + " Result: ");
+                quizController.player.setOpponentAnswerResult(i,j, currentQuestion);
+                quizController.pGUI.setScoreBoard(2,i,j, currentQuestion);
+                System.out.println("Round: " + i + " Question: " + j + " Result: " + currentQuestion);
+                j++;
             }
-            System.out.println("Round: " + i + " Question: " + j + " Result: ");
+            i++;
+        }
+
+    }
+
+    public void parseOpponentAnswersForRound(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        Object lastReadObject = inputStream.readObject();
+        boolean[] answerResults = (boolean[])lastReadObject;
+        int round = (int)inputStream.readObject();
+        int i = 0;
+        for (boolean answerResult : answerResults){
+            quizController.player.setOpponentAnswerResult(round,i, answerResult);
+            quizController.pGUI.setScoreBoard(2,round,i, answerResult);
+            System.out.println("Round: " + i + " Question: " + i + " Result: " + answerResult);
             i++;
         }
 
