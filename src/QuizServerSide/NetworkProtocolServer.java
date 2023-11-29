@@ -39,6 +39,7 @@ public class NetworkProtocolServer {
         OPPONENT_CURRENT_ROUND_ANSWERS,
         RESET_ANSWER_RESULT_ICONS_FOR_ROUND,
         SEND_ROUND_SCORE,
+        IS_WINNER,
     }
 
     public void parseSetPlayerName(ObjectInputStream inputStream, QuizServerPlayer player) throws IOException, ClassNotFoundException {
@@ -159,6 +160,12 @@ public class NetworkProtocolServer {
         outputStream.writeObject(player2Score);
         System.out.println("Send player score to client Player 1 " + player1Score);
         System.out.println("Send player score to client Player 2 " + player2Score);
+    }
+
+    public void sendIsWinner(ObjectOutputStream outputStream, int isWinner) throws IOException {
+        outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.IS_WINNER.ordinal()));
+        outputStream.writeObject(isWinner);
+        //System.out.println("Send player score to client Player 1 " + player1Score);
     }
 
 }

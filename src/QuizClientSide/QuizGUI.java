@@ -211,6 +211,8 @@ public class QuizGUI extends JFrame {
         playerAvatarPanel2.setLayout(new BoxLayout(playerAvatarPanel2, BoxLayout.Y_AXIS));
         playerCategoryPanel.setLayout(new BoxLayout(playerCategoryPanel, BoxLayout.Y_AXIS));
 
+        player1.setAlignmentX(0.5f);
+        player1NameLabel.setAlignmentX(0.5f);
         playerAvatarPanel1.add(Box.createRigidArea(new Dimension(0, 10)));
         playerAvatarPanel1.add(player1);
         playerAvatarPanel1.add(player1NameLabel);
@@ -220,6 +222,8 @@ public class QuizGUI extends JFrame {
 
         playerCategoryPanel.add(categoryNameLabel);
 
+        player2.setAlignmentX(0.5f);
+        player2NameLabel.setAlignmentX(0.5f);
         playerAvatarPanel2.add(Box.createRigidArea(new Dimension(50, 10)));
         playerAvatarPanel2.add(player2);
         playerAvatarPanel2.add(player2NameLabel);

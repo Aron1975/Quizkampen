@@ -379,8 +379,24 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     }
                     else {
                         serverProtocol.sendDisableStartNewRoundButton(output);
-                        status = END;
+
+
+                        if (currentRound == game.getTotalRounds()) {
+                            //You lose
+                            if(scoresPerRound[0] < scoresPerRound[1]){
+                                serverProtocol.sendIsWinner(output, 1);
+                            }
+                            //You win
+                            else if(scoresPerRound[0] > scoresPerRound[1]){
+                                serverProtocol.sendIsWinner(output, 2);
+                            }
+                            //Draw
+                            else {
+                                serverProtocol.sendIsWinner(output, 3);
+                            }
                         }
+                        status = END;
+                    }
 
 
 
