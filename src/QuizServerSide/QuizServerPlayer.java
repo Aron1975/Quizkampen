@@ -40,16 +40,20 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean ready;
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
+
     int currentQuestionWithinRound;
     int currentRound = 0;
 
 
+
+    boolean[][] answers;
 
     public QuizServerPlayer(Socket socket, QuizServerGame game, boolean categoryPicker) {
         this.game = game;
         this.socket = socket;
         this.serverProtocol = new NetworkProtocolServer(this);
         this.categoryPicker = categoryPicker;
+        this.answers = new boolean[game.totalRounds][game.numberOfQuestionsPerRound];
         try {
             output = new ObjectOutputStream(this.socket.getOutputStream());
             input = new ObjectInputStream(this.socket.getInputStream());
@@ -119,6 +123,21 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
     public void setNewQuestionGenerated(boolean newQuestionGenerated) {
         this.newQuestionGenerated = newQuestionGenerated;
+    }
+
+
+    public boolean[][] getAnswers() {
+        return answers;
+    }
+    public void setAnswers(boolean[][] answers) {
+        this.answers = answers;
+    }
+
+    public int getCurrentQuestionWithinRound() {
+        return currentQuestionWithinRound;
+    }
+    public int getCurrentRound() {
+        return currentRound;
     }
 
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
@@ -218,7 +237,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);
                         serverProtocol.sendCategories(output, game.categories);
                         //send to opponent as well needed for client updates
-                        opponent.getNetworkProtocolServer().sendCategories(opponent.getOutputStream(), game.categories);
+                        //opponent.getNetworkProtocolServer().sendCategories(opponent.getOutputStream(), game.categories);
+                        //BUG: Unsynced objectstream
                     }
                     System.out.println("Waiting for opponent to pick category" + playerName);
 
@@ -278,7 +298,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 }
 
                 if(status == SCORE) {
-                    //serverProtocol.sendOpponentScoreArray(output, );
+                    serverProtocol.sendOpponentAllAnswers(output, opponent.answers);
                     currentRound++;
                     serverProtocol.sendResetStartNewRoundButton(output);
                     switchCategoryPicker();

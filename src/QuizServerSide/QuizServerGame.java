@@ -50,7 +50,6 @@ public class QuizServerGame implements Serializable {
         }
     }
 
-
     public void setCurrentRound(int currentRound) {
         this.currentRound = currentRound;
     }

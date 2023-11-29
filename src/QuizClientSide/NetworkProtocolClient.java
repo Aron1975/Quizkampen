@@ -82,6 +82,7 @@ public class NetworkProtocolClient {
                 parseCorrectAnswerIndex(inputStream);
                 break;
             case 15:
+                parseOpponentAllAnswers(inputStream);
                 break;
             case 16:
                 break;
@@ -195,7 +196,7 @@ public class NetworkProtocolClient {
             quizController.pGUI.changeAnsweredButtonColor(result, buttonIndex);
         }  // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
-        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr(), result);
+        quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr()-1, result);
 
     }
 
@@ -232,7 +233,22 @@ public class NetworkProtocolClient {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.changeAnsweredButtonColor(true, (int) lastReadObject);
     }
-    public void parseOpponentScoresArray(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    public void parseOpponentAllAnswers(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
+        System.out.println("Inside parseOpponentAllAnswers: ");
+        int i = 0;
+        int j = 0;
+        for (boolean[] round : (boolean[][]) lastReadObject) {
+            for (boolean currentQuestion : round){
+                //quizController.player.answers[i][j] = currentQuestion;
+                quizController.player.setOpponentAnswerResult(i,j, currentQuestion);
+                quizController.pGUI.setScoreBoard(2,i,j, currentQuestion);
+                System.out.println("Round: " + i + " Question: " + j + " Result: ");
+                j++;
+            }
+            System.out.println("Round: " + i + " Question: " + j + " Result: ");
+            i++;
+        }
+
     }
 }

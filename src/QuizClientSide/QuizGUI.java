@@ -532,11 +532,14 @@ public class QuizGUI extends JFrame {
         this.questionsPerRound = questionsPerRound;
     }
 
-    public void setScoreBoard(int player, int questionNr, boolean correctAnswer){
+    public void setScoreBoard(int player, int roundNr, int questionNr, boolean correctAnswer){
+        System.out.println("in setcoreboard");
         if(correctAnswer) {
             plupparLabel[player][questionNr].setIcon(this.winIcon);
+            System.out.println("correct");
         }else{
             plupparLabel[player][questionNr].setIcon(this.loseIcon);
+            System.out.println("incorrect");
         }
     }
 
