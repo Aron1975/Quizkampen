@@ -10,19 +10,24 @@ public class ArrayOfQuestions {
     ArrayList<String> categories = new ArrayList<>();
 
     public ArrayOfQuestions() {
+        int counter = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader("src/QuizServerSide/Questions/Questions"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String category = line;
                 if(!categories.contains(category)) {
                     categories.add(line);
+                    System.out.println("New category: " + category);
                 }
                 String question = reader.readLine();
                 String[] alternative = reader.readLine().split(";");
                 String correctalternative = reader.readLine();
 
-                allQuestionsFromFile.put(question, new Questions(category, question, alternative, correctalternative));
-
+                System.out.println("Rad: " + counter + ": " + question);
+                counter++;
+                //allQuestionsFromFile.put(question, new Questions(category, question, alternative, correctalternative));
+                allQuestionsFromFile.put(category, new Questions(category, question, alternative, correctalternative));
+                System.out.println("HashMap: " +allQuestionsFromFile);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,6 +37,7 @@ public class ArrayOfQuestions {
 
     public Questions generateRandomQuestion(String categoryFromUser) {
         ArrayList<Questions> questionsWithCurrentCategory = new ArrayList<>();
+        System.out.println("Antal frågor i kategorin. Före: " + questionsWithCurrentCategory.size());
         //Populate a new list with questions for specific category
         // (allQuestionsFromFile is the one keeping tabs on already asked questions)
         for(Questions question : allQuestionsFromFile.values()){
@@ -45,6 +51,7 @@ public class ArrayOfQuestions {
         Questions tempQuestion = questionsWithCurrentCategory.get(0);
         allQuestionsFromFile.remove(tempQuestion.getQuestion());
         System.out.println(tempQuestion.question);
+        System.out.println("Antal frågor i kategorin. Efter: " + questionsWithCurrentCategory.size());
        return tempQuestion;
     }
 
@@ -71,12 +78,18 @@ public class ArrayOfQuestions {
 
 
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         //Skapar en arraylist för frågor samt svar
         //Läsa in frågor och svar
-        ArrayOfQuestions aq=new ArrayOfQuestions();
+        ArrayOfQuestions aq = new ArrayOfQuestions();
         Questions q;
-
+        System.out.println(aq.allQuestionsFromFile.size());
+        for (int i = 0; i < 6; i++) {
+            q = aq.generateRandomQuestion("Sci-fi");
+            System.out.println(q.getQuestion());
+        }
+    }
+/*
         q=aq.generateRandomQuestion("Sci-fi:", game.availableQuestions);
         System.out.println(q.question);
         System.out.println(q.correctAlternative);
