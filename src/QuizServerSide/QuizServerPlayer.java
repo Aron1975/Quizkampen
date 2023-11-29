@@ -232,6 +232,7 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
                 if (status == CATEGORY) {
                     currentQuestionWithinRound = 0;
+                    serverProtocol.sendResetAnswerResultIconsForRound(output);
 
                     if(categoryPicker) {
                         game.categories = game.aq.randomizeCategoryAlternatives(game.nrOfCategories);

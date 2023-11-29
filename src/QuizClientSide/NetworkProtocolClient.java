@@ -88,6 +88,7 @@ public class NetworkProtocolClient {
                 parseOpponentAnswersForRound(inputStream);
                 break;
             case 17:
+                parseUpdateRoundAnswerIcons();
                 break;
             case 18:
                 break;
@@ -146,7 +147,6 @@ public class NetworkProtocolClient {
         String[] categories = (String[]) lastReadObject;
         quizController.pGUI.setCategoryButtonText(categories);
         //System.out.println("Categories: " + categories[0] + " " + categories[1] + " " + categories[2]);
-        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 
     public void parseGetOpponentName(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -280,5 +280,9 @@ public class NetworkProtocolClient {
             i++;
         }
 
+    }
+
+    public void parseUpdateRoundAnswerIcons() throws IOException, ClassNotFoundException {
+        quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
     }
 }
