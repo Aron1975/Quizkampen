@@ -197,6 +197,7 @@ public class NetworkProtocolClient {
         }  // Uppdater score för spelaren i frågeomgången
         quizController.pGUI.setCurrentScoreBoard(quizController.player.getQuestionNr(), result);
         quizController.player.setAnswerResult(quizController.player.getRoundNr(),quizController.player.getQuestionNr()-1, result);
+        //BUGG FIX fel 51 index out of bounds 3/3
 
     }
 
