@@ -239,12 +239,12 @@ public class NetworkProtocolClient {
         int i = 0;
         int j = 0;
         for (boolean[] round : (boolean[][]) lastReadObject) {
+            j++;
             for (boolean currentQuestion : round){
                 //quizController.player.answers[i][j] = currentQuestion;
-                quizController.player.setOpponentAnswerResult(i,j, currentQuestion);
-                quizController.pGUI.setScoreBoard(2,i,j, currentQuestion);
+                quizController.player.setOpponentAnswerResult(i,j-1, currentQuestion);
+                quizController.pGUI.setScoreBoard(2,i,j-1, currentQuestion);
                 System.out.println("Round: " + i + " Question: " + j + " Result: ");
-                j++;
             }
             System.out.println("Round: " + i + " Question: " + j + " Result: ");
             i++;
