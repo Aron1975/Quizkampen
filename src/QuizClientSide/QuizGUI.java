@@ -90,7 +90,7 @@ public class QuizGUI extends JFrame {
     JPanel playerCategoryPanel = new JPanel();
     JLabel player1 = new JLabel(avatar1);
     JLabel player2 = new JLabel(avatar2);
-    JLabel category = new JLabel(categoryFood);
+    JLabel categoryLabel = new JLabel(categoryFood);
     JLabel player1NameLabel = new JLabel("Zorro");
     JLabel player2NameLabel = new JLabel("Dumbo");
     JLabel categoryNameLabel = new JLabel("Film");
@@ -215,7 +215,7 @@ public class QuizGUI extends JFrame {
         playerAvatarPanel1.add(player1NameLabel);
         playerAvatarPanel1.add(roundQuestionSpotsPanel1);
 
-        playerCategoryPanel.add(category);
+        playerCategoryPanel.add(categoryLabel);
 
         playerCategoryPanel.add(categoryNameLabel);
 
@@ -498,7 +498,21 @@ public class QuizGUI extends JFrame {
         for (int i = 0; i < textArray.length; i++){
             categoryButtons[i].setText(textArray[i]);
         }
+    }
 
+    public void setCategoryIcon(String category){
+        if(category.equals("Mat")){
+            categoryLabel.setIcon(categoryFood);
+        }
+        if(category.equals("Sci-fi")){
+            categoryLabel.setIcon(categorySpace);
+        }
+        if(category.equals("Geografi")){
+            categoryLabel.setIcon(categoryGeography);
+        }
+        if(category.equals("Rymden")){
+            categoryLabel.setIcon(categorySpace);
+        }
     }
 
     //GAME

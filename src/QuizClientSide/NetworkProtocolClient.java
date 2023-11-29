@@ -124,6 +124,7 @@ public class NetworkProtocolClient {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.CHOSEN_CATEGORY.ordinal()));
         outputStream.writeObject(name);
         quizController.pGUI.setCategoryNameLabel(name);
+        quizController.pGUI.setCategoryIcon(name);
     }
 
     public void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
@@ -224,6 +225,7 @@ public class NetworkProtocolClient {
     public void parseGetChosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
+        quizController.pGUI.setCategoryIcon((String) lastReadObject);
         System.out.println("Receive chosen Category: " + (String) lastReadObject);
     }
 
