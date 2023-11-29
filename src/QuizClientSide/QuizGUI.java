@@ -18,7 +18,7 @@ public class QuizGUI extends JFrame {
     int screenY = 600;
     int imageIconSize = 20;
     int imageIconSize2 = 120;
-    int imageIconSize3 = 90;
+    int imageIconSize3 = 80;
     Color panelsBackgroundColor = new Color(20,80,200);
     Font f = new Font(null, 3, 20);
     Font f2 = new Font(null, 3, 14);
@@ -35,13 +35,20 @@ public class QuizGUI extends JFrame {
 
     //Avatar images
     Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar4.png").
-            getImage().getScaledInstance(imageIconSize2, imageIconSize3, Image.SCALE_SMOOTH));;
+            getImage().getScaledInstance(imageIconSize2, imageIconSize2, Image.SCALE_SMOOTH));
     Icon avatar2 = new ImageIcon(new ImageIcon("Images/Avatar8.png").
-            getImage().getScaledInstance(imageIconSize2, imageIconSize3, Image.SCALE_SMOOTH));;
+            getImage().getScaledInstance(imageIconSize2, imageIconSize2, Image.SCALE_SMOOTH));
+
 
     //Category Images
     Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
     Icon questionBackground = new ImageIcon("Images/Question.jpg");
+    Icon categorySpace = new ImageIcon(new ImageIcon("Images/Category_Space.png").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
+    Icon categoryFood = new ImageIcon(new ImageIcon("Images/Category_Food.png").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
+    Icon categoryGeography = new ImageIcon(new ImageIcon("Images/Category_Geography.png").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
 
     //Scoreoard Images
     ImageIcon emptyscore = new ImageIcon(new ImageIcon("Images/emptyAnswerWithBorder.png").
@@ -83,7 +90,7 @@ public class QuizGUI extends JFrame {
     JPanel playerCategoryPanel = new JPanel();
     JLabel player1 = new JLabel(avatar1);
     JLabel player2 = new JLabel(avatar2);
-    JLabel category = new JLabel(categoryIcon);
+    JLabel category = new JLabel(categoryFood);
     JLabel player1NameLabel = new JLabel("Zorro");
     JLabel player2NameLabel = new JLabel("Dumbo");
     JLabel categoryNameLabel = new JLabel("Film");
