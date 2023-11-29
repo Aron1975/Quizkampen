@@ -394,12 +394,15 @@ public class QuizGUI extends JFrame {
         //
         JPanel playerNamePanel = new JPanel();
         playerNamePanel.setLayout(new BoxLayout(playerNamePanel, BoxLayout.Y_AXIS));
+        //playerNamePanel.setBackground(panelsBackgroundColor);
         playerNamePanel.setBackground(panelsBackgroundColor);
 
-        nameLabel[player] = new JLabel(" " + name);
+        nameLabel[player] = new JLabel(name);
         //JLabel roundScore = new JLabel("     " + (Integer.toString(roundPointsPlayer)));
         JLabel roundScore = new JLabel("     ");
         playerIconLabel[player] = new JLabel(playerIcon);
+        playerIconLabel[player].setAlignmentX(0.5f);
+        nameLabel[player].setAlignmentX(0.5f);
 
         nameLabel[player].setFont(f2);
         //roundScore.setFont(f2);

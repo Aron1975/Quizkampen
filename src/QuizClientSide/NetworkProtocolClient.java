@@ -2,10 +2,13 @@ package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
 import QuizServerSide.NetworkProtocolServer;
+import QuizServerSide.QuizServerPlayer;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.Timer;
@@ -91,6 +94,7 @@ public class NetworkProtocolClient {
                 parseUpdateRoundAnswerIcons();
                 break;
             case 18:
+                parseRoundScores(inputStream);
                 break;
             case 19:
                 break;
@@ -185,12 +189,19 @@ public class NetworkProtocolClient {
         quizController.pGUI.questionLabel.setText("<html><center>" + str + "</center></html>");
         System.out.println("Sending questions parse" + (String) lastReadObject);
         lastReadObject = inputStream.readObject();
-        String[] alternatives = (String[]) lastReadObject;
-        quizController.player.setCurrentAlternatives(alternatives);
-        quizController.pGUI.answerButtons[0].setText(alternatives[0]);
-        quizController.pGUI.answerButtons[1].setText(alternatives[1]);
-        quizController.pGUI.answerButtons[2].setText(alternatives[2]);
-        quizController.pGUI.answerButtons[3].setText(alternatives[3]);
+        ArrayList<String> alternatives = (ArrayList<String>) lastReadObject;
+        String[] alternativesStringArray = new String[alternatives.size()];
+        int i = 0;
+        for(String alt : alternatives)
+        {
+            alternativesStringArray[i] = alt;
+            i++;
+        }
+        quizController.player.setCurrentAlternatives(alternativesStringArray);
+        quizController.pGUI.answerButtons[0].setText(alternativesStringArray[0]);
+        quizController.pGUI.answerButtons[1].setText(alternativesStringArray[1]);
+        quizController.pGUI.answerButtons[2].setText(alternativesStringArray[2]);
+        quizController.pGUI.answerButtons[3].setText(alternativesStringArray[3]);
 
         if(quizController.timer != null)
         {
@@ -292,5 +303,22 @@ public class NetworkProtocolClient {
 
     public void parseUpdateRoundAnswerIcons() throws IOException, ClassNotFoundException {
         quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
+    }
+
+    public void parseRoundScores(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        int scoreplayer1 = (int) inputStream.readObject();
+        int scoreplayer2 = (int) inputStream.readObject();
+
+        quizController.pGUI.setScorePlayer1(scoreplayer1);
+        quizController.pGUI.setScorePlayer2(scoreplayer2);
+        System.out.println("Player1Score"+scoreplayer1);
+        System.out.println("Player2Score"+scoreplayer2);
+
+
+
+
+
+        //JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
+
     }
 }

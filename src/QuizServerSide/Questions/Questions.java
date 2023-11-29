@@ -3,20 +3,17 @@ package QuizServerSide.Questions;
 import QuizServerSide.QuizServerGame;
 import QuizServerSide.QuizServerPlayer;
 
+import java.util.ArrayList;
+
 public class Questions {
-    /*ArrayList<String> questions =new ArrayList<>();
-    ArrayList<String[]> alternativ =new ArrayList<>();
-    ArrayList<String> alternative =new ArrayList<>();
-    ArrayList<String> kategori =new ArrayList<>();*/
-    //Konstruktor
     String category;
     String question;
-    String[] alternative;
+    ArrayList<String> alternative;
     String correctAlternative;
 
 
 
-    Questions(String category, String question, String[] alternative, String correctAlternative) {
+    Questions(String category, String question, ArrayList<String> alternative, String correctAlternative) {
         this.category = category;
         this.question = question;
         this.alternative = alternative;
@@ -39,11 +36,11 @@ public class Questions {
         this.question = question;
     }
 
-    public String[] getAlternative() {
+    public ArrayList<String> getAlternative() {
         return alternative;
     }
 
-    public void setAlternative(String[] alternative) {
+    public void setAlternative(ArrayList<String> alternative) {
         this.alternative = alternative;
     }
 
@@ -61,8 +58,8 @@ public class Questions {
         return result;
     }
     public int correctAnswerIndex(){
-        for(int i = 0; i < alternative.length; i++){
-            if(alternative[i].equals(correctAlternative)){
+        for(int i = 0; i < alternative.size(); i++){
+            if(alternative.get(i).equals(correctAlternative)){
                 return i;
             }
         }
