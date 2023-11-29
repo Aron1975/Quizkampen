@@ -12,6 +12,7 @@ public class QuizPlayer {
     boolean opponentReady;
     QuizPlayer opponent;
 
+
     //Implement for keep track on which question and which round we are in.
     int nrOfQuestionsPerRound = 3;   // Hämta från server
     int nrOfRounds = 3;      // Hämta från server

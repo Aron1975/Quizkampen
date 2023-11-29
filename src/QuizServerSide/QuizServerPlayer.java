@@ -43,6 +43,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
 
     int currentQuestionWithinRound;
     int currentRound = 0;
+    int[]scoresPerRound=new int[2];
+
 
 
 
@@ -138,6 +140,42 @@ public class QuizServerPlayer extends Thread implements Serializable {
     }
     public int getCurrentRound() {
         return currentRound;
+    }
+
+    public int[] checkWhoWonRound(boolean[] answersCurrentRound,boolean[]opponentAnswerCurrentRound,int[]scoresPerRound2){
+
+        int[] scoresPerQuestion = new int[2];
+
+        for(int i = 0; i < answersCurrentRound.length; i++) {
+
+            if (answersCurrentRound[i] && opponentAnswerCurrentRound[i]) {
+                scoresPerQuestion[0]++;
+                scoresPerQuestion[1]++;
+
+            } else if (answersCurrentRound[i] && !(opponentAnswerCurrentRound[i])) {
+                scoresPerQuestion[0]++;
+
+            } else if (!(answersCurrentRound[i]) && opponentAnswerCurrentRound[i]) {
+                scoresPerQuestion[1]++;
+
+            }
+        }
+        if (scoresPerQuestion[0] > scoresPerQuestion[1]) {
+            scoresPerRound[0]++;
+
+        } else if (scoresPerQuestion[0] < scoresPerQuestion[1]) {
+            scoresPerRound[1]++;
+        }
+        else {
+            scoresPerRound[0]++;
+            scoresPerRound[1]++;
+
+        }
+        System.out.println("Scores per round player 1" + scoresPerRound[0]);
+        System.out.println("Scores per round player 2" + scoresPerRound[1]);
+
+        return scoresPerRound;
+
     }
 
     public void startNewQuestion(boolean whosTurn) throws IOException, ClassNotFoundException, InterruptedException {
@@ -295,12 +333,18 @@ public class QuizServerPlayer extends Thread implements Serializable {
                         status = SCORE;
                     }
                     i++;
+                    serverProtocol.sendRoundScores(output, checkWhoWonRound(answers[currentRound],opponent.answers[currentRound],scoresPerRound));
+                    System.out.println("Inside gameloop"+scoresPerRound[0]+" "+scoresPerRound[1]);
                 }
 
                 if(status == SCORE) {
+
                     //serverProtocol.sendOpponentAllAnswers(output, opponent.answers);
                     serverProtocol.sendAnswersForRound(output, 1, answers[currentRound], currentRound);
                     serverProtocol.sendAnswersForRound(output, 2, opponent.answers[currentRound], currentRound);
+
+                    //checkWhoWonRound
+
 
                     currentRound++;
                     serverProtocol.sendResetStartNewRoundButton(output);

@@ -2,7 +2,9 @@ package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
 import QuizServerSide.NetworkProtocolServer;
+import QuizServerSide.QuizServerPlayer;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -91,6 +93,7 @@ public class NetworkProtocolClient {
                 parseUpdateRoundAnswerIcons();
                 break;
             case 18:
+                parseRoundScores(inputStream);
                 break;
             case 19:
                 break;
@@ -292,5 +295,22 @@ public class NetworkProtocolClient {
 
     public void parseUpdateRoundAnswerIcons() throws IOException, ClassNotFoundException {
         quizController.pGUI.resetCurrentScoreBoard();//Nollställ plupparna vid ny questionrunda
+    }
+
+    public void parseRoundScores(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        int[] checkWhoWonRound = new int[2];
+        checkWhoWonRound = ((int[]) inputStream.readObject());
+
+        quizController.pGUI.setScorePlayer1(checkWhoWonRound[0]);
+        quizController.pGUI.setScorePlayer2(checkWhoWonRound[1]);
+        System.out.println("Player1Score"+checkWhoWonRound[0]);
+        System.out.println("Player2Score"+checkWhoWonRound[1]);
+
+
+
+
+
+        //JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
+
     }
 }
