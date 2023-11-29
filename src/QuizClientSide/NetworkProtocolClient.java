@@ -97,6 +97,7 @@ public class NetworkProtocolClient {
                 parseRoundScores(inputStream);
                 break;
             case 19:
+                parseIsWinner(inputStream);
                 break;
             case 20:
                 break;
@@ -320,5 +321,23 @@ public class NetworkProtocolClient {
 
         //JLabel scoreLabel = new JLabel(scorePlayer1 + " - " + scorePlayer2);
 
+    }
+
+    public void parseIsWinner(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+        int isWinner = (int) inputStream.readObject();
+        String newText = "";
+        if(isWinner == 1)
+        {
+            newText = "You Lose!";
+        }
+        if(isWinner == 2)
+        {
+            newText = "You Win!";
+        }
+        if(isWinner == 3)
+        {
+            newText = "Draw!";
+        }
+        quizController.pGUI.whoTurnLabel.setText(newText);
     }
 }
