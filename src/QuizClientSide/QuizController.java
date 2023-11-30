@@ -15,6 +15,7 @@ public class QuizController implements Runnable{
     NetworkProtocolClient networkProtocolClient;
     AnswerTimer timer;
 
+
     int round = 0;
     boolean newRound = true;
 
@@ -131,6 +132,16 @@ class CategoryButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             //Pick category window
+            for(int i = 0; i<pGUI.categoryButtons.length; i++){
+                if(e.getSource() == pGUI.categoryButtons[i]){
+                    try {
+                        networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[i].getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+            /*
             if(e.getSource() == pGUI.categoryButtons[0]){
                 try {
                     networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[0].getText());
@@ -151,7 +162,7 @@ class CategoryButtonListener implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-            }
+            }*/
 
         }
     }
