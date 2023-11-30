@@ -38,7 +38,7 @@ public class QuizServerGame implements Serializable {
             this.totalRounds = 2;
         }
         if(this.nrOfCategories<1 || this.nrOfCategories>6){
-            this.nrOfCategories = 3;
+            this.nrOfCategories = 6;
         }
     }
     public void readPropertyFile() {
