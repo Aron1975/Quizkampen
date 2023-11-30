@@ -26,7 +26,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
     QuizServerGame game;
     NetworkProtocolServer serverProtocol;
 
-
     //GAME
     int score;
     boolean categoryPicker;
@@ -36,7 +35,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
     boolean ready;
     boolean newQuestionGenerated;
     int lastAnsweredButtonIndex;
-
     int currentQuestionWithinRound;
     int currentRound = 0;
     int[]scoresPerRound=new int[2];
@@ -55,7 +53,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
             throw new RuntimeException(e);
         }
     }
-
     public void setOpponent(QuizServerPlayer opponent) {
         this.opponent = opponent;
     }
@@ -101,7 +98,6 @@ public class QuizServerPlayer extends Thread implements Serializable {
     public void setNewQuestionGenerated(boolean newQuestionGenerated) {
         this.newQuestionGenerated = newQuestionGenerated;
     }
-
     public boolean[][] getAnswers() {
         return answers;
     }

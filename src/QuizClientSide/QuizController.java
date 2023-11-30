@@ -41,7 +41,6 @@ public class QuizController implements Runnable{
             if(e.getSource() == pGUI.welcomeStartButton){
                 String name;
                 if(!(name=(pGUI.welcomeInput.getText()).trim()).isEmpty()) {
-                    player.setName(name);
                     try {
                         networkProtocolClient.sendPlayerName(client.getOutputStream(), name);
                     } catch (IOException ex) {

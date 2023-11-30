@@ -1,6 +1,4 @@
 package QuizServerSide;
-
-
 import QuizServerSide.Questions.ArrayOfQuestions;
 import QuizServerSide.Questions.Questions;
 
@@ -34,7 +32,6 @@ public class QuizServerGame implements Serializable {
         checkValuesFromPropertiesFile();
         categories = new String[nrOfCategories];
     }
-
     public void checkValuesFromPropertiesFile(){
         if(this.numberOfQuestionsPerRound<1 || this.numberOfQuestionsPerRound>5){
             this.numberOfQuestionsPerRound = 2;
@@ -46,7 +43,6 @@ public class QuizServerGame implements Serializable {
             this.nrOfCategories = 3;
         }
     }
-
     public void readPropertyFile() {
         try {
             p.load(new FileInputStream(filename));
@@ -54,7 +50,6 @@ public class QuizServerGame implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
     public int getTotalRounds() {
         return totalRounds;
     }

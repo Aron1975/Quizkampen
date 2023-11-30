@@ -1,22 +1,14 @@
 package QuizServerSide;
 
 import QuizServerSide.Questions.Questions;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-//ISSUES WITH THIS:
-//Need to code proper buffer storing and buffer reading to work as originally intended (Think will still be useful)
-
-//This class handles sending and parsing packets(NetworkMessage class)
-//Reads the first byte which controls what(structure) to send/parse based on the function connected to that specific number of first byte
 public class NetworkProtocolServer {
     NetworkProtocolServer(QuizServerPlayer player){
         this.player = player;
     }
     QuizServerPlayer player;
-
     enum PROTOCOL_SEND
     {
         PLAYER_READY,
@@ -140,7 +132,6 @@ public class NetworkProtocolServer {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.IS_WINNER.ordinal()));
         outputStream.writeObject(isWinner);
     }
-
     public void sendProperties(ObjectOutputStream outputStream, Integer[] properties) throws IOException {
         outputStream.writeObject(new NetworkMessage(PROTOCOL_SEND.SEND_PROPERTIES.ordinal()));
         outputStream.writeObject(properties);

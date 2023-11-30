@@ -1,9 +1,5 @@
 package QuizServerSide;
-
-import QuizServerSide.Questions.ArrayOfQuestions;
-
 import java.net.ServerSocket;
-import java.util.ArrayList;
 public class QuizServer{
     static int port = 42052;
     public static void main(String[] args) throws Exception {
@@ -42,5 +38,4 @@ public class QuizServer{
             listener.close();
         }
     }
-
 }

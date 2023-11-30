@@ -589,28 +589,19 @@ public class QuizGUI extends JFrame {
     }
 
     public void resetCurrentScoreBoard() {
-
         for (int i = 0; i < roundQuestionSpotsLabel1.length; i++) {
-
             roundQuestionSpotsLabel1[i].setIcon(emptyscore2);
             roundQuestionSpotsLabel2[i].setIcon(emptyscore2);
         }
     }
-
-
     //General
     public void changeWindow(String category) {
         cardLo.show(mainQuizPanel, category);
     }
-
     public void setNameLabels(String name1) {
-
         player1NameLabel.setText(name1);
-        //player2NameLabel.setText(name2);
         nameLabel[1].setText(name1);
-        //nameLabel[2].setText(name2);
     }
-
     public void setOpponentName(String catName) {
         player2NameLabel.setText("   " + catName);
         nameLabel[2].setText(catName);
@@ -619,22 +610,17 @@ public class QuizGUI extends JFrame {
     public int getScorePlayer1() {
         return scorePlayer1;
     }
-
     public void setScorePlayer1(int scorePlayer1) {
         this.scorePlayer1 = scorePlayer1;
         scoreLabel.setText(scorePlayer1 + " - " + getScorePlayer2());
     }
-
     public int getScorePlayer2() {
         return scorePlayer2;
     }
-
     public void setScorePlayer2(int scorePlayer2) {
         this.scorePlayer2 = scorePlayer2;
         scoreLabel.setText(getScorePlayer1() + " - " + scorePlayer2);
-
     }
-
     public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
         this.lastAnsweredQuestion = lastAnsweredQuestion;
     }
@@ -647,9 +633,7 @@ public class QuizGUI extends JFrame {
 
         if (toChooseCategory) {
             categoryLabelPickCategory.setText("Välj Kategori");
-           /* for (int i = 0; i < categoryButtons.length; i++) {
-                categoryButtons[i].setVisible(true);
-            }*/
+
             for (int i = 0; i < nrOfCategories; i++) {
                 categoryButtons[i].setVisible(true);
             }
