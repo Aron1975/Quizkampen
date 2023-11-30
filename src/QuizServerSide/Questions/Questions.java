@@ -1,7 +1,7 @@
 package QuizServerSide.Questions;
+
 import QuizServerSide.QuizServerGame;
 import QuizServerSide.QuizServerPlayer;
-
 import java.util.ArrayList;
 
 public class Questions {

@@ -11,8 +11,6 @@ public class QuizController implements Runnable{
     Thread t = new Thread(this);
     NetworkProtocolClient networkProtocolClient;
     AnswerTimer timer;
-    int round = 0;
-    boolean newRound = true;
 
     public QuizController(QuizPlayer player, QuizGUI pGUI, QuizClient client) {
         this.player = player;
@@ -100,29 +98,6 @@ class CategoryButtonListener implements ActionListener {
                     }
                 }
             }
-            /*
-            if(e.getSource() == pGUI.categoryButtons[0]){
-                try {
-                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[0].getText());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            else if(e.getSource() == pGUI.categoryButtons[1]){
-                try {
-                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[1].getText());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            else if(e.getSource() == pGUI.categoryButtons[2]){
-                try {
-                    networkProtocolClient.sendChosenCategory(client.getOutputStream(),pGUI.categoryButtons[2].getText());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }*/
-
         }
     }
     public static void main(String[] args){

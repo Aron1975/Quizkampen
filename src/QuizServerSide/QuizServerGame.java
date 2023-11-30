@@ -1,10 +1,8 @@
 package QuizServerSide;
-import QuizServerSide.Questions.ArrayOfQuestions;
-import QuizServerSide.Questions.Questions;
 
+import QuizServerSide.Questions.ArrayOfQuestions;
 import java.io.FileInputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class QuizServerGame implements Serializable {

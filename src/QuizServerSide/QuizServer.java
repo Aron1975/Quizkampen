@@ -1,4 +1,5 @@
 package QuizServerSide;
+
 import java.net.ServerSocket;
 public class QuizServer{
     static int port = 42052;

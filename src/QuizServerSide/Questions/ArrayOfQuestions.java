@@ -32,7 +32,6 @@ public class ArrayOfQuestions {
             e.printStackTrace();
         }
     }
-
     public void generateHashMap(){
         for(int i = 0; i<categories.size(); i++){
             ArrayList<Questions> tempList = new ArrayList<>();
@@ -44,7 +43,6 @@ public class ArrayOfQuestions {
             }
         }
     }
-
     public Questions generateRandomQuestion(String categoryFromUser) {
         ArrayList<Questions> questionsWithCurrentCategory;
         //Populate a new list with questions for specific category
@@ -60,7 +58,6 @@ public class ArrayOfQuestions {
         System.out.println(tempQuestion.question);
         return tempQuestion;
     }
-
     public String[] randomizeCategoryAlternatives(int nrOfCategories) {
         Collections.shuffle(this.categories);
         String[] nrOfRandomCategories = new String[nrOfCategories];

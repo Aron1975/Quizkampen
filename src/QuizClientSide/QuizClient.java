@@ -1,9 +1,6 @@
 package QuizClientSide;
 
 import QuizServerSide.NetworkMessage;
-import QuizServerSide.QuizServerPlayer;
-
-import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 
