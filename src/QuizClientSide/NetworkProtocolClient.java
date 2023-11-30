@@ -200,10 +200,10 @@ public class NetworkProtocolClient {
             i++;
         }
         quizController.player.setCurrentAlternatives(alternativesStringArray);
-        quizController.pGUI.answerButtons[0].setText(alternativesStringArray[0]);
-        quizController.pGUI.answerButtons[1].setText(alternativesStringArray[1]);
-        quizController.pGUI.answerButtons[2].setText(alternativesStringArray[2]);
-        quizController.pGUI.answerButtons[3].setText(alternativesStringArray[3]);
+        quizController.pGUI.answerButtons[0].setText("<html><center>" + alternativesStringArray[0] + "</center></html>");
+        quizController.pGUI.answerButtons[1].setText("<html><center>" + alternativesStringArray[1] + "</center></html>");
+        quizController.pGUI.answerButtons[2].setText("<html><center>" + alternativesStringArray[2] + "</center></html>");
+        quizController.pGUI.answerButtons[3].setText("<html><center>" + alternativesStringArray[3] + "</center></html>");
 
         if(quizController.timer != null)
         {

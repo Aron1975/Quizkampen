@@ -53,6 +53,7 @@ public class Questions {
     }
 
     public boolean checkAnswer(String answer, QuizServerPlayer player, QuizServerGame game){
+        answer = answer.substring(14, answer.length()-16); // remove html tags
         boolean result = answer.equals(correctAlternative);
         player.getAnswers()[player.getCurrentRound()][player.getCurrentQuestionWithinRound()] = result;
         return result;

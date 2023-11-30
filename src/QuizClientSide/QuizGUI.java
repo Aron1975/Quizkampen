@@ -25,7 +25,7 @@ public class QuizGUI extends JFrame {
     Dimension panelsDimension = new Dimension(screenX,screenY);
 
     int rounds = 6;
-    int questionsPerRound = 1;
+    int questionsPerRound = 2;
     static int currentRound = 3;
 
     int scorePlayer1 = 0;
