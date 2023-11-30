@@ -4,6 +4,7 @@ import QuizServerSide.NetworkMessage;
 import QuizServerSide.NetworkProtocolServer;
 import QuizServerSide.QuizServerPlayer;
 
+
 import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +15,8 @@ import java.util.Spliterators;
 import java.util.Timer;
 
 public class NetworkProtocolClient {
+
+
 
     NetworkProtocolClient(QuizController quizController) {
         this.quizController = quizController;
@@ -348,12 +351,12 @@ public class NetworkProtocolClient {
         quizController.player.setNrOfRounds(properties[1]);
         quizController.player.setPlayerAnswers(properties[1], properties[0]);
         quizController.pGUI.setNrOfRounds(properties[1]);
+        quizController.pGUI.setNrOfCategories(properties[2]);
         quizController.pGUI.setNrOfQuestionsPerRound(properties[0]);
         quizController.pGUI.initWelcomeWindow();
         quizController.pGUI.initPlayWindow();
         quizController.pGUI.initCategoryWindow();
         quizController.pGUI.initScoreboardWindow();
-        // properties[2]   //Antalet kategeorier;
         System.out.println("Receive NrOfRounds: " + properties[1] + " NrOfQuestions: " + properties[0]);
     }
 }
