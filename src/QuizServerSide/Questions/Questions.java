@@ -1,5 +1,4 @@
 package QuizServerSide.Questions;
-
 import QuizServerSide.QuizServerGame;
 import QuizServerSide.QuizServerPlayer;
 
@@ -11,45 +10,22 @@ public class Questions {
     ArrayList<String> alternative;
     String correctAlternative;
 
-
-
     Questions(String category, String question, ArrayList<String> alternative, String correctAlternative) {
         this.category = category;
         this.question = question;
         this.alternative = alternative;
         this.correctAlternative = correctAlternative;
     }
-
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
     public ArrayList<String> getAlternative() {
         return alternative;
-    }
-
-    public void setAlternative(ArrayList<String> alternative) {
-        this.alternative = alternative;
-    }
-
-    public String getCorrectAlternative() {
-        return correctAlternative;
-    }
-
-    public void setCorrectAlternative(String correctAlternative) {
-        this.correctAlternative = correctAlternative;
     }
 
     public boolean checkAnswer(String answer, QuizServerPlayer player, QuizServerGame game){

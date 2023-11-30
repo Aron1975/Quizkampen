@@ -5,45 +5,23 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class QuizController implements Runnable{
-
     QuizPlayer player;
     QuizGUI pGUI;
     QuizClient client;
-    String messageFromServer;
-    String[] messageArrayFromServer;
     Thread t = new Thread(this);
     NetworkProtocolClient networkProtocolClient;
     AnswerTimer timer;
-
-    int round = 0;
-    boolean newRound = true;
 
     public QuizController(QuizPlayer player, QuizGUI pGUI, QuizClient client) {
         this.player = player;
         this.pGUI = pGUI;
         this.client = client;
-        System.out.println("I Controller konstruktor.");
         this.networkProtocolClient = new NetworkProtocolClient(this);
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
-        //client.play();
+
         t.start();
-        System.out.println("I Controller konstruktor. Efter t.start().");
-//commented for Testing GUI       startGame();
-        System.out.println(player.getName());
         pGUI.setVisible(true);
-    }
-
-    public QuizController(QuizPlayer player, QuizGUI pGUI) {
-        this.player = player;
-        this.pGUI = pGUI;
-        this.pGUI.addButtonListener(new MyButtonListener());
-        this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
-        //t.start();
-    }
-
-    public QuizController() {
-
     }
 
     QuizClient getClient() { return client; }
@@ -54,9 +32,7 @@ public class QuizController implements Runnable{
             client.play(networkProtocolClient);
         }
     }
-
     class MyButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -69,12 +45,6 @@ public class QuizController implements Runnable{
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                  /*  try {
-                        client.getOutputStream().writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.SET_PLAYERNAME.ordinal()));
-                        client.getOutputStream().writeObject(name);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }*/
                 }
             }
             if(e.getSource() == pGUI.answerButtons[0]){
@@ -83,9 +53,6 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
-                //System.out.println("pressed button");
-
             }
             if(e.getSource() == pGUI.answerButtons[1]){
                 try {
@@ -93,9 +60,6 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
-                //System.out.println("pressed button");
-
             }
             if(e.getSource() == pGUI.answerButtons[2]){
                 try {
@@ -103,9 +67,6 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
-                //System.out.println("pressed button");
-
             }
             if(e.getSource() == pGUI.answerButtons[3]){
                 try {
@@ -113,8 +74,6 @@ public class QuizController implements Runnable{
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                //System.out.println("pressed button");
-
             }
             if(e.getSource() == pGUI.scoreBoardStartButton){
                 try {
@@ -155,12 +114,10 @@ class CategoryButtonListener implements ActionListener {
 
         }
     }
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args){
         QuizPlayer p = new QuizPlayer();
         QuizClient c = new QuizClient();
         QuizGUI pGUI = new QuizGUI();
         new QuizController(p,pGUI, c);
-        //c.play();
     }
 }

@@ -26,8 +26,6 @@ public class QuizGUI extends JFrame {
 
     int rounds = 6;
     int questionsPerRound = 2;
-    static int currentRound = 3;
-
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
     int roundPointsPlayer1 = 2;
@@ -39,10 +37,7 @@ public class QuizGUI extends JFrame {
     Icon avatar2 = new ImageIcon(new ImageIcon("Images/Avatar8.png").
             getImage().getScaledInstance(imageIconSize2, imageIconSize2, Image.SCALE_SMOOTH));
 
-
     //Category Images
-    Icon categoryIcon = new ImageIcon("Images/Kategori1.jpg");
-    Icon questionBackground = new ImageIcon("Images/Question.jpg");
     Icon categorySpace = new ImageIcon(new ImageIcon("Images/Category_Space.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
     Icon categoryFood = new ImageIcon(new ImageIcon("Images/Category_Food.png").
@@ -83,7 +78,6 @@ public class QuizGUI extends JFrame {
     JPanel playerPanelMain = new JPanel();
     JPanel playerPanel = new JPanel();
     JPanel questionPanel = new JPanel();
-    JPanel scores = new JPanel();
     JPanel answerPanel = new JPanel();
     JPanel playerAvatarPanel1 = new JPanel();
     JPanel playerAvatarPanel2 = new JPanel();
@@ -102,15 +96,13 @@ public class QuizGUI extends JFrame {
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
     JButton[] answerButtons = {new JButton(),new JButton(),new JButton(),new JButton()};
     JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
-    LayoutManager playersLayout = new BorderLayout();
-    //LayoutManager playersLayout = new GridLayout(3,3);
     LayoutManager answerLayout = new GridLayout(2,2);
     Color answButtonColor = new Color(20,40,100);
 
     //------------Scoreboard Window------------------------
-    String playerName1 = "Scaramanga";
-    String playerName2 = "James Bond";
-    String whoTurn = "Your turn";
+    String playerName1;
+    String playerName2;
+    String whoTurn;
 
     JPanel[][] roundPanel = new JPanel[3][rounds];
     JLabel[][] plupparLabel = new JLabel[3][rounds * questionsPerRound];
@@ -133,12 +125,6 @@ public class QuizGUI extends JFrame {
         //Nytt för CardLayout
         mainQuizPanel.setLayout(cardLo);
         mainQuizPanel.setPreferredSize(panelsDimension);
-
-        //Initialize
-        //initWelcomeWindow();
-        //initPlayWindow();
-        //initCategoryWindow();
-        //initScoreboardWindow();
 
         mainQuizPanel.add(welcomePanelMain, WELCOME);
         mainQuizPanel.add(playerPanelMain, PLAY);

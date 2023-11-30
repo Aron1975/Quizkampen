@@ -10,22 +10,12 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class QuizServerGame implements Serializable {
-
-    //GAME
-    QuizServerPlayer playerOne;
-    QuizServerPlayer playerTwo;
-    int currentRound = 0;
     int totalRounds = 0;
     int numberOfQuestionsPerRound = 2;
-    int currentQuestionWithinRound = 0;
     int nrOfCategories = 3;
     int delayStartNewQuestion;
-    String[] categories; // = new String[nrOfCategories];
-    boolean categoriesGotten = false;
+    String[] categories;
     String currentCategory;
-    String currentQuestion;
-    ArrayList<String> currentAnswerAlternatives = new ArrayList<>();
-    String currentCorrectAnswer;
     ArrayOfQuestions aq;
     Properties p = new Properties();
     String filename = "src/Quizkampen.properties";
@@ -52,48 +42,8 @@ public class QuizServerGame implements Serializable {
         }
     }
 
-    public void setCurrentRound(int currentRound) {
-        this.currentRound = currentRound;
-    }
-
-    public int getCurrentRound() {
-        return currentRound;
-    }
-
-    public void setTotalRounds(int totalRounds) {
-        this.totalRounds = totalRounds;
-    }
-
     public int getTotalRounds() {
         return totalRounds;
-    }
-
-    public void setCurrentQuestion(String currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
-
-    public String getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentAnswerAlternatives(ArrayList<String> currentAnswerAlternatives) {
-        this.currentAnswerAlternatives = currentAnswerAlternatives;
-    }
-
-    public ArrayList<String> getCurrentAnswerAlternatives() {
-        return currentAnswerAlternatives;
-    }
-
-    public void setCurrentCorrectAnswer(String currentCorrectAnswer) {
-        this.currentCorrectAnswer = currentCorrectAnswer;
-    }
-
-    public String getCurrentCorrectAnswer() {
-        return currentCorrectAnswer;
-    }
-
-    public void setNumberOfQuestionsPerRound(int numberOfQuestionsPerRound) {
-        this.numberOfQuestionsPerRound = numberOfQuestionsPerRound;
     }
 
     public int getNumberOfQuestionsPerRound() {
@@ -110,10 +60,6 @@ public class QuizServerGame implements Serializable {
 
     public ArrayOfQuestions getAq() {
         return aq;
-    }
-
-    public void setAq(ArrayOfQuestions aq) {
-        this.aq = aq;
     }
 
     public int getNrOfCategories() {
