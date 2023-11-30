@@ -32,10 +32,10 @@ public class QuizServerGame implements Serializable {
     }
     public void checkValuesFromPropertiesFile(){
         if(this.numberOfQuestionsPerRound<1 || this.numberOfQuestionsPerRound>5){
-            this.numberOfQuestionsPerRound = 2;
+            this.numberOfQuestionsPerRound = 5;
         }
         if(this.totalRounds<1 || this.totalRounds>10){
-            this.totalRounds = 2;
+            this.totalRounds = 10;
         }
         if(this.nrOfCategories<1 || this.nrOfCategories>6){
             this.nrOfCategories = 6;
