@@ -77,7 +77,7 @@ public class QuizGUI extends JFrame {
     JPanel categoryMainPanel = new JPanel();
     JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
     JPanel categoryButtonPanel = new JPanel();
-    JButton[] categoryButtons = {new JButton(""),new JButton(""),new JButton(""),new JButton(""),new JButton()};
+    JButton[] categoryButtons = {new JButton(""),new JButton(""),new JButton(""),new JButton(""),new JButton(), new JButton()};
 
     //------------ Play Window ---------------------------
     JPanel playerPanelMain = new JPanel();
