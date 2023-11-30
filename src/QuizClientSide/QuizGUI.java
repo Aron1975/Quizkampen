@@ -24,9 +24,9 @@ public class QuizGUI extends JFrame {
     Font f2 = new Font(null, 3, 14);
     Dimension panelsDimension = new Dimension(screenX,screenY);
 
-    int rounds = 6;
+    int rounds = 1;
     int questionsPerRound = 1;
-    static int currentRound = 3;
+    static int currentRound = 1;
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
@@ -113,7 +113,7 @@ public class QuizGUI extends JFrame {
     String whoTurn = "Your turn";
 
     JPanel[][] roundPanel = new JPanel[3][rounds];
-    JLabel[][] plupparLabel = new JLabel[3][rounds * questionsPerRound];
+    JLabel[][] plupparLabel;
     JPanel scoreboardMainPanel = new JPanel();
     JPanel player1Panel;
     JPanel player2Panel;
@@ -195,6 +195,8 @@ public class QuizGUI extends JFrame {
     }
 
     public void setPlayerPanelProperties(){
+        roundQuestionSpotsLabel1 = new JLabel[questionsPerRound];
+        roundQuestionSpotsLabel2 = new JLabel[questionsPerRound];
         // playerPanel.setPreferredSize(new Dimension((int)(screenX*0.85),screenX/2));
         playerPanel.setPreferredSize(new Dimension(340,180));
         playerPanel.setBackground(panelsBackgroundColor);
@@ -347,6 +349,9 @@ public class QuizGUI extends JFrame {
 
     //---------- Scoreboard --------------------------
     public void initScoreboardWindow() {
+        roundPanel = new JPanel[3][rounds];
+        plupparLabel = new JLabel[3][rounds * questionsPerRound];
+
         scoreboardMainPanel.setPreferredSize(panelsDimension);
         borderPanel.setPreferredSize(panelsDimension);
 
