@@ -30,8 +30,6 @@ public class QuizGUI extends JFrame {
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
-    int roundPointsPlayer1 = 2;
-    int roundPointsPlayer2 = 3;
 
     //Avatar images
     Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar4.png").
@@ -98,8 +96,6 @@ public class QuizGUI extends JFrame {
     JLabel questionLabel = new JLabel("", SwingConstants.CENTER);
     JButton[] answerButtons = {new JButton(), new JButton(), new JButton(), new JButton()};
     JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
-    LayoutManager playersLayout = new BorderLayout();
-    //LayoutManager playersLayout = new GridLayout(3,3);
     LayoutManager answerLayout = new GridLayout(2, 2);
     Color answButtonColor = new Color(20, 40, 100);
 
@@ -123,8 +119,6 @@ public class QuizGUI extends JFrame {
 
 
     public QuizGUI(){
-
-        System.out.println("I GUI konstruktor.");
         setTitle("QUIZKAMPEN");
         //Nytt för CardLayout
         mainQuizPanel.setLayout(cardLo);
@@ -139,7 +133,6 @@ public class QuizGUI extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
-        //setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
@@ -187,7 +180,6 @@ public class QuizGUI extends JFrame {
     public void setPlayerPanelProperties() {
         roundQuestionSpotsLabel1 = new JLabel[questionsPerRound];
         roundQuestionSpotsLabel2 = new JLabel[questionsPerRound];
-        // playerPanel.setPreferredSize(new Dimension((int)(screenX*0.85),screenX/2));
         playerPanel.setPreferredSize(new Dimension(340, 180));
         playerPanel.setBackground(panelsBackgroundColor);
         playerAvatarPanel1.setBackground(panelsBackgroundColor);
@@ -197,7 +189,6 @@ public class QuizGUI extends JFrame {
         player1NameLabel.setFont(f2);
         player2NameLabel.setFont(f2);
         categoryNameLabel.setFont(f2);
-        //playerPanel.setLayout(playersLayout);
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
 
         playerAvatarPanel1.setLayout(new BoxLayout(playerAvatarPanel1, BoxLayout.Y_AXIS));
@@ -226,8 +217,6 @@ public class QuizGUI extends JFrame {
         playerPanel.add(playerCategoryPanel, BorderLayout.CENTER);
         playerPanel.add(playerAvatarPanel2, BorderLayout.EAST);
 
-        // roundQuestionSpotsPanel1.setLayout(new FlowLayout());
-        //roundQuestionSpotsPanel2.setLayout(new FlowLayout());
         roundQuestionSpotsPanel1.setPreferredSize(new Dimension(90, 20));
 
         for (int i = 0; i < roundQuestionSpotsLabel1.length; i++) {
@@ -245,7 +234,6 @@ public class QuizGUI extends JFrame {
 
 
     }
-
     public void setQuestionPanelProperties() {
         String questionText = "Fråga?";
         questionPanel.setPreferredSize(new Dimension(screenX, screenY / 2));
@@ -284,13 +272,9 @@ public class QuizGUI extends JFrame {
             jb.setForeground(Color.WHITE);
             jb.setBorder(border);
             jb.setFocusPainted(false);
-            //jb.setFocusable(false);
-            //jb.setPreferredSize(new Dimension(150,150));
             answerPanel.add(jb);
         }
     }
-    //------------------------------------------------------------------
-
     //---------------- Category window ---------------------------------
     public void initCategoryWindow() {
         //Change
@@ -299,24 +283,16 @@ public class QuizGUI extends JFrame {
         categoryLabelPickCategory.setBackground(panelsBackgroundColor);
         categoryButtonPanel.setBackground(panelsBackgroundColor);
         //MAIN FRAME
-        //setSize(panelsDimension);
-        //setResizable(false);
-        //setLocationRelativeTo(null); // Center main window to screen
 
         // MAIN PANEL
         categoryMainPanel.setLayout(new BoxLayout(categoryMainPanel, BoxLayout.PAGE_AXIS));
-        //categoryMainPanel.setBackground(Color.WHITE);
 
         // PICK A CATEGORY LABEL
-        //categoryLabelPickCategory.setBackground(Color.WHITE);
         categoryLabelPickCategory.setOpaque(true);
         categoryLabelPickCategory.setFont(f);
         categoryLabelPickCategory.setAlignmentX(0.5f);
 
         // BUTTONS
-
-        //categoryButtons = new JButton[nrOfCategories];
-
         categoryButtonPanel.setLayout(new BoxLayout(categoryButtonPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < categoryButtons.length; i++) {
             categoryButtons[i].setBackground(answButtonColor);
@@ -331,17 +307,12 @@ public class QuizGUI extends JFrame {
             categoryButtonPanel.add(categoryButtons[i].getText(), categoryButtons[i]);
             categoryButtonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         }
-       /* for (int i = 0; i < nrOfCategories; i++) {
-            categoryButtons[i].setVisible(true);
-        }*/
 
         categoryMainPanel.add(Box.createRigidArea(new Dimension(0, 150)));
         categoryMainPanel.add(categoryLabelPickCategory);
         categoryMainPanel.add(Box.createRigidArea(new Dimension(0, 100)));
         categoryMainPanel.add(categoryButtonPanel);
-        //add(categoryMainPanel);
     }
-    //-----------------------------------------------------------------------
 
     //---------- Scoreboard --------------------------
     public void initScoreboardWindow() {
@@ -351,15 +322,12 @@ public class QuizGUI extends JFrame {
         scoreboardMainPanel.setPreferredSize(panelsDimension);
         borderPanel.setPreferredSize(panelsDimension);
 
-        //borderPanel.setPreferredSize(new Dimension(400,600));
         borderPanel.setBackground(panelsBackgroundColor);
 
         whoTurnLabel.setFont(f);
         whoTurnLabel.setHorizontalAlignment(JLabel.CENTER);
         borderPanel.add(whoTurnLabel, BorderLayout.NORTH);
 
-        //player1Panel.setFont(f2);
-        //player2Panel.setFont(f2);
         //----FONT
 
         // Score display
@@ -385,33 +353,27 @@ public class QuizGUI extends JFrame {
 
     public JPanel createPlayerPanel(int player) {
         String name;
-        Icon playerIcon = null;
-        int roundPointsPlayer;
+        Icon playerIcon;
         if (player == 1) {
             name = playerName1;
             playerIcon = avatar1;
-            roundPointsPlayer = roundPointsPlayer1;
         } else {
             name = playerName2;
             playerIcon = avatar2;
-            roundPointsPlayer = roundPointsPlayer2;
         }
 
         //
         JPanel playerNamePanel = new JPanel();
         playerNamePanel.setLayout(new BoxLayout(playerNamePanel, BoxLayout.Y_AXIS));
-        //playerNamePanel.setBackground(panelsBackgroundColor);
         playerNamePanel.setBackground(panelsBackgroundColor);
 
         nameLabel[player] = new JLabel(name);
-        //JLabel roundScore = new JLabel("     " + (Integer.toString(roundPointsPlayer)));
         JLabel roundScore = new JLabel("     ");
         playerIconLabel[player] = new JLabel(playerIcon);
         playerIconLabel[player].setAlignmentX(0.5f);
         nameLabel[player].setAlignmentX(0.5f);
 
         nameLabel[player].setFont(f2);
-        //roundScore.setFont(f2);
 
         playerNamePanel.add(playerIconLabel[player]);
         playerNamePanel.add(nameLabel[player]);
@@ -446,8 +408,6 @@ public class QuizGUI extends JFrame {
         }
         return scorePanel;
     }
-    //-------------------------------------------------------------------------
-
     //------------ Button Listeners -------------------------------------------
     void addButtonListener(ActionListener aListener) {
         for (JButton jB : answerButtons) {
@@ -462,20 +422,9 @@ public class QuizGUI extends JFrame {
             jB.addActionListener(aListener);
         }
     }
-    //-------------------------------------------------------------------------
-
     //-------------- GUI Methods ----------------------------------------------
-    //LOBBY
-
 
     //CATEGORY
-    public String getCategoryButtonName(int buttonNr) {
-        return categoryButtons[buttonNr].getText();
-    }
-
-    public String getLastAnsweredQuestion() {
-        return lastAnsweredQuestion;
-    }
 
     public void changeAnsweredButtonColor(boolean correctAnswer, int buttonIndex) {
 
@@ -488,7 +437,6 @@ public class QuizGUI extends JFrame {
         }
         for (JButton jb : answerButtons) {
             jb.setEnabled(false);
-            //System.out.println(jb);
         }
     }
 
@@ -499,9 +447,6 @@ public class QuizGUI extends JFrame {
         }
     }
 
-    public void setCategoryName(String catName) {
-        categoryNameLabel.setText("   " + catName);
-    }
 
     public void setCategoryButtonText(String[] textArray) {
         for (int i = 0; i < textArray.length; i++) {
@@ -525,64 +470,24 @@ public class QuizGUI extends JFrame {
     }
 
     //GAME
-    public void setQuestionLabelText(String text) {
-        if (text.length() > 32) {
-            text = splitText(text);
-        }
-        questionLabel.setText(text);
-    }
-
-    public String splitText(String text) {
-        String[] splittedText;
-        int index = text.indexOf(" ", 30);
-        splittedText = text.split(" ", 3);
-        return text;
-    }
-
-    public void setAnswerButtonText(String[] text) {
-        for (int i = 0; i < answerButtons.length; i++) {
-            answerButtons[i].setText(text[i]);
-        }
-    }
-
-    public String getButtonText(int buttonNr) {
-        return answerButtons[buttonNr].getText();
-    }
-
     public void setCategoryNameLabel(String category) {
         categoryNameLabel.setText(category);
     }
 
 
     //SCOREBOARD
-
-    public void setRounds(int rounds) {
-        this.rounds = rounds;
-    }
-
-    public void setQuestionsPerRound(int questionsPerRound) {
-        this.questionsPerRound = questionsPerRound;
-    }
-
     public void setScoreBoard(int player, int roundNr, int questionNr, boolean correctAnswer) {
         int index = questionNr + (roundNr * questionsPerRound);
         if (correctAnswer) {
-            System.out.println("UPDATE BUTTON INDEX: " + index);
             plupparLabel[player][index].setIcon(this.winIcon);
-            //plupparLabel[player][0].setIcon(this.winIcon);
         } else if (correctAnswer == false) {
-            System.out.println("UPDATE BUTTON INDEX: " + index);
             plupparLabel[player][index].setIcon(this.loseIcon);
-            //plupparLabel[player][0].setIcon(this.loseIcon);
-        } else {
-            System.out.println("NULL! UPDATE BUTTON INDEX: " + index);
         }
     }
 
     public void setCurrentScoreBoard(int questionNr, boolean correctAnswer) {
         if (correctAnswer) {
             roundQuestionSpotsLabel1[questionNr].setIcon(this.winIcon); //buggfix:
-            // Exception in thread "Thread-0" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 3
         } else {
             roundQuestionSpotsLabel1[questionNr].setIcon(this.loseIcon);
         }
