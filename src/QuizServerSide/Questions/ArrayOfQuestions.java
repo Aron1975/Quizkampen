@@ -54,8 +54,8 @@ public class ArrayOfQuestions {
         Collections.shuffle(questionsWithCurrentCategory);
 
         Questions tempQuestion = questionsWithCurrentCategory.get(0);
-        questionsWithCurrentCategory.remove(0);
-        allQuestionsFromFile.put(categoryFromUser, questionsWithCurrentCategory);
+        //questionsWithCurrentCategory.remove(0);
+        //allQuestionsFromFile.put(categoryFromUser, questionsWithCurrentCategory);
         System.out.println(tempQuestion.question);
         return tempQuestion;
     }

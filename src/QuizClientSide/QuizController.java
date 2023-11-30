@@ -22,13 +22,16 @@ public class QuizController implements Runnable{
         this.player = player;
         this.pGUI = pGUI;
         this.client = client;
+        System.out.println("I Controller konstruktor.");
         this.networkProtocolClient = new NetworkProtocolClient(this);
         this.pGUI.addButtonListener(new MyButtonListener());
         this.pGUI.initCategoryButtonListener(new CategoryButtonListener());
         //client.play();
         t.start();
+        System.out.println("I Controller konstruktor. Efter t.start().");
 //commented for Testing GUI       startGame();
         System.out.println(player.getName());
+        pGUI.setVisible(true);
     }
 
     public QuizController(QuizPlayer player, QuizGUI pGUI) {
@@ -155,8 +158,8 @@ class CategoryButtonListener implements ActionListener {
 
     public static void main(String[] args) throws Exception {
         QuizPlayer p = new QuizPlayer();
-        QuizGUI pGUI = new QuizGUI();
         QuizClient c = new QuizClient();
+        QuizGUI pGUI = new QuizGUI();
         new QuizController(p,pGUI, c);
         //c.play();
     }
