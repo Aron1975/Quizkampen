@@ -294,9 +294,11 @@ public class NetworkProtocolClient {
         quizController.player.setNrOfQuestionsPerRound(properties[0]);
         quizController.player.setNrOfRounds(properties[1]);
         quizController.player.setPlayerAnswers(properties[1], properties[0]);
+
         quizController.pGUI.setNrOfRounds(properties[1]);
         quizController.pGUI.setNrOfCategories(properties[2]);
         quizController.pGUI.setNrOfQuestionsPerRound(properties[0]);
+        quizController.pGUI.setProgressBarSekunder(properties[3]);
         quizController.pGUI.initWelcomeWindow();
         quizController.pGUI.initPlayWindow();
         quizController.pGUI.initCategoryWindow();

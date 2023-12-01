@@ -27,6 +27,7 @@ public class QuizGUI extends JFrame {
     int rounds = 1;
     int questionsPerRound = 6;
     int nrOfCategories = 4;
+    int progressBarSekunder = 5;
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
@@ -43,6 +44,8 @@ public class QuizGUI extends JFrame {
     Icon categoryFood = new ImageIcon(new ImageIcon("Images/Category_Food.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
     Icon categoryGeography = new ImageIcon(new ImageIcon("Images/Category_Geography.png").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
+    Icon categoryDeafult = new ImageIcon(new ImageIcon("Images/Category_Geography.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
 
     //Scoreoard Images
@@ -246,7 +249,8 @@ public class QuizGUI extends JFrame {
         questionLabel.setOpaque(true);
         questionLabel.setFont(f);
         progressBar.setMinimum(0);
-        progressBar.setMaximum(20 * 1000);
+        //progressBar.setMaximum(20 * 400);
+        progressBar.setMaximum(progressBarSekunder*1000);
         progressBar.setPreferredSize(new Dimension(screenX, 16));
         progressBar.setForeground(Color.RED);
         progressBar.setBackground(Color.GRAY);
@@ -563,5 +567,8 @@ public class QuizGUI extends JFrame {
         this.nrOfCategories = nrOfCategories;
     }
 
+    public void setProgressBarSekunder(int sekunder){
+        this.progressBarSekunder = sekunder;
+    }
 
 }

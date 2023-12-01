@@ -179,7 +179,9 @@ public class QuizServerPlayer extends Thread implements Serializable {
     {
         try {
             if(status == INIT){
-                Integer[] propertiesToSend = {game.getNumberOfQuestionsPerRound(),game.getTotalRounds(), game.getNrOfCategories()};
+                //Integer[] propertiesToSend = {game.getNumberOfQuestionsPerRound(),game.getTotalRounds(), game.getNrOfCategories()};
+                Integer[] propertiesToSend = {game.getNumberOfQuestionsPerRound(),game.getTotalRounds(), game.getNrOfCategories(),game.getTimeToAnswer()};
+
                 serverProtocol.sendProperties(output, propertiesToSend);
 
                 status=LOBBY;
