@@ -372,7 +372,7 @@ public class QuizGUI extends JFrame {
         scoreCatPanel.setBackground(panelsBackgroundColor);
         scoreboardCategoryLabels = new JLabel[nrOfCategories];
         for(int i = 0; i<nrOfCategories; i++){
-            scoreboardCategoryLabels[i] = new JLabel(his);
+            scoreboardCategoryLabels[i] = new JLabel(categoryGeography);
             scoreCatPanel.add(scoreboardCategoryLabels[i]);
         }
         return scoreCatPanel;
