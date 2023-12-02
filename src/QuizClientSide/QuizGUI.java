@@ -28,6 +28,7 @@ public class QuizGUI extends JFrame {
     int questionsPerRound = 6;
     int nrOfCategories = 4;
     int progressBarSekunder = 5;
+    int roundNumber = 0;
 
 
     int scorePlayer1 = 0;
@@ -375,9 +376,11 @@ public class QuizGUI extends JFrame {
         scoreCatPanel.add(scoreLabel);
         scoreCatPanel.setLayout(new BoxLayout(scoreCatPanel, BoxLayout.Y_AXIS));
         scoreCatPanel.setBackground(panelsBackgroundColor);
-        scoreboardCategoryLabels = new JLabel[nrOfCategories];
-        for(int i = 0; i<nrOfCategories; i++){
-            scoreboardCategoryLabels[i] = new JLabel(categoryGeography);
+        System.out.println("Setting scoreboard Labels, rounds: " + rounds);
+        scoreboardCategoryLabels = new JLabel[rounds];
+        for(int i = 0; i<rounds; i++){
+            scoreboardCategoryLabels[i] = new JLabel();
+            scoreboardCategoryLabels[i].setVisible(false);
             scoreCatPanel.add(scoreboardCategoryLabels[i]);
         }
         return scoreCatPanel;
@@ -490,22 +493,29 @@ public class QuizGUI extends JFrame {
     public void setCategoryIcon(String category) {
         if (category.equals("Mat")) {
             categoryLabel.setIcon(categoryFood);
+            scoreboardCategoryLabels[roundNumber].setIcon(categoryFood);
         }
         if (category.equals("Sci-fi")) {
             categoryLabel.setIcon(categorySciFi);
+            scoreboardCategoryLabels[roundNumber].setIcon(categorySciFi);
         }
         if (category.equals("Geografi")) {
             categoryLabel.setIcon(categoryGeography);
+            scoreboardCategoryLabels[roundNumber].setIcon(categoryGeography);
         }
         if (category.equals("Rymden")) {
             categoryLabel.setIcon(categorySpace);
+            scoreboardCategoryLabels[roundNumber].setIcon(categorySpace);
         }
         if (category.equals("Historia")) {
             categoryLabel.setIcon(categoryHistory);
+            scoreboardCategoryLabels[roundNumber].setIcon(categoryHistory);
         }
         if (category.equals("Film och TV")) {
             categoryLabel.setIcon(categoryMovies);
+            scoreboardCategoryLabels[roundNumber].setIcon(categoryMovies);
         }
+        scoreboardCategoryLabels[roundNumber].setVisible(true);
     }
 
     //GAME
@@ -606,4 +616,14 @@ public class QuizGUI extends JFrame {
         this.progressBarSekunder = sekunder;
     }
 
+    public void increaseRoundNr(){
+        roundNumber++;
+    }
+    public int getRoundNumber(){
+        return roundNumber;
+    }
+
+    public void setRounds(int rounds){
+        this.rounds=rounds;
+    }
 }

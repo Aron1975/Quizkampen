@@ -111,7 +111,9 @@ public class NetworkProtocolClient {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.CHOSEN_CATEGORY.ordinal()));
         outputStream.writeObject(name);
         quizController.pGUI.setCategoryNameLabel(name);
+        System.out.println("Round Nr: " + quizController.pGUI.getRoundNumber());
         quizController.pGUI.setCategoryIcon(name);
+        quizController.pGUI.increaseRoundNr();
     }
     public void sendPlayerReady(ObjectOutputStream outputStream) throws IOException {
         outputStream.writeObject(new NetworkMessage(NetworkProtocolClient.PROTOCOL_SEND.PLAYER_READY.ordinal()));
@@ -197,7 +199,9 @@ public class NetworkProtocolClient {
     public void parseGetChosenCategory(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         Object lastReadObject = inputStream.readObject();
         quizController.pGUI.setCategoryNameLabel((String) lastReadObject);
+        System.out.println("Round Nr: " + quizController.pGUI.getRoundNumber());
         quizController.pGUI.setCategoryIcon((String) lastReadObject);
+        quizController.pGUI.increaseRoundNr();
     }
 
     public void parseButtonResetColor(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -294,14 +298,15 @@ public class NetworkProtocolClient {
         quizController.player.setNrOfQuestionsPerRound(properties[0]);
         quizController.player.setNrOfRounds(properties[1]);
         quizController.player.setPlayerAnswers(properties[1], properties[0]);
-
-        quizController.pGUI.setNrOfRounds(properties[1]);
         quizController.pGUI.setNrOfCategories(properties[2]);
+        quizController.pGUI.setRounds(properties[1]);
         quizController.pGUI.setNrOfQuestionsPerRound(properties[0]);
         quizController.pGUI.setProgressBarSekunder(properties[3]);
+        System.out.println("Setting properties, nr of rounds in GUI: " + properties[1]);
         quizController.pGUI.initWelcomeWindow();
         quizController.pGUI.initPlayWindow();
         quizController.pGUI.initCategoryWindow();
         quizController.pGUI.initScoreboardWindow();
+
     }
 }
