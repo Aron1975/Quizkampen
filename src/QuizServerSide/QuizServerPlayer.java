@@ -183,9 +183,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                 Integer[] propertiesToSend = {game.getNumberOfQuestionsPerRound(),game.getTotalRounds(), game.getNrOfCategories(),game.getTimeToAnswer()};
 
                 serverProtocol.sendProperties(output, propertiesToSend);
-
-                status=LOBBY;
                 output.flush();
+                status=LOBBY;
             }
             while (true) {
                 if (status == LOBBY) {
@@ -242,8 +241,8 @@ public class QuizServerPlayer extends Thread implements Serializable {
                     if (currentQuestionWithinRound == game.numberOfQuestionsPerRound) {
                         serverProtocol.sendChangeWindow(output, "3");
 
-                        status = SCORE;
                         output.flush();
+                        status = SCORE;
                     }
                 }
 
