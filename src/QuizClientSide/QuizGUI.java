@@ -27,10 +27,8 @@ public class QuizGUI extends JFrame {
     int rounds = 1;
     int questionsPerRound = 6;
     int nrOfCategories = 4;
-<<<<<<< HEAD
     int progressBarSekunder = 5;
-=======
->>>>>>> main
+
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
