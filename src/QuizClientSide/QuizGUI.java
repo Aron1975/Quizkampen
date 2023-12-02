@@ -27,25 +27,32 @@ public class QuizGUI extends JFrame {
     int rounds = 1;
     int questionsPerRound = 6;
     int nrOfCategories = 4;
+<<<<<<< HEAD
     int progressBarSekunder = 5;
+=======
+>>>>>>> main
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
 
     //Avatar images
-    Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar4.png").
+    Icon avatar1 = new ImageIcon(new ImageIcon("Images/Avatar6.png").
             getImage().getScaledInstance(imageIconSize2, imageIconSize2, Image.SCALE_SMOOTH));
-    Icon avatar2 = new ImageIcon(new ImageIcon("Images/Avatar8.png").
+    Icon avatar2 = new ImageIcon(new ImageIcon("Images/Avatar7.png").
             getImage().getScaledInstance(imageIconSize2, imageIconSize2, Image.SCALE_SMOOTH));
 
     //Category Images
-    Icon categorySpace = new ImageIcon(new ImageIcon("Images/Category_Space.png").
+    Icon categorySciFi = new ImageIcon(new ImageIcon("Images/Category_SciFi.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
     Icon categoryFood = new ImageIcon(new ImageIcon("Images/Category_Food.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
     Icon categoryGeography = new ImageIcon(new ImageIcon("Images/Category_Geography.png").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
-    Icon categoryDeafult = new ImageIcon(new ImageIcon("Images/Category_Geography.png").
+    Icon categorySpace = new ImageIcon(new ImageIcon("Images/Category_Space.jpg").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
+    Icon categoryHistory = new ImageIcon(new ImageIcon("Images/Category_History.jpg").
+            getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
+    Icon categoryMovies = new ImageIcon(new ImageIcon("Images/Category_Movies.jpg").
             getImage().getScaledInstance(imageIconSize3, imageIconSize3, Image.SCALE_SMOOTH));
 
     //Scoreoard Images
@@ -465,13 +472,19 @@ public class QuizGUI extends JFrame {
             categoryLabel.setIcon(categoryFood);
         }
         if (category.equals("Sci-fi")) {
-            categoryLabel.setIcon(categorySpace);
+            categoryLabel.setIcon(categorySciFi);
         }
         if (category.equals("Geografi")) {
             categoryLabel.setIcon(categoryGeography);
         }
         if (category.equals("Rymden")) {
             categoryLabel.setIcon(categorySpace);
+        }
+        if (category.equals("Historia")) {
+            categoryLabel.setIcon(categoryHistory);
+        }
+        if (category.equals("Film och TV")) {
+            categoryLabel.setIcon(categoryMovies);
         }
     }
 
