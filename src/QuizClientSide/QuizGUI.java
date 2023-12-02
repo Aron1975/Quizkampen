@@ -112,6 +112,10 @@ public class QuizGUI extends JFrame {
     JPanel scoreboardMainPanel = new JPanel();
     JPanel player1Panel;
     JPanel player2Panel;
+    //--Adding extra panel to show categories--
+    JPanel scoreCategoryPanel = new JPanel();
+    JLabel[] scoreboardCategoryLabels;
+    //-----------------------------------------
     String scoreBoardStartButtonText = "Starta ny runda";
     JButton scoreBoardStartButton = new JButton(scoreBoardStartButtonText);
     JPanel borderPanel = new JPanel(new BorderLayout());
@@ -339,13 +343,17 @@ public class QuizGUI extends JFrame {
         // Score display
         scoreLabel.setFont(f);
         scoreLabel.setHorizontalAlignment(JLabel.CENTER);
-        borderPanel.add(scoreLabel, BorderLayout.CENTER);
+        //Changing to show categories
+
+        scoreCategoryPanel = createScoreCategoryPanel();
+        borderPanel.add(scoreCategoryPanel, BorderLayout.CENTER);
 
         //Player Panels---------
         player1Panel = createPlayerPanel(1);
         player2Panel = createPlayerPanel(2);
         borderPanel.add(player1Panel, BorderLayout.WEST);
         borderPanel.add(player2Panel, BorderLayout.EAST);
+
 
         // Start button
         scoreBoardStartButton.setBackground(Color.GREEN);
@@ -355,6 +363,19 @@ public class QuizGUI extends JFrame {
         scoreBoardStartButton.setPreferredSize(new Dimension(400, 40));
         borderPanel.add(scoreBoardStartButton, BorderLayout.SOUTH);
         scoreboardMainPanel.add(borderPanel);
+    }
+
+    public JPanel createScoreCategoryPanel(){
+        JPanel scoreCatPanel = new JPanel();
+        scoreCatPanel.add(scoreLabel);
+        scoreCatPanel.setLayout(new BoxLayout(scoreCatPanel, BoxLayout.Y_AXIS));
+        scoreCatPanel.setBackground(panelsBackgroundColor);
+        scoreboardCategoryLabels = new JLabel[nrOfCategories];
+        for(int i = 0; i<nrOfCategories; i++){
+            scoreboardCategoryLabels[i] = new JLabel(his);
+            scoreCatPanel.add(scoreboardCategoryLabels[i]);
+        }
+        return scoreCatPanel;
     }
 
     public JPanel createPlayerPanel(int player) {
@@ -414,6 +435,7 @@ public class QuizGUI extends JFrame {
         }
         return scorePanel;
     }
+
     //------------ Button Listeners -------------------------------------------
     void addButtonListener(ActionListener aListener) {
         for (JButton jB : answerButtons) {
