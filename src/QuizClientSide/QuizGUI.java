@@ -18,7 +18,7 @@ public class QuizGUI extends JFrame {
     int screenY = 600;
     int imageIconSize = 20;
     int imageIconSize2 = 120;
-    int imageIconSize3 = 80;
+    int imageIconSize3 = 60;
     Color panelsBackgroundColor = new Color(20, 80, 200);
     Font f = new Font(null, 3, 20);
     Font f2 = new Font(null, 3, 14);
@@ -81,7 +81,7 @@ public class QuizGUI extends JFrame {
     JPanel categoryMainPanel = new JPanel();
     JLabel categoryLabelPickCategory = new JLabel("Välj en kategori");
     JPanel categoryButtonPanel = new JPanel();
-    JButton[] categoryButtons = {new JButton(""),new JButton(""),new JButton(""),new JButton(""),new JButton(), new JButton()};
+    JButton[] categoryButtons = {new JButton(""), new JButton(""), new JButton(""), new JButton(""), new JButton(), new JButton()};
 
     //------------ Play Window ---------------------------
     JPanel playerPanelMain = new JPanel();
@@ -131,7 +131,7 @@ public class QuizGUI extends JFrame {
     JLabel[] playerIconLabel = new JLabel[3];
 
 
-    public QuizGUI(){
+    public QuizGUI() {
         setTitle("QUIZKAMPEN");
         //Nytt för CardLayout
         mainQuizPanel.setLayout(cardLo);
@@ -249,6 +249,7 @@ public class QuizGUI extends JFrame {
 
 
     }
+
     public void setQuestionPanelProperties() {
         String questionText = "Fråga?";
         questionPanel.setPreferredSize(new Dimension(screenX, screenY / 2));
@@ -262,7 +263,7 @@ public class QuizGUI extends JFrame {
         questionLabel.setFont(f);
         progressBar.setMinimum(0);
         //progressBar.setMaximum(20 * 400);
-        progressBar.setMaximum(progressBarSekunder*1000);
+        progressBar.setMaximum(progressBarSekunder * 1000);
         progressBar.setPreferredSize(new Dimension(screenX, 16));
         progressBar.setForeground(Color.RED);
         progressBar.setBackground(Color.GRAY);
@@ -291,6 +292,7 @@ public class QuizGUI extends JFrame {
             answerPanel.add(jb);
         }
     }
+
     //---------------- Category window ---------------------------------
     public void initCategoryWindow() {
         //Change
@@ -371,19 +373,49 @@ public class QuizGUI extends JFrame {
         scoreboardMainPanel.add(borderPanel);
     }
 
-    public JPanel createScoreCategoryPanel(){
+    public JPanel createScoreCategoryPanel() {
+        int yDistance = countDistance();
         JPanel scoreCatPanel = new JPanel();
-        scoreCatPanel.add(scoreLabel);
         scoreCatPanel.setLayout(new BoxLayout(scoreCatPanel, BoxLayout.Y_AXIS));
+        scoreCatPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        scoreLabel.setAlignmentX(0.5f);
+        scoreCatPanel.add(scoreLabel);
         scoreCatPanel.setBackground(panelsBackgroundColor);
+        scoreCatPanel.add(Box.createRigidArea(new Dimension(0, 60)));
         System.out.println("Setting scoreboard Labels, rounds: " + rounds);
         scoreboardCategoryLabels = new JLabel[rounds];
-        for(int i = 0; i<rounds; i++){
+        for (int i = 0; i < rounds; i++) {
             scoreboardCategoryLabels[i] = new JLabel();
             scoreboardCategoryLabels[i].setVisible(false);
+            scoreboardCategoryLabels[i].setAlignmentX(0.5f);
             scoreCatPanel.add(scoreboardCategoryLabels[i]);
+            scoreCatPanel.add(Box.createRigidArea(new Dimension(0, yDistance)));
         }
         return scoreCatPanel;
+    }
+
+    public int countDistance() {
+        int distance = 0;
+        switch (rounds) {
+            case 2:
+                distance = 152;
+                break;
+            case 3:
+                distance = 82;
+                break;
+            case 4:
+                distance = 45;
+                break;
+            case 5:
+                distance = 23;
+                break;
+            case 6:
+                distance = 10;
+                break;
+            default:
+                distance = 0;
+        }
+        return distance;
     }
 
     public JPanel createPlayerPanel(int player) {
@@ -548,33 +580,40 @@ public class QuizGUI extends JFrame {
             roundQuestionSpotsLabel2[i].setIcon(emptyscore2);
         }
     }
+
     //General
     public void changeWindow(String category) {
         cardLo.show(mainQuizPanel, category);
     }
+
     public void setNameLabels(String name1) {
-        player1NameLabel.setText(" "+name1+" ");
+        player1NameLabel.setText(" " + name1 + " ");
         nameLabel[1].setText(name1);
     }
+
     public void setOpponentName(String catName) {
-        player2NameLabel.setText(" "+catName+" ");
+        player2NameLabel.setText(" " + catName + " ");
         nameLabel[2].setText(catName);
     }
 
     public int getScorePlayer1() {
         return scorePlayer1;
     }
+
     public void setScorePlayer1(int scorePlayer1) {
         this.scorePlayer1 = scorePlayer1;
         scoreLabel.setText(scorePlayer1 + " - " + getScorePlayer2());
     }
+
     public int getScorePlayer2() {
         return scorePlayer2;
     }
+
     public void setScorePlayer2(int scorePlayer2) {
         this.scorePlayer2 = scorePlayer2;
         scoreLabel.setText(getScorePlayer1() + " - " + scorePlayer2);
     }
+
     public void setLastAnsweredQuestion(String lastAnsweredQuestion) {
         this.lastAnsweredQuestion = lastAnsweredQuestion;
     }
@@ -612,18 +651,19 @@ public class QuizGUI extends JFrame {
         this.nrOfCategories = nrOfCategories;
     }
 
-    public void setProgressBarSekunder(int sekunder){
+    public void setProgressBarSekunder(int sekunder) {
         this.progressBarSekunder = sekunder;
     }
 
-    public void increaseRoundNr(){
+    public void increaseRoundNr() {
         roundNumber++;
     }
-    public int getRoundNumber(){
+
+    public int getRoundNumber() {
         return roundNumber;
     }
 
-    public void setRounds(int rounds){
-        this.rounds=rounds;
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
     }
 }
